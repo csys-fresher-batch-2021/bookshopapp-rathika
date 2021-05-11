@@ -1,5 +1,6 @@
 <%@page import="java.util.* " %>
 <%@page import="in.rathika.service.*" %>
+ <!DOCTYPE>
 <html>
 <head>
 <title>Book Shopping App</title>
