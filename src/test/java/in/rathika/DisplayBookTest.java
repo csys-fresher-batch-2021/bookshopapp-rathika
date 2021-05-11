@@ -1,13 +1,11 @@
 package in.rathika;
 
-import static org.junit.Assert.*;
-
 import java.util.ArrayList;
 
 import org.junit.Test;
 
-import in.rathika.testcase.*;
-import in.rathika.service.*;
+import in.rathika.service.Book;
+import in.rathika.service.BookManager;
 
 public class DisplayBookTest {
 
