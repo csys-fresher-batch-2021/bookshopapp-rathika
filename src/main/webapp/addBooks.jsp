@@ -20,6 +20,7 @@
      </thead>
      <tbody>
       <%
+      Book b1 = new Book();
      // Book bookObj = new Book();
       List<Book> books = BookManager.addBookDetails();
       int i=0;
@@ -28,7 +29,7 @@
       %>
       <tr>
          <td><%=i %>
-         <td><%= %></td>
+         <td><%= book.bookName%></td>
          <td><%= book.language %></td>
          <td><%= book.noOfBooks %></td>
          <td><%= book.cost %></td>
