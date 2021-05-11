@@ -25,7 +25,7 @@ public class BookManager {
 	 * @param rate
 	 */
 	//BookDetails book = new BookDetails();
-	public static int addBookDetails() {
+	public static ArrayList<Book> addBookDetails() {
 		
 		int i=0;
 		
@@ -78,7 +78,7 @@ public class BookManager {
 		BookManager.addBook(book6);
 		
 		//BookDetailsValidation.validation(books);
-		return i;
+		return books;
 	}
 	/**
 	 * Display the Added Books.
