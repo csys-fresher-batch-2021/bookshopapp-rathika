@@ -11,6 +11,7 @@
 		<h3>Add Books</h3>
 		<form>
      <table class="table-table-bordered" border="2">
+     <caption>BOOK DETAILS</caption>
      <thead>
        <th scope="col">S.NO</th>
      <th scope="col">BOOK NAME</th>
