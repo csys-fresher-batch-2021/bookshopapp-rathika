@@ -1,7 +1,7 @@
 <%@page import="java.util.* " %>
 <%@page import="in.rathika.service.*" %>
- <!DOCTYPE>
-<html>
+ <!DOCTYPE html>
+<html lang="en">
 <head>
 <title>Book Shopping App</title>
 </head>
@@ -13,10 +13,10 @@
      <table class="table-table-bordered" border="2">
      <thead>
        <th>S.NO</th>
-     <th>BOOK NAME</th>
-     <th>LANGUAGE</th>
-     <th>NO OF BOOKS</th>
-     <th>COST</th>
+     <th scope="col">BOOK NAME</th>
+     <th scope="col">LANGUAGE</th>
+     <th scope="col">NO OF BOOKS</th>
+     <th scope="col">COST</th>
      </thead>
      <tbody>
       <%
