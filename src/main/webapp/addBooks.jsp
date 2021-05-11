@@ -12,7 +12,7 @@
 		<form>
      <table class="table-table-bordered" border="2">
      <thead>
-       <th>S.NO</th>
+       <th scope="col">S.NO</th>
      <th scope="col">BOOK NAME</th>
      <th scope="col">LANGUAGE</th>
      <th scope="col">NO OF BOOKS</th>
@@ -20,6 +20,7 @@
      </thead>
      <tbody>
       <%
+     // Book bookObj = new Book();
       List<Book> books = BookManager.addBookDetails();
       int i=0;
       for(Book book : books){
@@ -27,7 +28,7 @@
       %>
       <tr>
          <td><%=i %>
-         <td><%= book.bookName %></td>
+         <td><%= %></td>
          <td><%= book.language %></td>
          <td><%= book.noOfBooks %></td>
          <td><%= book.cost %></td>

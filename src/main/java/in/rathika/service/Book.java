@@ -4,9 +4,9 @@ public class Book {
 	/**
 	 * Declaring variables required  for book shop.
 	 */
-	    static String language;
-		static String bookName;
+	    public String language;
+		public String bookName;
 		
-		static int noOfBooks;
-		static int cost;
+		public int noOfBooks;
+		public int cost;
 }

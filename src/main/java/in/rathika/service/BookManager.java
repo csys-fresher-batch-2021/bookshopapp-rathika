@@ -5,6 +5,10 @@ import java.util.ArrayList;
 
 
 public class BookManager {
+	
+	private BookManager() {
+		
+	}
 	/**
 	 * Declaring Array list for book details.
 	 */
@@ -13,6 +17,7 @@ public class BookManager {
 	 * Add Book details into array list.
 	 * @param book
 	 */
+	
 	
 	public static void addBook(Book book) {
 		books.add(book);
