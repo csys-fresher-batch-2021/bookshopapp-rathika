@@ -5,7 +5,7 @@ public class Book {
 	 * Declaring variables required  for book shop.
 	 */
 	    private String language;
-		String bookName;
+		private String bookName;
 		
 		private int noOfBooks;
 		private int cost;

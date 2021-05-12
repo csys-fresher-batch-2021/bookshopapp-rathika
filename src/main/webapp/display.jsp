@@ -43,6 +43,6 @@
 				
 				
 				<a href="addBookDetails.jsp" >Add Book</a>
-
+</main>
 </body>
 </html>

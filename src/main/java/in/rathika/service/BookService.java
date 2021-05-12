@@ -1,11 +1,12 @@
 package in.rathika.service;
 import java.util.ArrayList;
+import java.util.List;
 import in.rathika.model.*;
 public class BookService {
 	private BookService() {
 		//private constructor to avoid object creation
 	}
-	private static final ArrayList<Book>  books = new ArrayList<>();
+	private static final List<Book>  books = new ArrayList<>();
 
 	/**
 	 * method to display the products available
@@ -13,7 +14,7 @@ public class BookService {
 	 * @return
 	 * 
 	 */
-	public static ArrayList<Book> getBooks() {
+	public static List<Book> getBooks() {
 		return books;
 	}
 	public static boolean addProduct(String bookName,String language,int noOfBooks,int cost) {

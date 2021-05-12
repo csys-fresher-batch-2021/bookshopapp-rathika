@@ -47,12 +47,15 @@ public class AddProductServlet extends HttpServlet {
 			if (isAdded) {
 				try {
 					response.sendRedirect("display.jsp");
-				}catch(Exception e) {
+				}
+				catch(Exception e) {
 					String errorMessage = "Unable to add Books ";
+					
 					response.sendRedirect("addproduct.jsp?errorMessage=" + errorMessage);
 				}
 				
 			} 
+			
 
 		}
 		
