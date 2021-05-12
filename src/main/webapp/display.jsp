@@ -41,7 +41,7 @@
 			</thead>
 				</table>
 				
-				<!--  TODO: Only Admin should be able to view this link -->
+				
 				<a href="addBookDetails.jsp" >Add Book</a>
 
 </body>

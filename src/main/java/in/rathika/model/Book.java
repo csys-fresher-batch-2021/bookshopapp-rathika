@@ -11,7 +11,6 @@ public class Book {
 		private int cost;
 	
 		public Book(String title, String language2, int noOfBooks2, int price) {
-			// TODO Auto-generated constructor stub
 			this.bookName = title;
 			this.language = language2;
 			this.noOfBooks = noOfBooks2;

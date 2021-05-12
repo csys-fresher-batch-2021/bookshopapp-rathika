@@ -1,6 +1,4 @@
 package in.rathika.service;
-import java.util.*;
-import java.awt.List;
 import java.util.ArrayList;
 import in.rathika.model.*;
 public class BookService {
@@ -35,4 +33,16 @@ public class BookService {
 		}
 		return valid;
 	}
+	
+	public static int isParsable(String price) {
+		   int res = 0;
+			try {
+		        res = Integer.parseInt(price);
+		       
+		    } catch (final NumberFormatException e) {
+		        res = 0;
+		    }
+			return res;	
+	}
+	
 }
