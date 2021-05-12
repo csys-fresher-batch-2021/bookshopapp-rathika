@@ -15,7 +15,11 @@
         <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="addBooks.jsp">Book</a>
+        <a class="nav-link" href="addBookDetails.jsp">ADD</a>
+        
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="display.jsp">VIEW</a>
         
       </li>
       <li class="nav-item dropdown">
