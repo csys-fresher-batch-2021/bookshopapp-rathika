@@ -19,7 +19,6 @@ public class BookService {
 	}
 	public static boolean addProduct(String bookName,String language,int noOfBooks,int cost) {
 		boolean isAdded = false;
-		System.out.println("Successfully added " + bookName +" "+language +" "+noOfBooks +" "+cost);
 		books.add(new Book(bookName,language,noOfBooks,cost));
 		isAdded=true;
 		return isAdded;
