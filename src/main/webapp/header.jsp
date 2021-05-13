@@ -1,7 +1,6 @@
 <link rel="stylesheet" href="assets/css/bootstrap.min.css">
 <link rel="stylesheet" href="assets/css/fontawesome.min.css">
 <link rel="stylesheet" href="assets/css/style.css">
-
 <header>
 <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
   <a class="navbar-brand" href="#">Book Shopping App</a>
@@ -16,11 +15,9 @@
       </li>
       <li class="nav-item">
         <a class="nav-link" href="addBookDetails.jsp">ADD</a>
-        
       </li>
       <li class="nav-item">
         <a class="nav-link" href="display.jsp">VIEW</a>
-        
       </li>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
