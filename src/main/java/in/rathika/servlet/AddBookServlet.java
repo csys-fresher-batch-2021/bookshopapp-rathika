@@ -1,5 +1,7 @@
 package in.rathika.servlet;
 
+
+
 import java.io.IOException;
 
 import javax.servlet.ServletException;
@@ -19,36 +21,33 @@ public class AddBookServlet extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-        try {
-        	String bookName = request.getParameter("bookName");
-    		String language = request.getParameter("language");
-    		String noOfBook = request.getParameter("noOfBooks");
-    		int noOfBooks = BookService.isParsable(noOfBook);
-    		boolean validNoOfBooks = BookService.isValidNumber(noOfBooks);
-    		String price = request.getParameter("cost");
-    		int cost = BookService.isParsable(price);
+			throws ServletException, IOException{
+		try {
+			String bookName = request.getParameter("bookName");
+			String language = request.getParameter("language");
+			String noOfBook = request.getParameter("noOfBooks");
+			int noOfBooks = BookService.isParsable(noOfBook);
+			boolean validNoOfBooks = BookService.isValidNumber(noOfBooks);
+			String price = request.getParameter("cost");
+			int cost = BookService.isParsable(price);
 
-    		boolean validCost = BookService.isValidNumber(cost);
-    		
-        	boolean isAdded = false;
-    		if(validNoOfBooks && validCost) {
-    			isAdded = BookService.addProduct(bookName, language, noOfBooks, cost);
-    			if (isAdded) {
-    				response.sendRedirect("display.jsp");
-    			}
-    			else {
-        			String errorMessage = "Unable to add Books ";
-        			response.sendRedirect("addproduct.jsp?errorMessage=" + errorMessage);
-        		}
-    		}
-    		
-        }catch (Exception e) {
-				String errorMessage = e.getMessage();
-				response.sendRedirect("addBookDeatails.jsp?errorMessage=" + errorMessage);
+			boolean validCost = BookService.isValidNumber(cost);
+
+			boolean isAdded = false;
+			if (validNoOfBooks && validCost) {
+				isAdded = BookService.addProduct(bookName, language, noOfBooks, cost);
+				if (isAdded) {
+					response.sendRedirect("display.jsp");
+				} else {
+					String errorMessage = "Unable to add Books ";
+					response.sendRedirect("addproduct.jsp?errorMessage=" + errorMessage);
+				}
 			}
 
-	
+		} catch (Exception e) {
+			String errorMessage = e.getMessage();
+			response.sendRedirect("addBookDeatails.jsp?errorMessage=" + errorMessage);
+		}
 
 	}
 
