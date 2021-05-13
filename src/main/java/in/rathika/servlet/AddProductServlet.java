@@ -38,7 +38,6 @@ public class AddProductServlet extends HttpServlet {
 				}catch(Exception e) {
 					String errorMessage = "Invalid data ";
 					response.sendRedirect("addproduct.jsp?errorMessage=" + errorMessage);
-					e.printStackTrace();
 				}
 				
 			}
@@ -50,7 +49,6 @@ public class AddProductServlet extends HttpServlet {
 					String errorMessage = "Unable to add Books ";
 					
 					response.sendRedirect("addproduct.jsp?errorMessage=" + errorMessage);
-					e.printStackTrace();
 				}
 				
 			} 
