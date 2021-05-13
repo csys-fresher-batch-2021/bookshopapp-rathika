@@ -10,7 +10,7 @@ public class BookService {
 	}
 
 	private static final List<Book> books = new ArrayList<>();
-    
+
 	/**
 	 * method to display the products available
 	 * 
@@ -21,6 +21,16 @@ public class BookService {
 		return books;
 	}
 
+	/**
+	 * Add Book Details.
+	 * 
+	 * @param bookName
+	 * @param language
+	 * @param noOfBooks
+	 * @param cost
+	 * @return
+	 */
+
 	public static boolean addProduct(String bookName, String language, int noOfBooks, int cost) {
 		boolean isAdded = false;
 		books.add(new Book(bookName, language, noOfBooks, cost));
@@ -28,6 +38,12 @@ public class BookService {
 		return isAdded;
 	}
 
+	/**
+	 * Validate number.
+	 * 
+	 * @param number
+	 * @return
+	 */
 	public static boolean isValidNumber(int number) {
 		boolean valid = false;
 		if (number > 0) {
@@ -38,6 +54,12 @@ public class BookService {
 		return valid;
 	}
 
+	/**
+	 * Parse string into integer.
+	 * 
+	 * @param price
+	 * @return
+	 */
 	public static int isParsable(String price) {
 		int res = 0;
 		try {
