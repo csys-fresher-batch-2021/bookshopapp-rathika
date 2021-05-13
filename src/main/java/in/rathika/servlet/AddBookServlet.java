@@ -44,7 +44,7 @@ public class AddBookServlet extends HttpServlet {
     		}
     		
         }catch (Exception e) {
-				String errorMessage = "Invalid cost or no of books ";
+				String errorMessage = e.getMessage();
 				response.sendRedirect("addBookDeatails.jsp?errorMessage=" + errorMessage);
 			}
 
