@@ -37,10 +37,7 @@ public class AddProductServlet extends HttpServlet {
 					isAdded = BookService.addProduct(bookName, language, noOfBooks, cost);
 				}catch(Exception e) {
 					throw new IOException("Invalid data");
-					/*
-					 * String errorMessage = " ";
-					 * response.sendRedirect("addproduct.jsp?errorMessage=" + errorMessage);
-					 */
+					
 				}
 				
 			}
@@ -50,11 +47,7 @@ public class AddProductServlet extends HttpServlet {
 				}
 				catch(Exception e) {
 					throw new IOException("Unnable to add");
-					/*
-					 * String errorMessage = "Unable to add Books ";
-					 * 
-					 * response.sendRedirect("addproduct.jsp?errorMessage=" + errorMessage);
-					 */
+					
 				}
 				
 			} 
