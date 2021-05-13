@@ -20,11 +20,9 @@ public class AddProductServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		
-		// Step 1: Get Form Values
+		
 		
 		String bookName = request.getParameter("bookName");
-		
-		
 		String language = request.getParameter("language");
 		String noOfBook = request.getParameter("noOfBooks");
 		int noOfBooks = BookService.isParsable(noOfBook);
@@ -33,14 +31,16 @@ public class AddProductServlet extends HttpServlet {
 		int cost = BookService.isParsable(price);
 		
 		boolean validCost = BookService.isValidNumber(cost);
-		// Step 2: Call Service => add Product
 		boolean isAdded = false;
 			if(validNoOfBooks && validCost) {
 				try {
 					isAdded = BookService.addProduct(bookName, language, noOfBooks, cost);
 				}catch(Exception e) {
-					String errorMessage = "Invalid data ";
-					response.sendRedirect("addproduct.jsp?errorMessage=" + errorMessage);
+					throw new IOException("Invalid data");
+					/*
+					 * String errorMessage = " ";
+					 * response.sendRedirect("addproduct.jsp?errorMessage=" + errorMessage);
+					 */
 				}
 				
 			}
@@ -49,9 +49,12 @@ public class AddProductServlet extends HttpServlet {
 					response.sendRedirect("display.jsp");
 				}
 				catch(Exception e) {
-					String errorMessage = "Unable to add Books ";
-					
-					response.sendRedirect("addproduct.jsp?errorMessage=" + errorMessage);
+					throw new IOException("Unnable to add");
+					/*
+					 * String errorMessage = "Unable to add Books ";
+					 * 
+					 * response.sendRedirect("addproduct.jsp?errorMessage=" + errorMessage);
+					 */
 				}
 				
 			} 
