@@ -11,8 +11,10 @@
 <title>Book App</title>
 </head>
 <body>
-	<jsp:include page="header.jsp"></jsp:include>
+<jsp:include page="header.jsp"></jsp:include>
 	<main class="container-fluid">
+<form action="login.jsp" method="post">
+
 		<h3>Books</h3>
 		<table class="table table-bordered">
 			<caption></caption>
@@ -23,6 +25,7 @@
 					<th scope="col">Language</th>
 					<th scope="col">No Of Books</th>
 					<th scope="col">Cost</th>
+					
 					<%
 					List<Book> books = BookService.getBooks();
 					int i = 0;
@@ -36,6 +39,7 @@
 					<td><%=bookDetails.getLanguage()%></td>
 					<td><%=bookDetails.getNoOfBooks()%></td>
 					<td><%=bookDetails.getCost()%></td>
+					<td><a href="DeleteBookServlet?bookName=<%=bookDetails.getBookName()%>" class="btn btn-danger">Delete</a></td>
 				</tr>
 				<%
 				}
@@ -43,8 +47,10 @@
 			</thead>
 		</table>
 
-
-		<a href="addBookDetails.jsp">Add Book</a>
+       <button type="submit">ORDER</button>
+</form>
+	
+		<!-- <a href="addBookDetails.jsp">Add Book</a> -->
 	</main>
 </body>
 </html>

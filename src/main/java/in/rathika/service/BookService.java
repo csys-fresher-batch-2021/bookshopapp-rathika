@@ -37,6 +37,23 @@ public class BookService {
 		isAdded = true;
 		return isAdded;
 	}
+	
+	public static boolean deleteBook(String bookName) {
+		boolean isDeleted = false;
+		Book searchbook = null;
+		for(Book book: books) {
+			if(book.getBookName().equalsIgnoreCase(bookName)) {
+				searchbook = book;
+				break;
+			}
+		}
+		if(searchbook != null) {
+			books.remove(searchbook);
+			isDeleted = true;
+		}
+		return isDeleted;
+	}
+
 
 	/**
 	 * Validate number.
@@ -53,22 +70,27 @@ public class BookService {
 		}
 		return valid;
 	}
-
+    
+	
+	
+   
+	
+	
 	/**
-	 * Parse string into integer.
+	 * Validate book name Book name does not contain number.
 	 * 
-	 * @param price
+	 * @param name
 	 * @return
 	 */
-	public static int isParsable(String price) {
-		int res = 0;
-		try {
-			res = Integer.parseInt(price);
-
-		} catch (final NumberFormatException e) {
-			res = 0;
+	public static boolean isBookNameValid(String name) {
+		boolean valid = true;
+		String regex = "[a-zA-Z_ ]+\\.?";
+		if (name.matches(regex)) {
+			valid = true;
+		} else {
+			valid = false;
 		}
-		return res;
+		return valid;
 	}
 
 }
