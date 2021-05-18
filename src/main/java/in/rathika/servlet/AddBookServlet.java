@@ -24,28 +24,35 @@ public class AddBookServlet extends HttpServlet {
 			throws ServletException, IOException{
 		try {
 			String bookName = request.getParameter("bookName");
+			boolean isValidName = BookService.isBookNameValid(bookName);
+			
 			String language = request.getParameter("language");
 			String noOfBook = request.getParameter("noOfBooks");
-			int noOfBooks = BookService.isParsable(noOfBook);
+			int noOfBooks = Integer.parseInt(noOfBook);
+			
 			boolean validNoOfBooks = BookService.isValidNumber(noOfBooks);
+			
 			String price = request.getParameter("cost");
-			int cost = BookService.isParsable(price);
+			
+			int cost = Integer.parseInt(price);
 
 			boolean validCost = BookService.isValidNumber(cost);
 
 			boolean isAdded = false;
-			if (validNoOfBooks && validCost) {
+			if (isValidName && validNoOfBooks && validCost) {
 				isAdded = BookService.addBook(bookName, language, noOfBooks, cost);
 				if (isAdded) {
-					response.sendRedirect("display.jsp");
+					response.sendRedirect("addBookDetails.jsp");
 				} else {
 					String errorMessage = "Unable to add Books ";
+					System.out.println("I am here");
 					response.sendRedirect("addBookDetails.jsp?errorMessage=" + errorMessage);
 				}
 			}
 
 		} catch (Exception e) {
 			String errorMessage = e.getMessage();
+			System.out.println("Not able to add");
 			response.sendRedirect("addBookDetails.jsp?errorMessage=" + errorMessage);
 		}
 
