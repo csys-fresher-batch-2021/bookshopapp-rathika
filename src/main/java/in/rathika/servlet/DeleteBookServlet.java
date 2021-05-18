@@ -23,6 +23,7 @@ public class DeleteBookServlet extends HttpServlet {
 			response.sendRedirect("display.jsp");
 		}
 		else {
+			System.out.println("Invaild");
 			String errorMessage = "Unable to delete book Name";
 			response.sendRedirect("addBookDetails.jsp?errorMessage=" + errorMessage);
 		}

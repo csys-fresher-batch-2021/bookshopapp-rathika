@@ -50,6 +50,7 @@ public class BookService {
 		if(searchbook != null) {
 			books.remove(searchbook);
 			isDeleted = true;
+			System.out.println("delete");
 		}
 		return isDeleted;
 	}

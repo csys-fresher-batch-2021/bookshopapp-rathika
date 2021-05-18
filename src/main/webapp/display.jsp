@@ -47,7 +47,7 @@
 			</thead>
 		</table>
 
-       <button type="submit">ORDER</button>
+       <button type="submit">order</button>
 </form>
 	
 		<!-- <a href="addBookDetails.jsp">Add Book</a> -->
