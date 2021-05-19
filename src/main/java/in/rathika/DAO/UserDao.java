@@ -2,7 +2,7 @@ package in.rathika.DAO;
 import java.util.ArrayList;
 import java.util.List;
 
-import in.rathika.model.*;
+import in.rathika.model.User;
 
 public class UserDao {
 	private final List<User> userReg = new ArrayList<User>();
