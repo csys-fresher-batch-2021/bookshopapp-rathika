@@ -7,6 +7,8 @@
 <title>Login</title>
 </head>
 <body>
+<jsp:include page="header.jsp"></jsp:include>
+	<main class="container-fluid">
 <form action="LoginServelet" method="post">
 <table>
 			<caption>ADMIN LOGIN</caption>
@@ -23,5 +25,6 @@
 			</table>
 			<button type="submit">SUBMIT</button>
 			</form>
+			</main>
 </body>
 </html>
