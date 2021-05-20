@@ -31,7 +31,7 @@ public class BookService {
 	 * @return
 	 */
 
-	public static boolean addProduct(String bookName, String language, int noOfBooks, int cost) {
+	public static boolean addBook(String bookName, String language, int noOfBooks, int cost) {
 		boolean isAdded = false;
 		books.add(new Book(bookName, language, noOfBooks, cost));
 		isAdded = true;

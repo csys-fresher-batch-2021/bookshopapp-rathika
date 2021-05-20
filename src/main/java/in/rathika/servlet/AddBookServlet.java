@@ -35,18 +35,18 @@ public class AddBookServlet extends HttpServlet {
 
 			boolean isAdded = false;
 			if (validNoOfBooks && validCost) {
-				isAdded = BookService.addProduct(bookName, language, noOfBooks, cost);
+				isAdded = BookService.addBook(bookName, language, noOfBooks, cost);
 				if (isAdded) {
 					response.sendRedirect("display.jsp");
 				} else {
 					String errorMessage = "Unable to add Books ";
-					response.sendRedirect("addproduct.jsp?errorMessage=" + errorMessage);
+					response.sendRedirect("addBookDetails.jsp?errorMessage=" + errorMessage);
 				}
 			}
 
 		} catch (Exception e) {
 			String errorMessage = e.getMessage();
-			response.sendRedirect("addBookDeatails.jsp?errorMessage=" + errorMessage);
+			response.sendRedirect("addBookDetails.jsp?errorMessage=" + errorMessage);
 		}
 
 	}
