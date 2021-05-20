@@ -4,6 +4,7 @@
 <%@page import="java.util.Map"%>
 <%@ page import="in.rathika.model.*"%>
 <%@ page import="in.rathika.service.*"%>
+<%@ page import="in.rathika.dao.BookDao" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,7 +28,8 @@
 					<th scope="col">Cost</th>
 					
 					<%
-					List<Book> books = BookService.getBooks();
+					
+					List<Book> books = BookDao.getBook();
 					int i = 0;
 					for (Book bookDetails : books) {
 						i++;
@@ -50,7 +52,7 @@
        <button type="submit">order</button>
 </form>
 	
-		<!-- <a href="addBookDetails.jsp">Add Book</a> -->
+		
 	</main>
 </body>
 </html>

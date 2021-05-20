@@ -7,6 +7,8 @@
 <title>add books</title>
 </head>
 <body>
+<jsp:include page="header.jsp"></jsp:include>
+	<main class="container-fluid">
 	<h1>ADD BOOKS</h1>
 	<form action="AddBookServlet" method="post">
 		<table>
@@ -37,6 +39,12 @@
 
 		</table>
 		<button type="submit">SUBMIT</button>
+		<a href="display.jsp">VIEW</a>
+
+		<a href="">DELETE</a>
+		
+		<a href="">UPDATE</a>
 	</form>
+	</main>
 </body>
 </html>

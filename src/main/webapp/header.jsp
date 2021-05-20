@@ -30,11 +30,12 @@ String role = (String) session.getAttribute("ROLE");
 						<a class="dropdown-item" href="#">Action 1</a> <a
 							class="dropdown-item" href="#">Action 2</a>
 					</div></li>
+					
 			</ul>
 			<ul class="navbar-nav ml-auto mt-2 mt-lg-0">
-				<li class="nav-item active"><a class="nav-link" href="adminLogin.jsp">Login</a>
+				<li class="nav-item active"><a class="nav-link" href="adminLogin.jsp">Admin Login</a>
 				</li>
-				<li class="nav-item"><a class="nav-link" href="#">Register</a>
+				<li class="nav-item"><a class="nav-link" href="userJob.jsp">SHOP</a>
 				</li>
 			</ul>
 
