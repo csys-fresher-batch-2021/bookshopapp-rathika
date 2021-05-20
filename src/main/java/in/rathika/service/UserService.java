@@ -21,11 +21,10 @@ public class UserService {
  		boolean addressValid = validatorObj.isAddressValid(address);
  		boolean ageValid = validatorObj.isAgeValid(age);
  		boolean passwordValid =validatorObj.isPasswordValid(password);
- 		if(nameValid && mobileValid && emailValid && addressValid && ageValid && passwordValid) {
- 			if(password.equals(confrimPassword)) {
+ 		if(nameValid && mobileValid && emailValid && addressValid && ageValid && passwordValid && password.equals(confrimPassword)) {
+ 			
  				userObj.addUser(regObj);
  	 			registerd = true;
- 			}
  		}
  		
  		return registerd;
