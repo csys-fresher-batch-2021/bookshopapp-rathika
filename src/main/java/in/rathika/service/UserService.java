@@ -1,6 +1,6 @@
 package in.rathika.service;
 
-import in.rathika.DAO.UserDao;
+import in.rathika.dao.UserDao;
 import in.rathika.model.User;
 import in.rathika.validator.UserValidator;
 
@@ -10,7 +10,7 @@ public class UserService {
      private UserValidator validatorObj = new UserValidator();
      
   
-    //String userName = registrationObj.getName();
+  
      
      public boolean addDetails(String name,String email,Long mobileNum,String address,int age,String password,String confrimPassword) {
  		boolean registerd = false;
@@ -26,13 +26,8 @@ public class UserService {
  				userObj.addUser(regObj);
  	 			registerd = true;
  			}
- 			else {
- 				System.out.println("Invalid confrim password");
- 			}
- 			
  		}
  		else {
- 			System.out.println("Invalid details");
  			registerd = false;
  		}
  		return registerd;

@@ -16,7 +16,7 @@ public class UserValidator {
 		}
 		else {
 			valid = false;
-			System.out.println("Invalid Name");
+			
 		}
 		return valid;
 	}
@@ -42,7 +42,7 @@ public class UserValidator {
    	 }
    	else {
 		valid = false;
-		System.out.println("Invalid email");
+		
 	}
    	   return valid;
 	}
@@ -79,7 +79,7 @@ public class UserValidator {
 		}
 		else {
 			valid = false;
-			System.out.println("Invalid Address");
+			
 		}
 		return valid;
 	}
@@ -118,7 +118,6 @@ public class UserValidator {
 		 }
 		 else {
 				valid = false;
-				System.out.println("Invalid password");
 			}
 		
 		return valid;
