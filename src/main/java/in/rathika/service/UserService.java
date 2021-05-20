@@ -27,9 +27,7 @@ public class UserService {
  	 			registerd = true;
  			}
  		}
- 		else {
- 			registerd = false;
- 		}
+ 		
  		return registerd;
  	}
      

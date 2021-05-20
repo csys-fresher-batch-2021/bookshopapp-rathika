@@ -34,8 +34,8 @@ public class UserValidator {
 	public boolean isEmailValid(String email) {
 		boolean valid = false;
 		
-		  String regex = "^[a-zA-Z0-9_+&*-]+(?:\\."+ "[a-zA-Z0-9_+&*-]+)*@" +
-		  "(?:[a-zA-Z0-9-]+\\.)+[a-z" + "A-Z]{2,7}$";
+		  String regex = "^[a-zA-Z0-9_+&*-]+(?:\\.+[a-zA-Z0-9_+&*-]+)*@" +
+		  "(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
 		 
    	 if(email.matches(regex)) {
    		 valid = true;
