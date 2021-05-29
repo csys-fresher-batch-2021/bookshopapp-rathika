@@ -6,8 +6,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import in.rathika.service.BookService;
+import in.rathika.service.OrderService;
 
 /**
  * Servlet implementation class DeleteBookServlet
@@ -18,15 +20,35 @@ public class DeleteBookServlet extends HttpServlet {
   
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String bookName = request.getParameter("bookName");
-		boolean isDeleted = BookService.deleteBook(bookName);
-		if(isDeleted) {
-			response.sendRedirect("display.jsp");
+		HttpSession sess = request.getSession();
+		boolean isDeleted = false;
+		boolean isOrderDeleted = false;
+		String role = (String)sess.getAttribute("JOB");
+		if(role!="REMOVE") {
+			isDeleted = BookService.deleteBook(bookName);
+			if(isDeleted) {
+				response.sendRedirect("display.jsp");
+			}
+			else {
+				System.out.println("Invaild");
+				String errorMessage = "Unable to delete book Name";
+				response.sendRedirect("addBookDetails.jsp?errorMessage=" + errorMessage);
+			}
 		}
 		else {
-			System.out.println("Invaild");
-			String errorMessage = "Unable to delete book Name";
-			response.sendRedirect("addBookDetails.jsp?errorMessage=" + errorMessage);
+			isOrderDeleted = OrderService.deleteBook(bookName);
+			if(isDeleted) {
+				response.sendRedirect("viewCart.jsp");
+			}
+			else {
+				System.out.println("Invaild");
+				String errorMessage = "Unable to delete book Name";
+				response.sendRedirect("viewCart.jsp?errorMessage=" + errorMessage);
+			}
 		}
+		
+	
+		
 	}
 
 }
