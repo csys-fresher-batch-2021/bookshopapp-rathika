@@ -2,6 +2,9 @@ package in.rathika.validator;
 
 public class BookValidator {
 
+	private BookValidator() {
+		
+	}
 	/**
 	 * Validate number.
 	 * 

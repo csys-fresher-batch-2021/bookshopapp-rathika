@@ -17,39 +17,36 @@ import in.rathika.service.OrderService;
 @WebServlet("/DeleteBookServlet")
 public class DeleteBookServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-  
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String bookName = request.getParameter("bookName");
-		HttpSession sess = request.getSession();
-		boolean isDeleted = false;
-		boolean isOrderDeleted = false;
-		String role = (String)sess.getAttribute("JOB");
-		if(role!="REMOVE") {
-			isDeleted = BookService.deleteBook(bookName);
-			if(isDeleted) {
-				response.sendRedirect("display.jsp");
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		try {
+			String bookName = request.getParameter("bookName");
+			HttpSession sess = request.getSession();
+			boolean isDeleted = false;
+			boolean isOrderDeleted = false;
+			String role = (String) sess.getAttribute("JOB");
+			if (role != "REMOVE") {
+				isDeleted = BookService.deleteBook(bookName);
+				if (isDeleted) {
+					response.sendRedirect("display.jsp");
+				} else {
+
+					String errorMessage = "Unable to delete book Name";
+					response.sendRedirect("addBookDetails.jsp?errorMessage=" + errorMessage);
+				}
+			} else {
+				isOrderDeleted = OrderService.deleteBook(bookName);
+				if (isOrderDeleted) {
+					response.sendRedirect("viewCart.jsp");
+
+				}
 			}
-			else {
-				System.out.println("Invaild");
-				String errorMessage = "Unable to delete book Name";
-				response.sendRedirect("addBookDetails.jsp?errorMessage=" + errorMessage);
-			}
+		} catch (Exception e) {
+
+			String errorMessage = "Unable to delete book Name";
+			response.sendRedirect("viewCart.jsp?errorMessage=" + errorMessage);
 		}
-		else {
-			isOrderDeleted = OrderService.deleteBook(bookName);
-			if(isDeleted) {
-				response.sendRedirect("viewCart.jsp");
-				System.out.println("deleted");
-			}
-			else {
-				System.out.println("Invaild");
-				String errorMessage = "Unable to delete book Name";
-				response.sendRedirect("viewCart.jsp?errorMessage=" + errorMessage);
-			}
-		}
-		
-	
-		
 	}
 
 }

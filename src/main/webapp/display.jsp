@@ -12,46 +12,48 @@
 <title>Book App</title>
 </head>
 <body>
-<jsp:include page="header.jsp"></jsp:include>
+	<jsp:include page="header.jsp"></jsp:include>
 	<main class="container-fluid">
-<form action="login.jsp" method="post">
+		<form action="login.jsp" method="post">
 
-		<h3>Books</h3>
-		<table class="table table-bordered">
-			<caption></caption>
-			<thead>
-				<tr>
-					<th scope="col">S.NO</th>
-					<th scope="col">Book Name</th>
-					<th scope="col">Language</th>
-					<th scope="col">No Of Books</th>
-					<th scope="col">Cost</th>
+			<h3>Books</h3>
+			<table class="table table-bordered">
+				<caption></caption>
+				<thead>
+					<tr>
+						<th scope="col">S.NO</th>
+						<th scope="col">Book Name</th>
+						<th scope="col">Language</th>
+						<th scope="col">No Of Books</th>
+						<th scope="col">Cost</th>
+
+						<%
+						BookDao bookDao = new BookDao();
+						List<Book> books = bookDao.getBook();
+						int i = 0;
+						for (Book bookDetails : books) {
+							i++;
+						%>
 					
+					<tr>
+						<td><%=i%></td>
+						<td><%=bookDetails.getBookName()%></td>
+						<td><%=bookDetails.getLanguage()%></td>
+						<td><%=bookDetails.getNoOfBooks()%></td>
+						<td><%=bookDetails.getCost()%></td>
+						<td><a
+							href="DeleteBookServlet?bookName=<%=bookDetails.getBookName()%>"
+							class="btn btn-danger">Delete</a></td>
+					</tr>
 					<%
-					BookDao bookDao = new BookDao();
-					List<Book> books = bookDao.getBook();
-					int i = 0;
-					for (Book bookDetails : books) {
-						i++;
+					}
 					%>
-				
-				<tr>
-					<td><%=i%></td>
-					<td><%=bookDetails.getBookName() %></td>
-					<td><%=bookDetails.getLanguage() %></td>
-					<td><%=bookDetails.getNoOfBooks() %></td>
-					<td><%=bookDetails.getCost() %></td>
-					<td><a href="DeleteBookServlet?bookName=<%=bookDetails.getBookName()%>" class="btn btn-danger">Delete</a></td>
-				</tr>
-				<%
-				}
-				%>
-			</thead>
-		</table>
+				</thead>
+			</table>
 
-       <button type="submit">order</button>
-</form>
-	
+			<button type="submit">order</button>
+		</form>
+
 		<!-- <a href="addBookDetails.jsp">Add Book</a> -->
 	</main>
 </body>
