@@ -7,7 +7,7 @@
 <%@ page import="in.rathika.dao.BookDao"%>
 <%@ page import="in.rathika.service.*"%>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
