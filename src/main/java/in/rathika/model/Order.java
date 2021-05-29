@@ -1,10 +1,9 @@
 package in.rathika.model;
 
-public class Book {
+public class Order {
 	/**
-	 * Declaring variables required for book shop.
+	 * Declaring Required Variable.
 	 */
-
 	private String bookName;
 	private String language;
 	private int noOfBooks;
@@ -26,7 +25,7 @@ public class Book {
 		return cost;
 	}
 
-	public Book(String bookName, String language, int noOfBooks, double cost) {
+	public Order(String bookName, String language, int noOfBooks, double cost) {
 		super();
 		this.bookName = bookName;
 		this.language = language;
@@ -36,7 +35,7 @@ public class Book {
 
 	@Override
 	public String toString() {
-		return "Book [bookName=" + bookName + ", language=" + language + ", noOfBooks=" + noOfBooks + ", cost=" + cost
+		return "Order [bookName=" + bookName + ", language=" + language + ", noOfBooks=" + noOfBooks + ", cost=" + cost
 				+ "]";
 	}
 
