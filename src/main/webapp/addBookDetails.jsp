@@ -40,7 +40,7 @@
 			</table>
 			<button type="submit" class="btn btn-success">SUBMIT</button>
 		</form>
-		<br /> <a href="addBookDetails.jsp" class="btn btn-primary">ADD</a> <a
+		<br /> <a href="view.jsp" class="btn btn-primary">VIEW</a> <a
 			href="display.jsp" class="btn btn-danger">DELETE</a>
 	</main>
 </body>
