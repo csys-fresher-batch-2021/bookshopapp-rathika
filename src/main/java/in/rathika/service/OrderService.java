@@ -33,7 +33,11 @@ public class OrderService {
 		
 		return isAdded;
 	}
-	
+   /**
+    * Search Book name is present or not.	
+    * @param bookName
+    * @return
+    */
    public static boolean isPresent(String bookName) {
 	   boolean present = false;
 	   List<Order> orders = orderDao.getOrder();
@@ -46,14 +50,18 @@ public class OrderService {
 	   return present;
 	   
    }
-   
+   /**
+    * Delete Book from the list.
+    * @param bookName
+    * @return
+    */
    public static boolean deleteBook(String bookName) {
 		boolean isDeleted = false;
-		Book searchbook = null;
-		List<Book> books = BookDao.getSearch();
-		for(Book book: books) {
-			if(book.getBookName().equalsIgnoreCase(bookName)) {
-				searchbook = book;
+		Order searchbook = null;
+		List<Order> books = OrderDao.getOrder();
+		for(Order order: books) {
+			if(order.getBookName().equalsIgnoreCase(bookName)) {
+				searchbook = order;
 				break;
 			}
 		}

@@ -39,6 +39,7 @@ public class DeleteBookServlet extends HttpServlet {
 			isOrderDeleted = OrderService.deleteBook(bookName);
 			if(isDeleted) {
 				response.sendRedirect("viewCart.jsp");
+				System.out.println("deleted");
 			}
 			else {
 				System.out.println("Invaild");

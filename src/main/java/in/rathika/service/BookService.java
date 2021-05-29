@@ -1,17 +1,16 @@
 package in.rathika.service;
 
-import java.util.ArrayList;
 import java.util.List;
-import in.rathika.model.*;
+
 import in.rathika.dao.BookDao;
+import in.rathika.model.Book;
 
 public class BookService {
 	
     
 	private static BookDao bookDao = new BookDao();
 	/**
-	 * Add Book Details.
-	 * 
+	 * Add Book Details. 
 	 * @param bookName
 	 * @param language
 	 * @param noOfBooks
@@ -30,7 +29,11 @@ public class BookService {
 		
 		return isAdded;
 	}
-	
+	/**
+	 * Delete Book from book details.
+	 * @param bookName
+	 * @return
+	 */
 	public static boolean deleteBook(String bookName) {
 		boolean isDeleted = false;
 		Book searchbook = null;
@@ -49,6 +52,12 @@ public class BookService {
 		}
 		return isDeleted;
 	}
+	
+	/**
+	 * Find the book present in the list or not.
+	 * @param bookName
+	 * @return
+	 */
    public static boolean isPresent(String bookName) {
 	   boolean present = false;
 	   List<Book> books = bookDao.getBook();
@@ -61,7 +70,11 @@ public class BookService {
 	   return present;
 	   
    }
-   
+   /**
+    * Get language from arraylist.
+    * @param bookName
+    * @return
+    */
    public static String getBookLanguage(String bookName) {
 	   String language=null;
 	   List<Book> books = bookDao.getBook();
@@ -74,7 +87,11 @@ public class BookService {
 	   return language;
 	   
    }
-   
+   /**
+    * Get noOfBokks from book name.
+    * @param bookName
+    * @return
+    */
    public static int getNoOfBooks(String bookName) {
 	   int noOfBooks = 0;
 	   List<Book> books = bookDao.getBook();
@@ -87,7 +104,11 @@ public class BookService {
 	   return noOfBooks;
 	   
    }
-   
+   /**
+    * Get cost using book name.
+    * @param bookName
+    * @return
+    */
    public static double getBookCost(String bookName) {
 	   double cost = 0;
 	   List<Book> books = bookDao.getBook();
@@ -101,24 +122,32 @@ public class BookService {
 	   
    }
   
-
+   /**
+    * Add book details into search list.
+    * @param bookName
+    * @param language
+    * @param noOfBooks
+    * @param cost
+    * @return
+    */
    
-   public static boolean addSearchDetails(String bookName, String language, int noOfBooks, double cost) {
-		boolean isAdded = false;
-		boolean present = BookService.isPresent(bookName);
-		
-		if(!present) {
-			isAdded=true;
-			bookDao.addSearch(bookName, language, noOfBooks, cost);
-			System.out.println(language);
-			System.out.println("Book servise");
-		}
-		return isAdded;
- }
+	/*
+	 * public static boolean addSearchDetails(String bookName, String language, int
+	 * noOfBooks, double cost) { boolean isAdded = false; boolean present =
+	 * BookService.isPresent(bookName);
+	 * 
+	 * if(!present) { isAdded=true; bookDao.addSearch(bookName, language, noOfBooks,
+	 * cost); System.out.println(language); System.out.println("Book servise"); }
+	 * return isAdded; }
+	 */
    
  
  
-   
+   /**
+    * Add searching book details.
+    * @param language
+    * @return
+    */
   
    public static boolean searchBookByLanguage(String language) {
 		boolean isAdd = false;
@@ -133,6 +162,11 @@ public class BookService {
        return isAdd;
 	}
    
+   /**
+    * Add search book details.
+    * @param type
+    * @return
+    */
    public static boolean searchBookByCost(int type) {
 		boolean isAdd = false;
 		List<Book> languageDetails = BookDao.getSearch();
@@ -156,6 +190,21 @@ public class BookService {
 		
       return isAdd;
 	}
-
-
+   /**
+    * Add confirm ordered book details.  
+    * @param bookName
+    * @return
+    */
+   public static boolean confirmOrder(String bookName) {
+		boolean isAdd = false;
+		List<Book> languageDetails = BookDao.getSearch();
+		languageDetails.removeAll(languageDetails);
+		for (Book book : BookDao.getBook()) {
+			if (book.getBookName().equalsIgnoreCase(bookName)) {
+				languageDetails.add(book);
+				isAdd = true;
+			} 
+		}
+      return isAdd;
+	}
 }

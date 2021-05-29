@@ -3,6 +3,7 @@
 <%@page import="java.util.List"%>
 <%@page import="java.util.Map"%>
 <%@ page import="in.rathika.model.*"%>
+<%@ page import="in.rathika.dao.BookDao"%>
 <%@ page import="in.rathika.service.*"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -27,7 +28,8 @@
 					<th scope="col">Cost</th>
 					
 					<%
-					List<Book> books = BookService.getBooks();
+					BookDao bookDao = new BookDao();
+					List<Book> books = bookDao.getBook();
 					int i = 0;
 					for (Book bookDetails : books) {
 						i++;
@@ -35,10 +37,10 @@
 				
 				<tr>
 					<td><%=i%></td>
-					<td><%=bookDetails.getBookName()%></td>
-					<td><%=bookDetails.getLanguage()%></td>
-					<td><%=bookDetails.getNoOfBooks()%></td>
-					<td><%=bookDetails.getCost()%></td>
+					<td><%=bookDetails.getBookName() %></td>
+					<td><%=bookDetails.getLanguage() %></td>
+					<td><%=bookDetails.getNoOfBooks() %></td>
+					<td><%=bookDetails.getCost() %></td>
 					<td><a href="DeleteBookServlet?bookName=<%=bookDetails.getBookName()%>" class="btn btn-danger">Delete</a></td>
 				</tr>
 				<%

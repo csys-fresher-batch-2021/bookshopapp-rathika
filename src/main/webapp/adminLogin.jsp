@@ -9,7 +9,7 @@
 <body>
 <jsp:include page="header.jsp"></jsp:include>
 	<main class="container-fluid">
-<form action="LoginServelet" method="post">
+<form action="LoginServlet" method="post">
 <table>
 			<caption>ADMIN LOGIN</caption>
 			<tr>
@@ -23,7 +23,7 @@
 					placeholder="Enter password" id="passId" required></td>
 			</tr>
 			</table>
-			<button type="submit">SUBMIT</button>
+			<button type="submit" class="btn btn-primary">SUBMIT</button>
 			</form>
 			</main>
 </body>

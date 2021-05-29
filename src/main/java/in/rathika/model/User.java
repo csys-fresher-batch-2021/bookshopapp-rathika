@@ -1,6 +1,9 @@
 package in.rathika.model;
 
 public class User {
+	/**
+	 * Declaring required variables.
+	 */
     private String name;
     private String email;
     private Long mobile;

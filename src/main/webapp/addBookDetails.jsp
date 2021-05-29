@@ -7,8 +7,10 @@
 <title>add books</title>
 </head>
 <body>
+<jsp:include page="header.jsp"></jsp:include>
+	<main class="container-fluid">
 	<h1>ADD BOOKS</h1>
-	<form action="AddBookServlet" method="post">
+	<form action="AddBooksServlet" method="post">
 		<table>
 			<caption>BOOK DETAILS</caption>
 			<tr>
@@ -18,16 +20,18 @@
 			</tr>
 			<tr>
 				<th scope="col">LANGUAGE</th>
-				<td><select name="language" id="lang">
+				<td>
+				<select name="language" id="lang">
 						<option>TAMIL</option>
 						<option>ENGLISH</option>
 						<option>HINDHI</option>
-				</select></td>
+				</select>
+				</td>
 			</tr>
 			<tr>
 				<th scope="col">NO OF BOOKS</th>
 				<td><input type="number" name="noOfBooks"
-					placeholder="Enter No of Books" id="noOfBookId" required autofocus></td>
+					placeholder="Enter No of Books" id="noOfBookId" required></td>
 			</tr>
 			<tr>
 				<th scope="col">COST</th>
@@ -36,7 +40,11 @@
 			</tr>
 
 		</table>
-		<button type="submit">SUBMIT</button>
+		<button type="submit" class="btn btn-success">SUBMIT</button>
 	</form>
+	<br/>
+	<a href="addBookDetails.jsp" class="btn btn-primary">ADD</a> 
+	<a href="display.jsp" class="btn btn-danger">DELETE</a>
+	</main>
 </body>
 </html>
