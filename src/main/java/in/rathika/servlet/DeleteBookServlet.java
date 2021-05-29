@@ -15,7 +15,7 @@ import in.rathika.service.BookService;
 @WebServlet("/DeleteBookServlet")
 public class DeleteBookServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-  
+    
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String bookName = request.getParameter("bookName");
 		boolean isDeleted = BookService.deleteBook(bookName);
