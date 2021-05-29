@@ -17,6 +17,11 @@ public class BookValidator {
 		}
 		return valid;
 	}
+	/**
+	 * Cost Validation
+	 * @param number
+	 * @return
+	 */
     
 	public static boolean isCostValid(double number) {
 		boolean valid = false;
