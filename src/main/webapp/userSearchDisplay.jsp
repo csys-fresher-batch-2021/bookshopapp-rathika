@@ -26,7 +26,9 @@
 				   HttpSession sess = request.getSession();
 				   session.setAttribute("JOB", "SEARCHING");
 				   String role = (String) session.getAttribute("ROLE");
-					if(role =="ADMIN" || role == null) {
+				   String user = (String) session.getAttribute("LOGGED_IN_USER");
+				   
+					if(role =="ADMIN" || user == null) {
 					%>
 					<th scope="col">S.NO</th>
 					<th scope="col">Book Name</th>
@@ -36,7 +38,7 @@
 					
 					<%
 					BookDao bookDao = new BookDao();
-					List<Book> language = bookDao.getSearch();
+					List<Book> language = BookDao.getSearch();
 					int i = 0;
 					for (Book bookDetails : language) {
 						i++;

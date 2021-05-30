@@ -33,7 +33,7 @@
 					HttpSession sess = request.getSession();
 					session.setAttribute("JOB", "REMOVE");
 					OrderDao orderDao = new OrderDao();
-					List<Order> orders = orderDao.getOrder();
+					List<Order> orders = OrderDao.getOrder();
 					int i = 0;
 					for (Order orderDetails : orders) {
 						i++;
