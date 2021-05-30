@@ -185,7 +185,7 @@ public class BookService {
 	}
 
 	/**
-	 * Add confirm ordered book details.
+	 * Add confirm Ordered book details.
 	 * 
 	 * @param bookName
 	 * @return
