@@ -31,15 +31,15 @@ public class OrderBookServlet extends HttpServlet {
 			String language = BookService.getBookLanguage(bookName);
 			int noOfBooks = BookService.getNoOfBooks(bookName);
 			double cost = BookService.getBookCost(bookName);
-			boolean isAdded = false;
+			boolean added = false;
 			boolean present = OrderService.isPresent(bookName);
 			if (!present) {
-				isAdded = OrderService.addOrder(bookName, language, noOfBooks, cost);
+				added = OrderService.addOrder(bookName, language, noOfBooks, cost);
 				HttpSession sess = request.getSession();
 				String role = (String) sess.getAttribute("JOB");
-				if (isAdded && role != "SEARCHING") {
+				if (added && role != "SEARCHING") {
 					response.sendRedirect("addCart.jsp");
-				} else if (isAdded && role == "SEARCHING") {
+				} else if (added && role == "SEARCHING") {
 					response.sendRedirect("userSearchDisplay.jsp");
 				}
 

@@ -78,4 +78,19 @@ public class OrderService {
 		return isDeleted;
 	}
 
+	public static boolean checkValidNoOfBooks(String bookName, int count) {
+		boolean present = OrderService.isPresent(bookName);
+		boolean validBooks = false;
+		if(present) {
+			List<Order> books = OrderDao.getOrder();
+			for (Order order : books) {
+				if (order.getNoOfBooks()>=count) {
+					validBooks = true;
+					
+				}
+			}
+		}
+		return validBooks;
+	}
+
 }

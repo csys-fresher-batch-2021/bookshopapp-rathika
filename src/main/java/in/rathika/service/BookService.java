@@ -202,4 +202,20 @@ public class BookService {
 		}
 		return isAdd;
 	}
+
+	public static boolean confirmBill(String bookName, int count) {
+          boolean confirm = false;
+          List<Book> bill = BookDao.getBill();
+        boolean valid = OrderService.checkValidNoOfBooks(bookName,count);
+  		if(valid) {
+  			
+  		}
+  		
+          return confirm;
+
+		
+	}
+
+	
+
 }

@@ -2,7 +2,7 @@ package in.rathika.model;
 
 public class Order {
 	/**
-	 * Declaring Required Variable.
+	 * Declaring Required Variables.
 	 */
 	private String bookName;
 	private String language;

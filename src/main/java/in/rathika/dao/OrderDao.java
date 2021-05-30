@@ -13,7 +13,7 @@ public class OrderDao {
 	private static final List<Order> orders = new ArrayList<>();
 
 	/**
-	 * Add orderd Books into arraylist.
+	 * Add Orderd details.
 	 * 
 	 * @param bookName
 	 * @param language
