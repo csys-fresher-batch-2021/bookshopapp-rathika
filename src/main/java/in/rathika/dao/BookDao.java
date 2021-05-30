@@ -72,16 +72,6 @@ public class BookDao {
 		return language;
 	}
 	
-	private static final List<Book> bill = new ArrayList<>();
-	
-	public void addBill(String bookName, String language, int noOfBooks, double cost) {
-
-		books.add(new Book(bookName, language, noOfBooks, cost));
-	}
-	
-	public static List<Book> getBill() {
-		return bill;
-	}
 	
 	
 }
