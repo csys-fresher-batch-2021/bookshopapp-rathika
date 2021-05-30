@@ -49,7 +49,7 @@ public class BookDao {
 	}
 
 	/**
-	 * Add Book Details that user search.
+	 * Add book Details that user search.
 	 * 
 	 * @param bookName
 	 * @param language2
