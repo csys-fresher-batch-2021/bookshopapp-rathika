@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="ISO-8859-1">
 <title>USER LOGIN</title>
@@ -13,9 +13,9 @@
 			<table>
 				<caption>USER LOGIN</caption>
 				<tr>
-					<th scope="col">USER NAME</th>
-					<td><input type="text" name="userName"
-						placeholder="Enter user name" id="userId" required autofocus></td>
+					<th scope="col">EMAIL</th>
+					<td><input type="text" name="emailId"
+						placeholder="Enter Email ID" id="email" required autofocus></td>
 				</tr>
 				<tr>
 					<th scope="col">PASSWORD</th>
@@ -23,7 +23,9 @@
 						placeholder="Enter password" id="passId" required></td>
 				</tr>
 			</table>
+
 			<button type="submit" class="btn btn-success">SUBMIT</button>
+
 			<a href="userRegistration.jsp" class="btn btn-primary">New User</a>
 		</form>
 	</main>

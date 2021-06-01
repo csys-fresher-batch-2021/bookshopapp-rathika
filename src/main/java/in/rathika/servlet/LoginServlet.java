@@ -9,29 +9,26 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- * Servlet implementation class LoginServelet
+ * Servlet implementation class LoginServlet
  */
-@WebServlet("/LoginServelet")
-public class LoginServelet extends HttpServlet {
+@WebServlet("/LoginServlet")
+public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    @Override
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		try {
 			String username = request.getParameter("userName");
-			String userPassCode = request.getParameter("userPass");
-			boolean isValid = "admin".equals(username) && "admin".equals(userPassCode);
-			if(isValid) {
+			String userPassCode = request.getParameter("password");
+			boolean isValid = "Admin".equals(username) && "admin".equals(userPassCode);
+			if (isValid) {
 				HttpSession session = request.getSession();
 				session.setAttribute("LOGGED_IN_USER", username);
 				session.setAttribute("ROLE", "ADMIN");
-				response.sendRedirect("adminJob.jsp");
+			
+				response.sendRedirect("addBookDetails.jsp");
 			}
-		}catch(Exception e) {
+		}catch (Exception e) {
 			response.sendRedirect("adminLogin.jsp?errorMessage=Invalid Login Credentials");
 		}
 	}

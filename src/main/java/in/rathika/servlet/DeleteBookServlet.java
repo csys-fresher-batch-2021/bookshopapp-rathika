@@ -31,9 +31,7 @@ public class DeleteBookServlet extends HttpServlet {
 				if (isDeleted) {
 					response.sendRedirect("display.jsp");
 				} else {
-
-					String errorMessage = "Unable to delete book Name";
-					response.sendRedirect("addBookDetails.jsp?errorMessage=" + errorMessage);
+                   response.sendRedirect("addBookDetails.jsp?errorMessage=Unable to delete book Name");
 				}
 			} else {
 				isOrderDeleted = OrderService.deleteBook(bookName);
@@ -43,9 +41,7 @@ public class DeleteBookServlet extends HttpServlet {
 				}
 			}
 		} catch (Exception e) {
-
-			String errorMessage = "Unable to delete book Name";
-			response.sendRedirect("viewCart.jsp?errorMessage=" + errorMessage);
+			response.sendRedirect("viewCart.jsp?errorMessage=Unable to delete book Name");
 		}
 	}
 

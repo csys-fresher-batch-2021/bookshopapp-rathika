@@ -5,6 +5,7 @@ public class BookValidator {
 	private BookValidator() {
 		
 	}
+	
 	/**
 	 * Validate number.
 	 * 
@@ -20,6 +21,7 @@ public class BookValidator {
 		}
 		return valid;
 	}
+	
 	/**
 	 * Cost Validation
 	 * @param number

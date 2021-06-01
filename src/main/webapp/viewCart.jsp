@@ -6,7 +6,7 @@
 <%@ page import="in.rathika.dao.OrderDao"%>
 <%@ page import="in.rathika.service.OrderService"%>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
@@ -15,9 +15,7 @@
 <body>
 <jsp:include page="header.jsp"></jsp:include>
 	<main class="container-fluid">
-
-
-		<h3>Books</h3>
+      <h3>Books</h3>
 		<table class="table table-bordered">
 			<caption></caption>
 			<thead>
@@ -27,7 +25,7 @@
 					<th scope="col">LANGUAGE</th>
 					<th scope="col">TOTAL BOOKS</th>
 					<th scope="col">COST</th>
-					<th scope="col">OREDR BOOKS</td></th>
+					<th scope="col">OREDR BOOKS</th>
 					
 					<%
 					HttpSession sess = request.getSession();
@@ -47,20 +45,33 @@
 					<td><%=orderDetails.getCost() %></td>
 					
 				
-					<td><form action="CofirmOrderServlet" method="post"> <input type="number" name="noBooks"
-					placeholder="Enter Number of books" id="bookId" required ></form></td>
-					<td><button type="submit" class="btn btn-success">Confirm Order</button></td>
-					<td><a href="DeleteBookServlet?bookName=<%=orderDetails.getBookName() %>" class="btn btn-danger">DELETE</a></td>
+					<td><form action="CofirmOrderServlet"> <input type="number" name="noBooks"
+					placeholder="Enter Number of books" id="bookId" required ></td>
+					<td><button class="btn btn-success"  type="submit">Confirm Order</button></td>
+					
+					<td><a href="DeleteBookServlet?bookName=<%=orderDetails.getBookName()%>" class="btn btn-danger">DELETE</a></td>
 				</tr>
 				<%
-				}
+				
+				session.setAttribute("bookName",orderDetails.getBookName());
 				%>
+				</form>
+				
+				
+				 
+			<%
+					}
+			%>
+			
 			</thead>
 		</table>
-      
-     
 	
-	 <a href="viewCart.jsp" class="btn btn-primary">VIEW RESPONSE</a>
+				 
+		
+    <a href="addCart.jsp" class="btn btn-primary">BUY MORE</a>
+    <a href="displayOrder.jsp" class="btn btn-primary">view</a>
+	
+	
 	</main>
 </body>
 </html>

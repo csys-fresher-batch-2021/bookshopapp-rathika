@@ -1,6 +1,7 @@
 package in.rathika.model;
 
 public class Order {
+	
 	/**
 	 * Declaring Required Variables.
 	 */

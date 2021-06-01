@@ -3,7 +3,6 @@ package in.rathika.dao;
 import java.util.ArrayList;
 import java.util.List;
 
-import in.rathika.model.Book;
 import in.rathika.model.Order;
 
 public class OrderDao {
@@ -25,6 +24,7 @@ public class OrderDao {
 		orders.add(new Order(bookName, language, noOfBooks, cost));
 	}
 
+	
 	/**
 	 * Get Ordered List.
 	 * 
@@ -33,5 +33,18 @@ public class OrderDao {
 	public static List<Order> getOrder() {
 		return orders;
 	}
+	
+	
+	private static final List<Order> confrimOrders = new ArrayList<>();
+	
+	public static void addOrders(String bookName, String language, int noOfBooks, double cost) {
+       
+		confrimOrders.add(new Order(bookName, language, noOfBooks, cost));
+	}
+    
+	public static List<Order> getConfrimOrder() {
+		return confrimOrders;
+	}
+	
 
 }

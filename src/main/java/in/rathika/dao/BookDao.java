@@ -9,6 +9,7 @@ public class BookDao {
 	 * ArrayList to store Book Details.
 	 */
 	private static final List<Book> books = new ArrayList<>();
+	
 	/**
 	 * Store Some Book Details.
 	 */
@@ -17,10 +18,11 @@ public class BookDao {
 
 	static {
 		books.add(new Book("MOON", ENGLISH, 4, 500));
-		books.add(new Book("PONNIN SELVAN", TAMIL, 3, 1000));
+		books.add(new Book("PONNIYIN SELVAN", TAMIL, 3, 1000));
 		books.add(new Book("A TALE OF TWO CITIES", ENGLISH, 3, 700));
 		books.add(new Book("The LITTLE PRINCE", ENGLISH, 3, 500));
 	}
+	
 	/**
 	 * ArrayList to store search books.
 	 */
@@ -71,5 +73,5 @@ public class BookDao {
 	public static List<Book> getSearch() {
 		return language;
 	}
- 
+
 }

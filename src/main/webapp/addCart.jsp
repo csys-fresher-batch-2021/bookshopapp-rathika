@@ -1,12 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-<%@page import="java.util.List"%>
-<%@page import="java.util.Map"%>
+<%@ page import="java.util.List"%>
+<%@ page import="java.util.Map"%>
 <%@ page import="in.rathika.model.*"%>
 <%@ page import="in.rathika.dao.BookDao"%>
 <%@ page import="in.rathika.service.*"%>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
@@ -50,8 +50,6 @@
 					%>
 				</thead>
 			</table>
-
-
 		</form>
 
 		<a href="viewCart.jsp" class="btn btn-success">VIEW CART</a>

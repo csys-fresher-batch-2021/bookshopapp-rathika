@@ -11,6 +11,7 @@
 String loggedInAdminname = (String) session.getAttribute("LOGGED_IN_USER");
 String role = (String) session.getAttribute("ROLE");
 %>
+
 <%
 String loggedInUsername = (String) session.getAttribute("LOGGED_IN_USER");
 %>
@@ -70,8 +71,8 @@ String loggedInUsername = (String) session.getAttribute("LOGGED_IN_USER");
 				if (loggedInUsername == null) {
 				%>
 				<li class="nav-item active"><a class="nav-link"
-					href="adminLogin.jsp">Admin</a></li>
-				<li class="nav-item"><a class="nav-link" href="userLogin.jsp">User</a>
+					href="adminLogin.jsp">ADMIN</a></li>
+				<li class="nav-item"><a class="nav-link" href="userLogin.jsp">USER</a>
 				</li>
 				<%
 				} else {

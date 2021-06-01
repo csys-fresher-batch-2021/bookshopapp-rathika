@@ -7,6 +7,7 @@ import in.rathika.model.Book;
 
 public class BookService {
 
+	
 	private BookService() {
 
 	}
@@ -35,7 +36,7 @@ public class BookService {
 	}
 
 	/**
-	 * Delete Book from book details.
+	 * Delete Book from arraylist.
 	 * 
 	 * @param bookName
 	 * @return
@@ -59,6 +60,7 @@ public class BookService {
 		return isDeleted;
 	}
 
+	
 	/**
 	 * Find the book present in the list or not.
 	 * 
@@ -185,7 +187,7 @@ public class BookService {
 	}
 
 	/**
-	 * Add confirm ordered book details.
+	 * Add confirm Ordered book details.
 	 * 
 	 * @param bookName
 	 * @return
@@ -203,18 +205,7 @@ public class BookService {
 		return isAdd;
 	}
 
-	public static boolean confirmBill(String bookName, int count) {
-          boolean confirm = false;
-          List<Book> bill = BookDao.getBill();
-        boolean valid = OrderService.checkValidNoOfBooks(bookName,count);
-  		if(valid) {
-  			
-  		}
-  		
-          return confirm;
-
-		
-	}
+	
 
 	
 
