@@ -31,7 +31,7 @@ public class UserLoginServlet extends HttpServlet {
 			boolean isValidUser = UserDao.checkUser(uemail, userPassCode);
 
 			String uname = UserDao.getValidUser(uemail);
-			System.out.println(uname);
+			
 			if (isValidUser) {
 				HttpSession session = request.getSession();
 				session.setAttribute("LOGGED_IN_USER", uname);

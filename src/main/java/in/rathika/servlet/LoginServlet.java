@@ -25,7 +25,7 @@ public class LoginServlet extends HttpServlet {
 				HttpSession session = request.getSession();
 				session.setAttribute("LOGGED_IN_USER", username);
 				session.setAttribute("ROLE", "ADMIN");
-				System.out.println("Admin valid");
+			
 				response.sendRedirect("addBookDetails.jsp");
 			}
 		}catch (Exception e) {
