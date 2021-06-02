@@ -18,11 +18,12 @@ public class OrderBookServlet extends HttpServlet {
     /**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
+	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		try {
 		String bookName = request.getParameter("bookName");
-		//boolean present = BookService.isPresent(bookName);
+		
 		String language = BookService.getBookLanguage(bookName);
 		int noOfBooks = BookService.getNoOfBooks(bookName);
 		double cost = BookService.getBookCost(bookName);
@@ -33,9 +34,7 @@ public class OrderBookServlet extends HttpServlet {
 			if(isAdded) {
 				response.sendRedirect("viewCart.jsp");
 			}
-			else {
-				System.out.println("Alraedy added");
-			}
+			
 		}
 		}catch(Exception e) {
 			response.sendRedirect("addCart.jsp?errorMessage=Unable to add");	

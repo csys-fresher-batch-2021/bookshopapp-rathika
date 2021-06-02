@@ -18,7 +18,7 @@
 
 			<h3>Books</h3>
 			<table class="table table-bordered">
-				<caption></caption>
+				<caption>bill</caption>
 				<thead>
 					<tr>
 						<th scope="col">S.NO</th>

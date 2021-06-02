@@ -5,6 +5,10 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 public class ConnectionUtil {
+	private ConnectionUtil() {
+		
+	}
+	
 	private static final String DRIVER_CLASS_NAME = "org.postgresql.Driver";
 	private static final String DATABASE_NAME = "bookshopping_db";
 	private static final String DB_USERNAME = "postgres";
@@ -22,7 +26,7 @@ public static Connection getConnection() {
 		Class.forName(DRIVER_CLASS_NAME);
 		
 		connection = (Connection) DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
-		System.out.println(connection);
+		
 	}
 	catch (ClassNotFoundException | SQLException e) {
 		e.printStackTrace();

@@ -5,13 +5,17 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.List;
 
 import in.rathika.model.User;
 import in.rathika.util.ConnectionUtil;
 
 public class UserDao {
+	
+	
+	private UserDao() {
+		
+	}
 	/**
 	 * Add User Details into database.
 	 * 
@@ -19,7 +23,7 @@ public class UserDao {
 	 * @throws Exception
 	 * @throws SQLException
 	 */
-	public static void save(User user) throws Exception, SQLException {
+	public static void save(User user) throws Exception {
 		// Step 1: Get connection
 		Connection con = null;
 		PreparedStatement pst = null;
@@ -35,7 +39,6 @@ public class UserDao {
 			pst.setString(4, user.getAddress());
 			pst.setInt(5, user.getAge());
 			pst.setString(6, user.getPassword());
-			// Step 3: Execute Query ( insert/update/delete - call executeUpdate() )
 			int rows = pst.executeUpdate();
 			System.out.println("No of rows inserted :" + rows);
 		} catch (SQLException e) {
@@ -61,7 +64,7 @@ public class UserDao {
 	 * @throws Exception
 	 * @throws SQLException
 	 */
-	public static boolean checkUser(String userEmail, String userPassCode) throws Exception, SQLException {
+	public static boolean checkUser(String userEmail, String userPassCode) throws Exception {
 		// Step 1: Get connection
 		boolean isValid = false;
 		Connection con = null;
@@ -96,7 +99,7 @@ public class UserDao {
 	 * @throws Exception
 	 * @throws SQLException
 	 */
-	public static String getValidUser(String emailId) throws Exception, SQLException {
+	public static String getValidUser(String emailId) throws Exception {
 		// Step 1: Get connection
 		String name = null;
 		Connection con = null;
@@ -116,7 +119,7 @@ public class UserDao {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new RuntimeException("Invalid User");
+			
 		} finally {
 			ConnectionUtil.close(pst, con);
 		}

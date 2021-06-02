@@ -34,7 +34,7 @@ public class UserService {
 	 * @throws SQLException 
 	 */
 	public boolean addDetails(String name, String email, Long mobileNum, String address, int age, String password,
-			String confrimPassword) throws SQLException, Exception {
+			String confrimPassword) throws Exception {
 		boolean registerd = false;
 		User regObj = new User(name, email, mobileNum, address, age, password);
 		boolean nameValid = validatorObj.isNameValid(name);
@@ -57,11 +57,7 @@ public class UserService {
 	}
 
 	
-	public static String getUserName(String emailId) throws SQLException, Exception {
-		String name = UserDao.getValidUser(emailId);
-		
-		return name;
-	}
+	
 	
 	
 }

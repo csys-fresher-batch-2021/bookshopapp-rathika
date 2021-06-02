@@ -16,7 +16,7 @@ import in.rathika.service.OrderService;
 @WebServlet("/BillServlet")
 public class BillServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-   
+    @Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			double total = OrderService.billCalculation();
