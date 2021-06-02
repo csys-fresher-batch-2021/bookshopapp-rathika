@@ -6,7 +6,7 @@
 <body>
 	<jsp:include page="header.jsp"></jsp:include>
 	<main class="container-fluid">
-		<h3>Welcome To Book Shop App</h3>
+		<h3>WELCOME TO BOOK SHOP APP</h3>
 
 
 	</main>

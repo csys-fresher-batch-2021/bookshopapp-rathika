@@ -21,7 +21,6 @@ public class BillServlet extends HttpServlet {
 		try {
 			double total = OrderService.billCalculation();
 			if(total!=0) {
-				
 				HttpSession session = request.getSession();
 				session.setAttribute("TOTAL", total);
 				response.sendRedirect("displayBill.jsp");

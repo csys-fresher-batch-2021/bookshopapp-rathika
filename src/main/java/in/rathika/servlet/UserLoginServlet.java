@@ -38,7 +38,7 @@ public class UserLoginServlet extends HttpServlet {
 				session.setAttribute("ROLE", "USER");
 				response.sendRedirect("addCart.jsp");
 			}
-		} catch (Exception e) {
+		}catch (Exception e) {
 			response.sendRedirect("userLogin.jsp?errorMessage=Invalid Login Credentials");
 		}
 	}

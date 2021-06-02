@@ -28,7 +28,7 @@ public class LoginServlet extends HttpServlet {
 				System.out.println("Admin valid");
 				response.sendRedirect("addBookDetails.jsp");
 			}
-		} catch (Exception e) {
+		}catch (Exception e) {
 			response.sendRedirect("adminLogin.jsp?errorMessage=Invalid Login Credentials");
 		}
 	}

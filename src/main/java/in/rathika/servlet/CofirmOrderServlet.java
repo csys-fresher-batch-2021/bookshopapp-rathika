@@ -25,8 +25,6 @@ public class CofirmOrderServlet extends HttpServlet {
 		int count = Integer.parseInt(total);
 		HttpSession session = request.getSession();
 		String bookName = (String) session.getAttribute("bookName");
-		System.out.println(bookName);
-		System.out.println(count);
 		boolean valid = OrderService.validNoOfBooks(bookName, count);
 		if(valid) {
 			boolean added = OrderService.addConfrimOrder(bookName, count);

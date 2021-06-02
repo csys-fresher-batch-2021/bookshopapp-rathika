@@ -23,6 +23,7 @@
 						placeholder="Enter password" id="passId" required></td>
 				</tr>
 			</table>
+
 			<button type="submit" class="btn btn-primary">SUBMIT</button>
 		</form>
 	</main>

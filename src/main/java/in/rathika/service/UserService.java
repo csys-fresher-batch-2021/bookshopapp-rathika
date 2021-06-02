@@ -1,7 +1,6 @@
 package in.rathika.service;
 
 import java.sql.SQLException;
-import java.util.List;
 
 import in.rathika.dao.UserDao;
 import in.rathika.model.User;
@@ -16,7 +15,7 @@ public class UserService {
 	/**
 	 * Object created for DAO and Validator class.
 	 */
-	private UserDao userObj = new UserDao();
+	
 
 	private UserValidator validatorObj = new UserValidator();
 

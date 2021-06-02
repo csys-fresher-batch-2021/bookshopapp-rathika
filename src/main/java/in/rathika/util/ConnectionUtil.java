@@ -18,9 +18,9 @@ public static Connection getConnection() {
 	
 	Connection connection = null;
 	try {
-		// Step 1: Load the database driver into memory ( ClassNotFoundException )
+		
 		Class.forName(DRIVER_CLASS_NAME);
-		// Step 2: Get the Database Connection (SQLException)
+		
 		connection = (Connection) DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
 		System.out.println(connection);
 	}
@@ -31,7 +31,7 @@ public static Connection getConnection() {
 	return connection;
 }
 public static void close(PreparedStatement pst, Connection con) throws Exception {
-	// Null Check - to avoid Null Pointer Exception
+	
 	if (pst != null) {
 		pst.close();
 	}

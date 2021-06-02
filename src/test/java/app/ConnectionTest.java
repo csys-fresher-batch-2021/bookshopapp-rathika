@@ -1,8 +1,6 @@
 package app;
 
-import static org.junit.Assert.*;
-
-import org.junit.Test;
+import static org.junit.Assert.fail;
 
 import in.rathika.util.ConnectionUtil;
 

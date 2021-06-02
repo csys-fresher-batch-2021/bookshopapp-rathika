@@ -1,6 +1,5 @@
 package in.rathika.dao;
 
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,12 +12,13 @@ import in.rathika.model.User;
 import in.rathika.util.ConnectionUtil;
 
 public class UserDao {
-    /**
-     * Add User Details into database.
-     * @param user
-     * @throws Exception
-     * @throws SQLException
-     */
+	/**
+	 * Add User Details into database.
+	 * 
+	 * @param user
+	 * @throws Exception
+	 * @throws SQLException
+	 */
 	public static void save(User user) throws Exception, SQLException {
 		// Step 1: Get connection
 		Connection con = null;
@@ -28,10 +28,10 @@ public class UserDao {
 			// Step 2: Prepare data
 			String sql = "insert into userList(username,email,mobileNumber,address,age,password) values ( ?,?,?,?,?,? )";
 			pst = con.prepareStatement(sql);
-			
+
 			pst.setString(1, user.getName());
 			pst.setString(2, user.getEmail());
-			pst.setLong(3,user.getMobile());
+			pst.setLong(3, user.getMobile());
 			pst.setString(4, user.getAddress());
 			pst.setInt(5, user.getAge());
 			pst.setString(6, user.getPassword());
@@ -45,14 +45,16 @@ public class UserDao {
 			ConnectionUtil.close(pst, con);
 		}
 	}
-	
-	public static void save(List<User> users) throws Exception{
+
+	public static void save(List<User> users) throws Exception {
 		for (User user : users) {
-			save(user);	
+			save(user);
 		}
 	}
+
 	/**
 	 * Check Whether the user already registerd or not.
+	 * 
 	 * @param userEmail
 	 * @param userPassCode
 	 * @return
@@ -70,14 +72,14 @@ public class UserDao {
 			// Step 2: Prepare data
 			Statement st = con.createStatement();
 			ResultSet rs = st.executeQuery(url);
-			while(rs.next()) {
+			while (rs.next()) {
 				String uemail = rs.getString("email");
-				String pass =rs.getString("password");
-				if(uemail.equals(userEmail) && pass.equals(userPassCode)) {
+				String pass = rs.getString("password");
+				if (uemail.equals(userEmail) && pass.equals(userPassCode)) {
 					isValid = true;
 				}
 			}
-	} catch (SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new RuntimeException("Invalid User");
 		} finally {
@@ -85,16 +87,18 @@ public class UserDao {
 		}
 		return isValid;
 	}
-    /**
-     * Get user name using emailId
-     * @param emailId
-     * @return
-     * @throws Exception
-     * @throws SQLException
-     */
+
+	/**
+	 * Get user name using emailId
+	 * 
+	 * @param emailId
+	 * @return
+	 * @throws Exception
+	 * @throws SQLException
+	 */
 	public static String getValidUser(String emailId) throws Exception, SQLException {
 		// Step 1: Get connection
-		String  name = null;
+		String name = null;
 		Connection con = null;
 		PreparedStatement pst = null;
 		try {
@@ -102,16 +106,15 @@ public class UserDao {
 			con = ConnectionUtil.getConnection();
 			Statement st = con.createStatement();
 			ResultSet rs = st.executeQuery(url);
-			while(rs.next()) {
+			while (rs.next()) {
 				String uname = rs.getString("username");
 				String email = rs.getString("email");
-				if(email.equals(emailId)) {
+				if (email.equals(emailId)) {
 					name = uname;
 				}
 			}
-			
-				
-	} catch (SQLException e) {
+
+		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new RuntimeException("Invalid User");
 		} finally {

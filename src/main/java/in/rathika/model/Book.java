@@ -1,6 +1,7 @@
 package in.rathika.model;
 
 public class Book {
+	
 	/**
 	 * Declaring variables required for book shop.
 	 */

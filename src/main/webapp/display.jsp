@@ -14,7 +14,7 @@
 <body>
 	<jsp:include page="header.jsp"></jsp:include>
 	<main class="container-fluid">
-		<form action="login.jsp" method="post">
+		
 
 			<h3>Books</h3>
 			<table class="table table-bordered">
@@ -51,10 +51,10 @@
 				</thead>
 			</table>
 
-			<button type="submit">order</button>
-		</form>
+			
+	
 
-		<!-- <a href="addBookDetails.jsp">Add Book</a> -->
+		
 	</main>
 </body>
 </html>

@@ -47,6 +47,7 @@
 						placeholder="Re-Enter Password" id="passId" required></td>
 				</tr>
 			</table>
+			
 			<button type="submit" class="btn btn-success">REGISTER</button>
 		</form>
 	</main>

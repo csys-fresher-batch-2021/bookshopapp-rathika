@@ -49,7 +49,6 @@ public class AddBooksServlet extends HttpServlet {
 			}
               
 		} catch (Exception e) {
-			
 			response.sendRedirect("addBookDetails.jsp?errorMessage=Not able to add");
 		
 		}

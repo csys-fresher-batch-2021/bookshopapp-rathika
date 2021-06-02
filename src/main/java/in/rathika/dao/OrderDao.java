@@ -24,6 +24,7 @@ public class OrderDao {
 		orders.add(new Order(bookName, language, noOfBooks, cost));
 	}
 
+	
 	/**
 	 * Get Ordered List.
 	 * 
@@ -32,6 +33,7 @@ public class OrderDao {
 	public static List<Order> getOrder() {
 		return orders;
 	}
+	
 	
 	private static final List<Order> confrimOrders = new ArrayList<>();
 	

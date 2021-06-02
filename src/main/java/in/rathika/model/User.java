@@ -1,7 +1,8 @@
 package in.rathika.model;
 
 public class User {
-    private String name;
+    
+	private String name;
     private String email;
     private Long mobile;
     private String address;

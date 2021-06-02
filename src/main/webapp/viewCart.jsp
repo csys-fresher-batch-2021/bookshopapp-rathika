@@ -15,9 +15,7 @@
 <body>
 <jsp:include page="header.jsp"></jsp:include>
 	<main class="container-fluid">
-
-
-		<h3>Books</h3>
+      <h3>Books</h3>
 		<table class="table table-bordered">
 			<caption></caption>
 			<thead>

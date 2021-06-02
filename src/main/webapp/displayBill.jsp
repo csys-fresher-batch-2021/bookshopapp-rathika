@@ -60,8 +60,8 @@
 			<thead>
 			</thead>
 			<tr>
-				<th>USER NAME</th>
-				<th>TOTAL AMOUNT</th>
+				<th scope="col">USER NAME</th>
+				<th scope="col">TOTAL AMOUNT</th>
 			</tr>
 			<tr>
 				<td><%=userName%>

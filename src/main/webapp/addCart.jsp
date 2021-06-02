@@ -50,8 +50,6 @@
 					%>
 				</thead>
 			</table>
-
-
 		</form>
 
 		<a href="viewCart.jsp" class="btn btn-success">VIEW CART</a>

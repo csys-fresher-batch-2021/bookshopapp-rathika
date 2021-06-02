@@ -11,6 +11,7 @@
 String loggedInAdminname = (String) session.getAttribute("LOGGED_IN_USER");
 String role = (String) session.getAttribute("ROLE");
 %>
+
 <%
 String loggedInUsername = (String) session.getAttribute("LOGGED_IN_USER");
 %>

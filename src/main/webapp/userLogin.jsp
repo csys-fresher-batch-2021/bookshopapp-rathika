@@ -23,7 +23,9 @@
 						placeholder="Enter password" id="passId" required></td>
 				</tr>
 			</table>
+
 			<button type="submit" class="btn btn-success">SUBMIT</button>
+
 			<a href="userRegistration.jsp" class="btn btn-primary">New User</a>
 		</form>
 	</main>
