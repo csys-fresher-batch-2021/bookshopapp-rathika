@@ -10,14 +10,10 @@ public class User {
     private String password;
     private String confrimPassword;
 	
-	public void setPassword(String password) {
-		this.password = password;
-	}
-	public String getConfrimPassword() {
-		return confrimPassword;
-	}
-	
-	public String getName() {
+
+
+
+   	public String getName() {
 		return name;
 	}
 	
@@ -36,9 +32,16 @@ public class User {
 	public int getAge() {
 		return age;
 	}
-
-
-   	@Override
+	
+	public String getPassword() {
+		return password;
+	}
+	
+	public String getConfrimPassword() {
+		return confrimPassword;
+	}
+	
+	@Override
 	public String toString() {
 		return "User [name=" + name + ", email=" + email + ", mobile=" + mobile + ", address=" + address + ", age="
 				+ age + ", password=" + password + "]";
