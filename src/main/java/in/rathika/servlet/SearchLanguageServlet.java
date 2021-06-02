@@ -1,12 +1,12 @@
 package in.rathika.servlet;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import in.rathika.service.BookService;
 
@@ -33,8 +33,8 @@ public class SearchLanguageServlet extends HttpServlet {
 			
 			
 		}catch(Exception e) {
-			String errorMessage = "Unable to add Books ";
-			response.sendRedirect("userSearchDisplay.jsp?errorMessage=" + errorMessage);
+			
+			response.sendRedirect("userSearchDisplay.jsp?errorMessage=Unable to add Books" );
 		}
 		
 	}

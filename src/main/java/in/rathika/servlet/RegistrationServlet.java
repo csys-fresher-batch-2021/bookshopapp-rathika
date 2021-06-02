@@ -40,13 +40,11 @@ public class RegistrationServlet extends HttpServlet {
 			
 			boolean isAdded = service.addDetails(username, email, userMobileNum, address, validAge, password, confrimPassCode);
 			if(isAdded) {
-				response.sendRedirect("login.jsp");
+				response.sendRedirect("userLogin.jsp");
 				
 			}
 	    }catch(Exception e) {
-			String errorMessage = "Invalid user details ";
-			
-			response.sendRedirect("userRegistration.jsp?errorMessage=" + errorMessage);
+			response.sendRedirect("userRegistration.jsp?errorMessage=Invalid user details");
 		}
 	  
 		

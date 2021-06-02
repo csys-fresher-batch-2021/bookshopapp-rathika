@@ -1,5 +1,6 @@
 package in.rathika.service;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import in.rathika.dao.UserDao;
@@ -30,43 +31,38 @@ public class UserService {
 	 * @param password
 	 * @param confrimPassword
 	 * @return
+	 * @throws Exception 
+	 * @throws SQLException 
 	 */
 	public boolean addDetails(String name, String email, Long mobileNum, String address, int age, String password,
-			String confrimPassword) {
+			String confrimPassword) throws SQLException, Exception {
 		boolean registerd = false;
-		User regObj = new User(name, email, mobileNum, address, age, password, password);
+		User regObj = new User(name, email, mobileNum, address, age, password);
 		boolean nameValid = validatorObj.isNameValid(name);
 		boolean mobileValid = validatorObj.isMobileNumberValid(mobileNum);
 		boolean emailValid = validatorObj.isEmailValid(email);
 		boolean addressValid = validatorObj.isAddressValid(address);
 		boolean ageValid = validatorObj.isAgeValid(age);
 		boolean passwordValid = validatorObj.isPasswordValid(password);
+		
 		if (nameValid && mobileValid && emailValid && addressValid && ageValid && passwordValid
 				&& password.equals(confrimPassword)) {
-
-			userObj.addUser(regObj);
-			registerd = true;
+            
+            	UserDao.save(regObj);
+    			registerd = true;
+            
+			
 		}
 
 		return registerd;
 	}
 
-	/**
-	 * Check whether the user is valid.
-	 * 
-	 * @param userName
-	 * @param userPassCode
-	 * @return
-	 */
-	public boolean checkUser(String userName, String userPassCode) {
-		boolean isValidUser = false;
-		List<User> users = UserDao.getUser();
-		for (User userDetails : users) {
-			if (userDetails.getName().equals(userName) && userDetails.getPassword().equals(userPassCode)) {
-				isValidUser = true;
-			}
-
-		}
-		return isValidUser;
+	
+	public static String getUserName(String emailId) throws SQLException, Exception {
+		String name = UserDao.getValidUser(emailId);
+		
+		return name;
 	}
+	
+	
 }

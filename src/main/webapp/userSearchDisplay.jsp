@@ -74,7 +74,7 @@
 					
 					<%
 					BookDao bookDao = new BookDao();
-					List<Book> language = bookDao.getSearch();
+					List<Book> language = BookDao.getSearch();
 					int i = 0;
 					for (Book bookDetails : language) {
 						i++;

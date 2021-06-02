@@ -29,8 +29,8 @@ public class SearchByCostServlet extends HttpServlet {
 			}
 			
 		}catch(Exception e) {
-			String errorMessage = "Unable to add Books ";
-			response.sendRedirect("userSearchDisplay.jsp?errorMessage=" + errorMessage);
+			
+			response.sendRedirect("userSearchDisplay.jsp?errorMessage=Unable to add Books " );
 		}
 		
 		
