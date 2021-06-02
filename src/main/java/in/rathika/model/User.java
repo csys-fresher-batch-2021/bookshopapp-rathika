@@ -73,8 +73,7 @@ public class User {
 	}
 
 
-	public User(String name2, String email2, Long mobile2, String address2, int age2, String password2,
-			String confrimPassword2) {
+	public User(String name2, String email2, Long mobile2, String address2, int age2, String password2) {
 
 		this.name = name2;
 		this.email = email2;
