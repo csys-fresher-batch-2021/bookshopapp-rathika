@@ -43,15 +43,14 @@ public class AddBooksServlet extends HttpServlet {
 				if (isAdded) {
 					response.sendRedirect("addBookDetails.jsp");
 				} else {
-					String errorMessage = "Unable to add Books ";
-					
-					response.sendRedirect("addBookDetails.jsp?errorMessage=" + errorMessage);
+				
+                   response.sendRedirect("addBookDetails.jsp?errorMessage=Unable to add Books");
 				}
 			}
-              
+
 		} catch (Exception e) {
 			response.sendRedirect("addBookDetails.jsp?errorMessage=Not able to add");
-		
+
 		}
 
 	}

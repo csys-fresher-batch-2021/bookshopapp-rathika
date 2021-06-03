@@ -28,8 +28,7 @@
 						<th scope="col">Cost</th>
 
 						<%
-						BookDao bookDao = new BookDao();
-						List<Book> books = bookDao.getBook();
+						List<Book> books = BookService.getBookDetails();
 						int i = 0;
 						for (Book bookDetails : books) {
 							i++;

@@ -16,25 +16,27 @@ import in.rathika.service.BookService;
 @WebServlet("/SearchLanguageServlet")
 public class SearchLanguageServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-   
+
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
 	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		try {
-			String language= request.getParameter("language");
+			String language = request.getParameter("language");
 			boolean added = BookService.searchBookByLanguage(language);
-			if(added) {
-				
-					response.sendRedirect("userSearchDisplay.jsp");
-				}
-				
-	  }catch(Exception e) {
-			
-			response.sendRedirect("userSearchDisplay.jsp?errorMessage=Unable to add Books" );
+			if (added) {
+
+				response.sendRedirect("userSearchDisplay.jsp");
+			}
+
+		} catch (Exception e) {
+
+			response.sendRedirect("userSearchDisplay.jsp?errorMessage=Unable to add Books");
 		}
-		
+
 	}
 
 }

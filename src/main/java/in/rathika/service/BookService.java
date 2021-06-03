@@ -12,8 +12,7 @@ public class BookService {
 
 	}
 
-	private static BookDao bookDao = new BookDao();
-
+	
 	/**
 	 * Add Book Details.
 	 * 
@@ -22,14 +21,15 @@ public class BookService {
 	 * @param noOfBooks
 	 * @param cost
 	 * @return
+	 * @throws Exception 
 	 */
-	public static boolean addBook(String bookName, String language, int noOfBooks, double cost) {
+	public static boolean addBook(String bookName, String language, int noOfBooks, double cost) throws Exception {
 		boolean isAdded = false;
 		boolean present = BookService.isPresent(bookName);
-
+        Book bookObj = new Book(bookName, language, noOfBooks, cost);
 		if (!present) {
 			isAdded = true;
-			bookDao.addBook(bookName, language, noOfBooks, cost);
+			BookDao.saveBook(bookObj);
 		}
 
 		return isAdded;
@@ -40,24 +40,11 @@ public class BookService {
 	 * 
 	 * @param bookName
 	 * @return
+	 * @throws Exception 
 	 */
-	public static boolean deleteBook(String bookName) {
-		boolean isDeleted = false;
-		Book searchbook = null;
-		List<Book> books = BookDao.getBook();
-		for (Book book : books) {
-			if (book.getBookName().equalsIgnoreCase(bookName)) {
-				searchbook = book;
-				break;
-			}
-		}
-
-		if (searchbook != null) {
-			books.remove(searchbook);
-			isDeleted = true;
-			System.out.println("delete");
-		}
-		return isDeleted;
+	public static boolean deleteBook(String bookName) throws Exception {
+		
+		return BookDao.deleteBooks(bookName.trim());
 	}
 
 	
@@ -66,13 +53,15 @@ public class BookService {
 	 * 
 	 * @param bookName
 	 * @return
+	 * @throws Exception 
 	 */
-	public static boolean isPresent(String bookName) {
+	public static boolean isPresent(String bookName) throws Exception {
 		boolean present = false;
-		List<Book> books = BookDao.getBook();
+		List<Book> books = BookDao.getBookDetails();
 		for (Book bookDetails : books) {
 			if (bookDetails.getBookName().equalsIgnoreCase(bookName)) {
 				present = true;
+				break;
 			}
 
 		}
@@ -104,10 +93,11 @@ public class BookService {
 	 * 
 	 * @param bookName
 	 * @return
+	 * @throws Exception 
 	 */
-	public static int getNoOfBooks(String bookName) {
+	public static int getNoOfBooks(String bookName) throws Exception {
 		int noOfBooks = 0;
-		List<Book> books = BookDao.getBook();
+		List<Book> books = BookDao.getBookDetails();
 		for (Book bookDetails : books) {
 			if (bookDetails.getBookName().equalsIgnoreCase(bookName)) {
 				noOfBooks = bookDetails.getNoOfBooks();
@@ -123,10 +113,11 @@ public class BookService {
 	 * 
 	 * @param bookName
 	 * @return
+	 * @throws Exception 
 	 */
-	public static double getBookCost(String bookName) {
+	public static double getBookCost(String bookName) throws Exception {
 		double cost = 0;
-		List<Book> books = BookDao.getBook();
+		List<Book> books = BookDao.getBookDetails();
 		for (Book bookDetails : books) {
 			if (bookDetails.getBookName().equalsIgnoreCase(bookName)) {
 				cost = bookDetails.getCost();
@@ -204,8 +195,20 @@ public class BookService {
 		}
 		return isAdd;
 	}
-
+   
 	
+	/**
+	 * Get book details from database.
+	 * @return
+	 * @throws Exception
+	 */
+	public static List<Book> getBookDetails() throws Exception{
+		List<Book> books = BookDao.getBookDetails();
+		books.removeAll(books);
+		List<Book> book = BookDao.getBookDetails();
+		return book;
+		
+	}
 
 	
 

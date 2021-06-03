@@ -9,7 +9,7 @@
 <html lang="en">
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>ADD CART</title>
 </head>
 <body>
 	<jsp:include page="header.jsp"></jsp:include>
@@ -29,7 +29,7 @@
 
 						<%
 						BookDao bookDao = new BookDao();
-						List<Book> books = BookDao.getBook();
+						List<Book> books = BookService.getBookDetails();
 						int i = 0;
 						for (Book bookDetails : books) {
 							i++;
@@ -51,7 +51,7 @@
 				</thead>
 			</table>
 		</form>
-
+                                                             
 		<a href="viewCart.jsp" class="btn btn-success">VIEW CART</a>
 	</main>
 </body>
