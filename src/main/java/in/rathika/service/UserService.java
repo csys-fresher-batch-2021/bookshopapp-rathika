@@ -1,6 +1,7 @@
 package in.rathika.service;
 
 import java.sql.SQLException;
+import java.util.Map;
 
 import in.rathika.dao.UserDao;
 import in.rathika.model.User;
@@ -46,18 +47,35 @@ public class UserService {
 		
 		if (nameValid && mobileValid && emailValid && addressValid && ageValid && passwordValid
 				&& password.equals(confrimPassword)) {
-            
             	UserDao.save(regObj);
     			registerd = true;
-            
-			
-		}
+         }
 
 		return registerd;
 	}
 
+    /**
+     * Find whether the user is valid.
+     * @param uemail
+     * @param userPassCode
+     * @return
+     * @throws Exception
+     */
+	public static boolean isValidUser(String uemail, String userPassCode) throws Exception {
+           boolean valid = false;	
+		   Map<String,String> loginDetails = UserDao.checkUser(uemail, userPassCode);
+
+		   for (String email : loginDetails.keySet()) {
+				String password = loginDetails.get(email);
+				if(password.matches(userPassCode) && email.matches(uemail)) {
+					valid = true;
+				}
+				   
+
+			}
+		   return valid;
+	}
 	
-	
-	
+
 	
 }

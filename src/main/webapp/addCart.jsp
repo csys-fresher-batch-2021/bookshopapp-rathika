@@ -29,7 +29,7 @@
 
 						<%
 						BookDao bookDao = new BookDao();
-						List<Book> books = BookDao.getBook();
+						List<Book> books = BookService.getBookDetails();
 						int i = 0;
 						for (Book bookDetails : books) {
 							i++;
@@ -51,7 +51,7 @@
 				</thead>
 			</table>
 		</form>
-
+                                                             
 		<a href="viewCart.jsp" class="btn btn-success">VIEW CART</a>
 	</main>
 </body>
