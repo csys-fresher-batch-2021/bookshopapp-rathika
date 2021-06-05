@@ -122,8 +122,13 @@ public class BookDao {
 		Connection con = null;
 		PreparedStatement pst = null;
 		try {
+
             books.removeAll(books);
 			String url = "select * from bookList where noOfBooks>0";
+
+
+			String url = "select * from bookList";
+
 			con = ConnectionUtil.getConnection();
 			Statement st = con.createStatement();
 			ResultSet rs = st.executeQuery(url);
@@ -132,7 +137,9 @@ public class BookDao {
 				String bookLanguage = rs.getString("language");
 				int noOfBooks = rs.getInt("noOfBooks");
 				double cost = rs.getDouble("cost");
+
 				
+
 				books.add(new Book(bookname, bookLanguage, noOfBooks, cost));
 			}
 
