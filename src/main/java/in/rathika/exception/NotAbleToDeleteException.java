@@ -1,3 +1,4 @@
+  
 package in.rathika.exception;
 
 public class NotAbleToDeleteException extends Exception {

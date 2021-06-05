@@ -34,7 +34,7 @@ public class SearchLanguageServlet extends HttpServlet {
 
 		} catch (Exception e) {
 
-			response.sendRedirect("userSearchDisplay.jsp?errorMessage=Unable to add Books");
+			response.sendRedirect("userSearchDisplay.jsp?errorMessage=Books not Available");
 		}
 
 	}

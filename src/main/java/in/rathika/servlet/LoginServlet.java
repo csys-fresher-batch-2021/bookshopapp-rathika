@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import in.rathika.service.UserService;
+
 /**
  * Servlet implementation class LoginServlet
  */
@@ -20,13 +22,16 @@ public class LoginServlet extends HttpServlet {
 		try {
 			String username = request.getParameter("userName");
 			String userPassCode = request.getParameter("password");
-			boolean isValid = "Admin".equals(username) && "admin".equals(userPassCode);
+			boolean isValid = UserService.isValidAdmin(username, userPassCode);
 			if (isValid) {
 				HttpSession session = request.getSession();
 				session.setAttribute("LOGGED_IN_USER", username);
 				session.setAttribute("ROLE", "ADMIN");
 			
 				response.sendRedirect("addBookDetails.jsp");
+			}
+			else {
+				response.sendRedirect("adminLogin.jsp?errorMessage=Invalid Login Credentials");
 			}
 		}catch (Exception e) {
 			response.sendRedirect("adminLogin.jsp?errorMessage=Invalid Login Credentials");

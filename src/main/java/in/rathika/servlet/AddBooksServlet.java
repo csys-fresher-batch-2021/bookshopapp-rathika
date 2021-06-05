@@ -28,10 +28,10 @@ public class AddBooksServlet extends HttpServlet {
 			String bookName = request.getParameter("bookName");
 			boolean isValidName = BookValidator.isBookNameValid(bookName);
 			String language = request.getParameter("language");
-			String noOfBook = request.getParameter("noOfBooks");
+			String noOfBook = request.getParameter("noBookId");
 			int noOfBooks = Integer.parseInt(noOfBook);
 			boolean validNoOfBooks = BookValidator.isValidNumber(noOfBooks);
-			String price = request.getParameter("cost");
+			String price = request.getParameter("costId");
 			double cost = Double.parseDouble(price);
 
 			boolean validCost = BookValidator.isCostValid(cost);

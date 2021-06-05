@@ -32,14 +32,14 @@ public class OrderBookServlet extends HttpServlet {
 			int noOfBooks = BookService.getNoOfBooks(bookName);
 			double cost = BookService.getBookCost(bookName);
 			boolean isAdded = false;
-			boolean present = OrderService.isPresent(bookName);
-			if (!present) {
+			
+			
 				isAdded = OrderService.addOrder(bookName, language, noOfBooks, cost);
 				if (isAdded) {
 					response.sendRedirect("viewCart.jsp");
 				}
 
-			}
+			
 		} catch (Exception e) {
 			response.sendRedirect("addCart.jsp?errorMessage=Unable to add");
 		}

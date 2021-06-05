@@ -1,3 +1,4 @@
+
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
     <%@page import="java.util.List"%>
@@ -9,7 +10,7 @@
 <html lang="en">
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>Cart</title>
 </head>
 <body>
 <body>
@@ -42,7 +43,7 @@
 					<td><%=orderDetails.getBookName() %></td>
 					<td><%=orderDetails.getLanguage() %></td>
 					<td><%=orderDetails.getNoOfBooks() %></td>
-					<td><%=orderDetails.getCost() %></td>
+					<td><%=orderDetails.getCost() %> Rs</td>
 					
 				
 					<td><form action="CofirmOrderServlet"> <input type="number" name="noBooks"
@@ -60,10 +61,9 @@
 				
 				 
 			<%
-					}
+			}
 			%>
-			
-			</thead>
+		</thead>
 		</table>
 	
 				 

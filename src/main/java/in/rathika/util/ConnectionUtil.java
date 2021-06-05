@@ -2,50 +2,63 @@ package in.rathika.util;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
-
-
-
+import java.sql.Statement;
 public class ConnectionUtil {
 	private ConnectionUtil() {
-
+		//Default constructor
 	}
-
-	private static final String DRIVER_CLASS_NAME = "org.postgresql.Driver";
-	private static final String DATABASE_NAME = "bookshopping_db";
-	private static final String DB_USERNAME = "postgres";
-	private static final String DB_PASSWORD = "postgres";
-	private static final String HOST = "localhost";
-	private static final int PORT = 5432;
-	private static final String DB_URL = "jdbc:postgresql://" + HOST + ":" + PORT + "/" + DATABASE_NAME;
-
-	public static Connection getConnection() {
-
-		Connection connection = null;
+	private static String driverClass = System.getenv("spring.datasource.driver-class-name");
+	private static String url = System.getenv("spring.datasource.url");
+	private static String username = System.getenv("spring.datasource.username");
+	private static String password = System.getenv("spring.datasource.password");
+	/**
+	 * This method creates a database connection.
+	 * @return
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	public static Connection getConnection() throws ClassNotFoundException, SQLException {
+		Class.forName(driverClass);
+		return DriverManager.getConnection(url, username, password);
+	//org.postgresql.Driver  jdbc:postgresql://localhost/employeedb postgres @Lingtan1112
+	}
+	/**
+	 * This method is used to close the connection of Resultset connection and prepared statement
+	 * Method overloading
+	 * @param con
+	 */
+	public static void close( ResultSet rs, Statement statement, Connection con) {
 		try {
-
-			Class.forName(DRIVER_CLASS_NAME);
-
-			connection = (Connection) DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
-			System.out.print(DB_URL);
-		} catch (ClassNotFoundException | SQLException e) {
+			if(rs!=null) {
+				rs.close();
+			}
+			if(statement!= null) {
+				statement.close();
+			}
+			if (con != null) {
+				con.close();
+			}
+		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new RuntimeException("Unable to get the database connection");
-		}
-		return connection;
-	}
-
-	public static void close(PreparedStatement pst, Connection con) throws Exception {
-
-		if (pst != null) {
-			pst.close();
-		}
-		if (con != null) {
-			con.close();
 		}
 	}
-
-	
-
+	/**
+	 * This method closes the connections for statement and connection.
+	 * @param statement
+	 * @param con
+	 */
+	public static void close(Statement statement, Connection con) {
+		try {
+			if (statement != null) {
+				statement.close();
+			}
+			if (con != null) {
+				con.close();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 }

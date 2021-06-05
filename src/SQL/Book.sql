@@ -17,4 +17,3 @@ INSERT INTO bookList(bookName,language,noOfBooks,cost) VALUES
 ('The LITTLE PRINCE','ENGLISH',4,700);
 
 SELECT * FROM bookList;
-

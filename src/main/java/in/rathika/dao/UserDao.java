@@ -23,6 +23,7 @@ public class UserDao {
 	 * HashMap to get email and password.
 	 */
 	private static Map<String, String> loginMap = new HashMap<>();
+	private static Map<String, String> adminMap = new HashMap<>();
 
 	/**
 	 * private constructor.
@@ -176,4 +177,26 @@ public class UserDao {
 		}
 		return userDetails;
 	}
+	public static Map<String, String> checkAdmin(String adminName, String adminPassCode) throws Exception {
+		Connection con = null;
+		PreparedStatement pst = null;
+		try {
+			String url = "select * from adminLogin";
+			con = ConnectionUtil.getConnection();
+			Statement st = con.createStatement();
+			ResultSet rs = st.executeQuery(url);
+			while (rs.next()) {
+				String adminname = rs.getString("adminName");
+				String pass = rs.getString("password");
+				adminMap.put(adminname, pass);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new RuntimeException("Invalid User");
+		} finally {
+			ConnectionUtil.close(pst, con);
+		}
+		return adminMap;
+	}
+
 }

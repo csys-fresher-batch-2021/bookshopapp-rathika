@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import in.rathika.dao.OrderDao;
 import in.rathika.service.OrderService;
 
 /**
@@ -27,7 +28,11 @@ public class CofirmOrderServlet extends HttpServlet {
 			HttpSession session = request.getSession();
 			String bookName = (String) session.getAttribute("bookName");
 			boolean valid = OrderService.validNoOfBooks(bookName, count);
-			if (valid) {
+			int totalCount = OrderService.getUpdatedBooks(bookName);
+			System.out.println("Total from order list" + totalCount);
+
+			boolean updated = OrderDao.updateBooks(bookName, totalCount - count);
+			if (valid && updated) {
 				boolean added = OrderService.addConfrimOrder(bookName, count);
 				if (added) {
 					response.sendRedirect("displayOrder.jsp");

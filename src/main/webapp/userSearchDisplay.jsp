@@ -10,7 +10,7 @@
 <html lang="en">
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>User Search</title>
 </head>
 <body>
 <jsp:include page="header.jsp"></jsp:include>
@@ -33,7 +33,7 @@
 					<th scope="col">Book Name</th>
 					<th scope="col">Language</th>
 					<th scope="col">No Of Books</th>
-					<th scope="col">Cost</th>
+					<th scope="col">Cost(Rs)</th>
 					
 					<%
 					BookDao bookDao = new BookDao();
@@ -48,7 +48,7 @@
 					<td><%=bookDetails.getBookName() %></td>
 					<td><%=bookDetails.getLanguage() %></td>
 					<td><%=bookDetails.getNoOfBooks() %></td>
-					<td><%=bookDetails.getCost() %></td>
+					<td><%=bookDetails.getCost() %> Rs</td>
 					
 				</tr>
 				<%
