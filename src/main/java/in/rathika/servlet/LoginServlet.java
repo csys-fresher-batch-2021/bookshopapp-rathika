@@ -30,6 +30,9 @@ public class LoginServlet extends HttpServlet {
 			
 				response.sendRedirect("addBookDetails.jsp");
 			}
+			else {
+				response.sendRedirect("adminLogin.jsp?errorMessage=Invalid Login Credentials");
+			}
 		}catch (Exception e) {
 			response.sendRedirect("adminLogin.jsp?errorMessage=Invalid Login Credentials");
 		}

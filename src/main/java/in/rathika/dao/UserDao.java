@@ -23,9 +23,7 @@ public class UserDao {
 	 * HashMap to get email and password.
 	 */
 	private static Map<String, String> loginMap = new HashMap<>();
-
 	private static Map<String, String> adminMap = new HashMap<>();
-
 
 	/**
 	 * private constructor.
@@ -179,7 +177,6 @@ public class UserDao {
 		}
 		return userDetails;
 	}
-
 	public static Map<String, String> checkAdmin(String adminName, String adminPassCode) throws Exception {
 		Connection con = null;
 		PreparedStatement pst = null;
@@ -203,6 +200,3 @@ public class UserDao {
 	}
 
 }
-
-}
-

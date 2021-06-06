@@ -75,7 +75,13 @@ public class UserService {
 			}
 		   return valid;
 	}
-	
+	/**
+	 * Check Whether the admin is valid.
+	 * @param name
+	 * @param password
+	 * @return
+	 * @throws Exception
+	 */
     public static boolean isValidAdmin(String name,String password) throws Exception{
 		boolean valid = false;
 		Map<String,String> AdminLoginDetails = UserDao.checkAdmin(name, password);

@@ -1,10 +1,6 @@
 package in.rathika.exception;
 
-
 public class CannotGetDetailsException extends Exception {
-
-public class CannotGetDetailsException extends Exception{
-
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -15,11 +11,5 @@ public class CannotGetDetailsException extends Exception{
 	 */
 	public CannotGetDetailsException(String message) {
 		super(message);
-
 	}
-
-	
-
-}
-
 }

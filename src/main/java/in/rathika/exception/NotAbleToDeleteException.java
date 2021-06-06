@@ -1,4 +1,4 @@
-
+  
 package in.rathika.exception;
 
 public class NotAbleToDeleteException extends Exception {
@@ -7,8 +7,4 @@ public class NotAbleToDeleteException extends Exception {
 	public NotAbleToDeleteException(String message) {
 		super(message);
 	}
-
 }
-
-}
-
