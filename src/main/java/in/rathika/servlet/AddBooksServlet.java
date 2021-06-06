@@ -28,10 +28,10 @@ public class AddBooksServlet extends HttpServlet {
 			String bookName = request.getParameter("bookName");
 			boolean isValidName = BookValidator.isBookNameValid(bookName);
 			String language = request.getParameter("language");
-			String noOfBook = request.getParameter("noOfBooks");
+			String noOfBook = request.getParameter("noBookId");
 			int noOfBooks = Integer.parseInt(noOfBook);
 			boolean validNoOfBooks = BookValidator.isValidNumber(noOfBooks);
-			String price = request.getParameter("cost");
+			String price = request.getParameter("costId");
 			double cost = Double.parseDouble(price);
 
 			boolean validCost = BookValidator.isCostValid(cost);
@@ -43,15 +43,14 @@ public class AddBooksServlet extends HttpServlet {
 				if (isAdded) {
 					response.sendRedirect("addBookDetails.jsp");
 				} else {
-					String errorMessage = "Unable to add Books ";
-					
-					response.sendRedirect("addBookDetails.jsp?errorMessage=" + errorMessage);
+				
+                   response.sendRedirect("addBookDetails.jsp?errorMessage=Unable to add Books");
 				}
 			}
-              
+
 		} catch (Exception e) {
 			response.sendRedirect("addBookDetails.jsp?errorMessage=Not able to add");
-		
+
 		}
 
 	}

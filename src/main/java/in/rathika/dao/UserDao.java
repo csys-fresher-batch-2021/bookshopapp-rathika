@@ -5,17 +5,33 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import in.rathika.model.User;
 import in.rathika.util.ConnectionUtil;
 
 public class UserDao {
-	
-	
+
+	/**
+	 * List to store User details.
+	 */
+	private static List<User> userDetails = new ArrayList<>();
+	/**
+	 * HashMap to get email and password.
+	 */
+	private static Map<String, String> loginMap = new HashMap<>();
+	private static Map<String, String> adminMap = new HashMap<>();
+
+	/**
+	 * private constructor.
+	 */
 	private UserDao() {
-		
+
 	}
+
 	/**
 	 * Add User Details into database.
 	 * 
@@ -49,6 +65,12 @@ public class UserDao {
 		}
 	}
 
+	/**
+	 * Add user details.
+	 * 
+	 * @param users
+	 * @throws Exception
+	 */
 	public static void save(List<User> users) throws Exception {
 		for (User user : users) {
 			save(user);
@@ -64,23 +86,18 @@ public class UserDao {
 	 * @throws Exception
 	 * @throws SQLException
 	 */
-	public static boolean checkUser(String userEmail, String userPassCode) throws Exception {
-		// Step 1: Get connection
-		boolean isValid = false;
+	public static Map<String, String> checkUser(String userEmail, String userPassCode) throws Exception {
 		Connection con = null;
 		PreparedStatement pst = null;
 		try {
 			String url = "select email,password from userList";
 			con = ConnectionUtil.getConnection();
-			// Step 2: Prepare data
 			Statement st = con.createStatement();
 			ResultSet rs = st.executeQuery(url);
 			while (rs.next()) {
 				String uemail = rs.getString("email");
 				String pass = rs.getString("password");
-				if (uemail.equals(userEmail) && pass.equals(userPassCode)) {
-					isValid = true;
-				}
+				loginMap.put(uemail, pass);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -88,7 +105,7 @@ public class UserDao {
 		} finally {
 			ConnectionUtil.close(pst, con);
 		}
-		return isValid;
+		return loginMap;
 	}
 
 	/**
@@ -119,10 +136,67 @@ public class UserDao {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			
+
 		} finally {
 			ConnectionUtil.close(pst, con);
 		}
 		return name;
 	}
+
+	/**
+	 * Get the user Details.
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	public List<User> getUserDetails() throws Exception {
+		Connection con = null;
+		PreparedStatement pst = null;
+		try {
+			String url = "select * from userList";
+			con = ConnectionUtil.getConnection();
+			Statement st = con.createStatement();
+			ResultSet rs = st.executeQuery(url);
+			while (rs.next()) {
+				String uname = rs.getString("username");
+				String email = rs.getString("email");
+				long mobile = rs.getLong("mobileNumber");
+				String userAddress = rs.getString("address ");
+				int userAge = rs.getInt("age");
+				String userPass = rs.getString("password");
+				User regObj = new User(uname, email, mobile, userAddress, userAge, userPass);
+				userDetails.add(regObj);
+
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+
+		} finally {
+			ConnectionUtil.close(pst, con);
+		}
+		return userDetails;
+	}
+	public static Map<String, String> checkAdmin(String adminName, String adminPassCode) throws Exception {
+		Connection con = null;
+		PreparedStatement pst = null;
+		try {
+			String url = "select * from adminLogin";
+			con = ConnectionUtil.getConnection();
+			Statement st = con.createStatement();
+			ResultSet rs = st.executeQuery(url);
+			while (rs.next()) {
+				String adminname = rs.getString("adminName");
+				String pass = rs.getString("password");
+				adminMap.put(adminname, pass);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new RuntimeException("Invalid User");
+		} finally {
+			ConnectionUtil.close(pst, con);
+		}
+		return adminMap;
+	}
+
 }

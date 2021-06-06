@@ -30,7 +30,7 @@
 
 
 						<%
-						List<Order> orders = OrderDao.getConfrimOrder();
+						List<Order> orders = OrderService.getOrderDetails();
 						int i = 0;
 						for (Order orderDetails : orders) {
 							i++;
@@ -41,8 +41,8 @@
 						<td><%=orderDetails.getBookName()%></td>
 						<td><%=orderDetails.getLanguage()%></td>
 						<td><%=orderDetails.getNoOfBooks()%></td>
-						<td><%=orderDetails.getCost()%></td>
-						<td><%=orderDetails.getNoOfBooks() * orderDetails.getCost()%></td>
+						<td><%=orderDetails.getCost()%> Rs</td>
+						<td><%=orderDetails.getNoOfBooks() * orderDetails.getCost()%> Rs</td>
 					</tr>
 					<%
 					}
@@ -61,7 +61,7 @@
 			</thead>
 			<tr>
 				<th scope="col">USER NAME</th>
-				<th scope="col">TOTAL AMOUNT</th>
+				<th scope="col">TOTAL AMOUNT(Rs)</th>
 			</tr>
 			<tr>
 				<td><%=userName%>

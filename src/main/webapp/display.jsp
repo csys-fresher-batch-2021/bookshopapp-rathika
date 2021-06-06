@@ -28,8 +28,7 @@
 						<th scope="col">Cost</th>
 
 						<%
-						BookDao bookDao = new BookDao();
-						List<Book> books = bookDao.getBook();
+					    List<Book> books = BookService.getBookDetails();
 						int i = 0;
 						for (Book bookDetails : books) {
 							i++;
@@ -40,7 +39,7 @@
 						<td><%=bookDetails.getBookName()%></td>
 						<td><%=bookDetails.getLanguage()%></td>
 						<td><%=bookDetails.getNoOfBooks()%></td>
-						<td><%=bookDetails.getCost()%></td>
+						<td><%=bookDetails.getCost()%> Rs</td>
 						<td><a
 							href="DeleteBookServlet?bookName=<%=bookDetails.getBookName()%>"
 							class="btn btn-danger">Delete</a></td>

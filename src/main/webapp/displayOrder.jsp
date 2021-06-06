@@ -8,7 +8,7 @@
 <html lang="en">
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>Orders</title>
 </head>
 <body>
 	<jsp:include page="header.jsp"></jsp:include>
@@ -31,7 +31,7 @@
 
 					<%
 					OrderDao orderDao = new OrderDao();
-					List<Order> orders = OrderDao.getConfrimOrder();
+					List<Order> orders = OrderService.getOrderDetails();
 					int i = 0;
 					for (Order orderDetails : orders) {
 						i++;
@@ -42,7 +42,7 @@
 						<td><%=orderDetails.getBookName()%></td>
 						<td><%=orderDetails.getLanguage()%></td>
 						<td><%=orderDetails.getNoOfBooks()%></td>
-						<td><%=orderDetails.getCost()%></td>
+						<td><%=orderDetails.getCost()%> Rs</td>
 						<td><a
 							href="DeleteCartServlet?bookName=<%=orderDetails.getBookName()%>"
 							class="btn btn-danger">CANCEL</a></td>

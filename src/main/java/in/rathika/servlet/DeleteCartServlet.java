@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import in.rathika.dao.OrderDao;
 import in.rathika.service.OrderService;
 
 /**
@@ -23,7 +24,13 @@ public class DeleteCartServlet extends HttpServlet {
 			
 			String name = request.getParameter("bookName");
 		    delete = OrderService.deleteCart(name);
-		    if(delete) {
+			int totalCount = OrderService.getUpdatedBooks(name);
+			System.out.println("Total count"+totalCount);
+			System.out.println("Total from order list"+totalCount);
+			int count = OrderDao.getNoOfBooks(name);
+			System.out.println("order count"+count);
+		    boolean updated =  OrderDao.updateBooks(name, totalCount+count);
+		    if(delete && updated) {
 		    	response.sendRedirect("displayOrder.jsp");
 		    }
 			
