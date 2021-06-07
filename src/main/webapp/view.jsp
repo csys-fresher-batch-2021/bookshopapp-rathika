@@ -38,7 +38,7 @@
 					<td><%=bookDetails.getBookName() %></td>
 					<td><%=bookDetails.getLanguage() %></td>
 					<td><%=bookDetails.getNoOfBooks() %></td>
-					<td><%=bookDetails.getCost() %></td>
+					<td><%=bookDetails.getCost() %>Rs</td>
 					
 				</tr>
 				<%
