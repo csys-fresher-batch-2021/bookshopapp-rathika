@@ -42,7 +42,7 @@
 		</dependency>
 	</dependencies>
 	<build>
-		<finalName>app</finalName>
+		<finalName>bookshopapp-rathika</finalName>
 		<pluginManagement>
 			<plugins>
 				<plugin>
@@ -50,7 +50,15 @@
 					<artifactId>sonar-maven-plugin</artifactId>
 					<version>3.8.0.2131</version>
 				</plugin>
+				<plugin>
+                 <artifactId>maven-war-plugin</artifactId>
+                 <version>2.4</version>
+                  <configuration>
+                  <failOnMissingWebXml>false</failOnMissingWebXml>
+             </configuration>
+            </plugin>
 			</plugins>
+	
 		</pluginManagement>
 	</build>
 </project>
