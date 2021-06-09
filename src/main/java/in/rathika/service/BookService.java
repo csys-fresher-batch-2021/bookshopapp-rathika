@@ -4,6 +4,7 @@ import java.util.List;
 
 import in.rathika.dao.BookDao;
 import in.rathika.model.Book;
+import in.rathika.validator.BookValidator;
 
 public class BookService {
 
@@ -26,8 +27,11 @@ public class BookService {
 	public static boolean addBook(String bookName, String language, int noOfBooks, double cost) throws Exception {
 		boolean isAdded = false;
 		boolean present = BookService.isPresent(bookName);
+		boolean isValidName = BookValidator.isBookNameValid(bookName);
+		boolean validNoOfBooks = BookValidator.isValidNumber(noOfBooks);
+		boolean validCost = BookValidator.isCostValid(cost);
         Book bookObj = new Book(bookName, language, noOfBooks, cost);
-		if (!present) {
+		if (isValidName && validNoOfBooks && validCost && !present) {
 			isAdded = true;
 			BookDao.saveBook(bookObj);
 		}
@@ -44,7 +48,12 @@ public class BookService {
 	 */
 	public static boolean deleteBook(String bookName) throws Exception {
 		
-		return BookDao.deleteBooks(bookName.trim());
+		boolean deleted = false;
+		if(BookValidator.isBookNameValid(bookName)) {
+			deleted =  BookDao.deleteBooks(bookName.trim());
+		}
+		return deleted;
+		
 	}
 
 	
@@ -197,19 +206,14 @@ public class BookService {
 	}
    
 	
-	/**
-	 * Get book details from database.
-	 * @return
-	 * @throws Exception
-	 */
-	public static List<Book> getBookDetails() throws Exception{
-		List<Book> books = BookDao.getBookDetails();
-		books.removeAll(books);
-		List<Book> book = BookDao.getBookDetails();
-		return book;
-		
-	}
 
-	
+    /**
+     * Get the book details.
+     * @return
+     * @throws Exception
+     */
+	public static List<Book> getBookDetails() throws Exception {
+		return BookDao.getBook();
+	}
 
 }

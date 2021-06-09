@@ -1,6 +1,7 @@
 package in.rathika.servlet;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -20,10 +21,11 @@ public class BillServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			double total = OrderService.billCalculation();
-			if(total!=0) {
-				HttpSession session = request.getSession();
+			HttpSession session = request.getSession();
+			if(total!=0 ) {
+			
 				session.setAttribute("TOTAL", total);
-				response.sendRedirect("displayBill.jsp");
+				response.sendRedirect("bill.jsp");
 			}
 		}catch(Exception e) {
 			response.sendRedirect("addCart.jsp?errorMessage=No books in cart");

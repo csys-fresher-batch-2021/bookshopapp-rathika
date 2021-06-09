@@ -123,7 +123,7 @@ public class BookDao {
 		PreparedStatement pst = null;
 		try {
             books.removeAll(books);
-			String url = "select * from bookList where noOfBooks>0";
+			String url = "select * from bookList where noOfBooks>0 ORDER BY bookName";
 			con = ConnectionUtil.getConnection();
 			Statement st = con.createStatement();
 			ResultSet rs = st.executeQuery(url);

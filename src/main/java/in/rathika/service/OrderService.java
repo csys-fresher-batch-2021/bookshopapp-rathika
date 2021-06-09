@@ -118,8 +118,8 @@ public class OrderService {
 				double cost = order.getCost();
 				String language = order.getLanguage();
 				Order orderObj = new Order(bookName, language, noOfBooks, cost);
-				// OrderDao.addOrders(bookName,language,noOfBooks,cost);
 				OrderDao.saveOrder(orderObj);
+				OrderDao.addConfrimCart(bookName, language, noOfBooks, cost);
 				isAdd = true;
 				break;
 
@@ -174,14 +174,13 @@ public class OrderService {
 	 */
 	public static double billCalculation() throws Exception {
 		double total = 0;
-		List<Order> books = OrderService.getOrderDetails();
+		List<Order> books = OrderDao.getConfrimOrder();
 		for (Order book : books) {
-			// OrderDao.saveConfrimOrder(books);
+			
 			total = total + book.getNoOfBooks() * book.getCost();
-			// OrderDao.deleteOrders(book.getBookName());
-
 		}
-
+        boolean removed =books.removeAll(books);
+        System.out.println(removed);
 		return total;
 	}
 
@@ -262,4 +261,5 @@ public class OrderService {
 		}
 		return count1;
 	}
+
 }

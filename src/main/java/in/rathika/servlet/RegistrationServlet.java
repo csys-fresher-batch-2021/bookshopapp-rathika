@@ -44,6 +44,9 @@ public class RegistrationServlet extends HttpServlet {
 				response.sendRedirect("userLogin.jsp");
 
 			}
+			else {
+				response.sendRedirect("userRegistration.jsp?errorMessage=Invalid user details");
+			}
 		} catch (Exception e) {
 			response.sendRedirect("userRegistration.jsp?errorMessage=Invalid user details");
 		}

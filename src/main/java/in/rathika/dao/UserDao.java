@@ -177,6 +177,13 @@ public class UserDao {
 		}
 		return userDetails;
 	}
+	/**
+	 * Check Whether the admin is valid.
+	 * @param adminName
+	 * @param adminPassCode
+	 * @return
+	 * @throws Exception
+	 */
 	public static Map<String, String> checkAdmin(String adminName, String adminPassCode) throws Exception {
 		Connection con = null;
 		PreparedStatement pst = null;
@@ -198,5 +205,40 @@ public class UserDao {
 		}
 		return adminMap;
 	}
+	/**
+	 * Get user details from userList.
+	 * @param userName
+	 * @return
+	 * @throws Exception
+	 */
+	public static List<User> getUserDetails(String userName) throws Exception {
+		Connection con = null;
+		PreparedStatement pst = null;
+		try {
+            
+			String url = "select email,mobileNumber,address from userList where username='"+userName+"' ORDER BY userName";
+			con = ConnectionUtil.getConnection();
+			Statement st = con.createStatement();
+			ResultSet rs = st.executeQuery(url);
+			while (rs.next()) {
+			
+				String emailId = rs.getString("email");
+				
+				long mobile = rs.getLong("mobileNumber");
+				String address = rs.getString("address");
+				
+				
+				userDetails.add(new User(emailId , mobile,address));
+			}
 
+		} catch (SQLException e) {
+			e.printStackTrace();
+
+		} finally {
+			ConnectionUtil.close(pst, con);
+		}
+		return userDetails;
+	}
+
+	
 }

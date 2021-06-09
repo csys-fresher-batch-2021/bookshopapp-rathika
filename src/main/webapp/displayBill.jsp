@@ -51,25 +51,7 @@
 			</table>
 
 		</form>
-		<%
-		String userName = (String) session.getAttribute("LOGGED_IN_USER");
-		Double total = (Double) session.getAttribute("TOTAL");
-		%>
-		<h1>YOUR TOTAL BILL</h1>
-		<table class="table table-bordered">
-			<thead>
-			</thead>
-			<tr>
-				<th scope="col">USER NAME</th>
-				<th scope="col">TOTAL AMOUNT(Rs)</th>
-			</tr>
-			<tr>
-				<td><%=userName%>
-				<td><%=total%>
-			</tr>
-		</table>
-
-		<a href="addCart.jsp" class="btn btn-success">CONFRIM BOOKING</a>
+		
 	</main>
 </body>
 </html>

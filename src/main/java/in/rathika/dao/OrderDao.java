@@ -45,7 +45,16 @@ public class OrderDao {
 	 * List to store confrim order.
 	 */
 	private static final List<Order> confrimOrders = new ArrayList<>();
+    
+	private static final List<Order> orderDetails = new ArrayList<>();
+	
+	public static void addConfrimCart(String bookName, String language, int noOfBooks, double cost) {
 
+		orderDetails.add(new Order(bookName, language, noOfBooks, cost));
+	}
+	public static List<Order> getConfrimOrder() {
+		return orderDetails;
+	}
 	/**
 	 * Save ordered details into database.
 	 * 
@@ -220,6 +229,11 @@ public class OrderDao {
 		return count;
 
 	}
+	/**
+	 * Get order
+	 * @param order
+	 * @throws Exception
+	 */
 	public static void confrimOrder(Order order) throws Exception {
 		// Step 1: Get connection
 		Connection con = null;
@@ -287,7 +301,12 @@ public class OrderDao {
 		}
 		return confrimOrders;
 	}
-
+    /**
+     * Delete Book from confrim order list.
+     * @param bookName
+     * @return
+     * @throws Exception
+     */
 	public static boolean deleteConfrimOrders(String bookName) throws Exception {
 		boolean isDelete = false;
 		Connection con = null;
@@ -313,6 +332,11 @@ public class OrderDao {
 		}
 
 		return isDelete;
+	}
+
+	public static void addOrders(String bookName, String language, int noOfBooks, double cost) {
+		orderDetails.add(new Order(bookName, language, noOfBooks, cost));
+		
 	}
 
 }

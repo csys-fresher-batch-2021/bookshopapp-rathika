@@ -1,6 +1,7 @@
 package in.rathika.servlet;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -20,7 +21,9 @@ public class LogoutServlet extends HttpServlet {
 			throws ServletException, IOException {
 		
 		HttpSession session = request.getSession();
+		String userName = (String) session.getAttribute("LOGGED_IN_USER");
 		session.removeAttribute("LOGGED_IN_USER");
+		session.setAttribute("LOGOUT", userName);
 		response.sendRedirect("header.jsp");
 	
 	}

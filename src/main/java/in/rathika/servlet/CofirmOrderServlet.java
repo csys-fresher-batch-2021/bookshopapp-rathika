@@ -34,6 +34,7 @@ public class CofirmOrderServlet extends HttpServlet {
 			boolean updated = OrderDao.updateBooks(bookName, totalCount - count);
 			if (valid && updated) {
 				boolean added = OrderService.addConfrimOrder(bookName, count);
+				
 				if (added) {
 					response.sendRedirect("displayOrder.jsp");
 				} else {

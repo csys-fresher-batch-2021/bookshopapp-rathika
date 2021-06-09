@@ -25,13 +25,12 @@
 						<th scope="col">LANGUAGE</th>
 						<th scope="col">TOTAL BOOKS</th>
 						<th scope="col">COST</th>
-						<th scope="col">BUY MORE</th>
 
 					</tr>
 
 					<%
 					OrderDao orderDao = new OrderDao();
-					List<Order> orders = OrderService.getOrderDetails();
+					List<Order> orders = OrderDao.getConfrimOrder();
 					int i = 0;
 					for (Order orderDetails : orders) {
 						i++;
@@ -42,10 +41,10 @@
 						<td><%=orderDetails.getBookName()%></td>
 						<td><%=orderDetails.getLanguage()%></td>
 						<td><%=orderDetails.getNoOfBooks()%></td>
-						<td><%=orderDetails.getCost()%> Rs</td>
-						<td><a
+						<td><%=orderDetails.getNoOfBooks()*orderDetails.getCost()%> Rs</td>
+						<%-- <td><a
 							href="DeleteCartServlet?bookName=<%=orderDetails.getBookName()%>"
-							class="btn btn-danger">CANCEL</a></td>
+							class="btn btn-danger">CANCEL</a></td> --%>
 
 					</tr>
 					<%

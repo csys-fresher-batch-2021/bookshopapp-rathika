@@ -22,7 +22,7 @@ public class ConnectionUtil {
 	public static Connection getConnection() throws ClassNotFoundException, SQLException {
 		Class.forName(driverClass);
 		return DriverManager.getConnection(url, username, password);
-	//org.postgresql.Driver  jdbc:postgresql://localhost/employeedb postgres @Lingtan1112
+	
 	}
 	/**
 	 * This method is used to close the connection of Resultset connection and prepared statement

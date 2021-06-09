@@ -40,4 +40,11 @@ public class Order {
 				+ "]";
 	}
 
+	
+
+	public boolean removeAll(Order order) {
+	    
+		return false;
+	}
+
 }

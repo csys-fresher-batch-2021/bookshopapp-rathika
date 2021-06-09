@@ -58,4 +58,10 @@ public class User {
 
 	}
 
+	public User(String emailId, long mobile2, String address2) {
+		this.email = emailId;
+		this.mobile = mobile2;
+		this.address = address2;
+	}
+   
 }

@@ -29,7 +29,7 @@
 
 						<%
 						BookDao bookDao = new BookDao();
-						List<Book> books =  BookService.getBookDetails();
+						List<Book> books =  BookDao.getBookDetails();
 						int i = 0;
 						for (Book bookDetails : books) {
 							i++;
