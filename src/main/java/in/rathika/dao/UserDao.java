@@ -55,8 +55,8 @@ public class UserDao {
 			pst.setString(4, user.getAddress());
 			pst.setInt(5, user.getAge());
 			pst.setString(6, user.getPassword());
-			int rows = pst.executeUpdate();
-			System.out.println("No of rows inserted :" + rows);
+		    pst.executeUpdate();
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new RuntimeException("Unable to add user");
@@ -121,11 +121,12 @@ public class UserDao {
 		String name = null;
 		Connection con = null;
 		PreparedStatement pst = null;
+		ResultSet rs = null;
 		try {
 			String url = "select username, email from userList";
 			con = ConnectionUtil.getConnection();
-			Statement st = con.createStatement();
-			ResultSet rs = st.executeQuery(url);
+			pst = con.prepareStatement(url);
+			rs = pst.executeQuery();
 			while (rs.next()) {
 				String uname = rs.getString("username");
 				String email = rs.getString("email");
@@ -152,11 +153,13 @@ public class UserDao {
 	public List<User> getUserDetails() throws Exception {
 		Connection con = null;
 		PreparedStatement pst = null;
+		ResultSet rs = null;
 		try {
 			String url = "select * from userList";
 			con = ConnectionUtil.getConnection();
-			Statement st = con.createStatement();
-			ResultSet rs = st.executeQuery(url);
+
+			pst = con.prepareStatement(url);
+			rs = pst.executeQuery();
 			while (rs.next()) {
 				String uname = rs.getString("username");
 				String email = rs.getString("email");
@@ -177,8 +180,10 @@ public class UserDao {
 		}
 		return userDetails;
 	}
+
 	/**
 	 * Check Whether the admin is valid.
+	 * 
 	 * @param adminName
 	 * @param adminPassCode
 	 * @return
@@ -187,11 +192,12 @@ public class UserDao {
 	public static Map<String, String> checkAdmin(String adminName, String adminPassCode) throws Exception {
 		Connection con = null;
 		PreparedStatement pst = null;
+		ResultSet rs = null;
 		try {
 			String url = "select * from adminLogin";
 			con = ConnectionUtil.getConnection();
-			Statement st = con.createStatement();
-			ResultSet rs = st.executeQuery(url);
+			pst = con.prepareStatement(url);
+			rs = pst.executeQuery();
 			while (rs.next()) {
 				String adminname = rs.getString("adminName");
 				String pass = rs.getString("password");
@@ -205,8 +211,10 @@ public class UserDao {
 		}
 		return adminMap;
 	}
+
 	/**
 	 * Get user details from userList.
+	 * 
 	 * @param userName
 	 * @return
 	 * @throws Exception
@@ -214,21 +222,23 @@ public class UserDao {
 	public static List<User> getUserDetails(String userName) throws Exception {
 		Connection con = null;
 		PreparedStatement pst = null;
+		ResultSet rs = null;
 		try {
-            
-			String url = "select email,mobileNumber,address from userList where username='"+userName+"' ORDER BY userName";
+
+			String url = "select email,mobileNumber,address from userList where username='" + userName
+					+ "' ORDER BY userName";
 			con = ConnectionUtil.getConnection();
-			Statement st = con.createStatement();
-			ResultSet rs = st.executeQuery(url);
+			pst = con.prepareStatement(url);
+			rs = pst.executeQuery();
+
 			while (rs.next()) {
-			
+
 				String emailId = rs.getString("email");
-				
+
 				long mobile = rs.getLong("mobileNumber");
 				String address = rs.getString("address");
-				
-				
-				userDetails.add(new User(emailId , mobile,address));
+
+				userDetails.add(new User(emailId, mobile, address));
 			}
 
 		} catch (SQLException e) {
@@ -240,5 +250,4 @@ public class UserDao {
 		return userDetails;
 	}
 
-	
 }

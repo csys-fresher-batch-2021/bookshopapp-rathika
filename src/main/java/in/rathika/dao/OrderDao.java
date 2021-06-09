@@ -106,12 +106,15 @@ public class OrderDao {
 	public static List<Order> getOrderDetails() throws Exception {
 		Connection con = null;
 		PreparedStatement pst = null;
+		ResultSet rs = null;
 		try {
 
 			String url = "select * from orderList";
 			con = ConnectionUtil.getConnection();
-			Statement st = con.createStatement();
-			ResultSet rs = st.executeQuery(url);
+			
+			
+			pst = con.prepareStatement(url);
+			rs = pst.executeQuery();
 			while (rs.next()) {
 				String bookname = rs.getString("bookName");
 				String bookLanguage = rs.getString("language");
@@ -248,8 +251,8 @@ public class OrderDao {
 			pst.setString(2, order.getLanguage());
 			pst.setInt(3, order.getNoOfBooks());
 			pst.setDouble(4, order.getCost());
-			int rows = pst.executeUpdate();
-			System.out.println("No of rows inserted :" + rows);
+			pst.executeUpdate();
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new RuntimeException("Unable to add user");

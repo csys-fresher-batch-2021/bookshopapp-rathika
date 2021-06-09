@@ -179,8 +179,8 @@ public class OrderService {
 			
 			total = total + book.getNoOfBooks() * book.getCost();
 		}
-        boolean removed =books.removeAll(books);
-        System.out.println(removed);
+        books.clear();
+        
 		return total;
 	}
 

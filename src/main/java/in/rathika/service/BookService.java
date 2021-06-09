@@ -147,7 +147,7 @@ public class BookService {
 	public static boolean searchBookByLanguage(String language) {
 		boolean isAdd = false;
 		List<Book> languageDetails = BookDao.getSearch();
-		languageDetails.removeAll(languageDetails);
+		languageDetails.clear();
 		for (Book book : BookDao.getBook()) {
 			if (book.getLanguage().equalsIgnoreCase(language)) {
 				languageDetails.add(book);
@@ -166,7 +166,7 @@ public class BookService {
 	public static boolean searchBookByCost(int type) {
 		boolean isAdd = false;
 		List<Book> languageDetails = BookDao.getSearch();
-		languageDetails.removeAll(languageDetails);
+		languageDetails.clear();
 		if (type == 1) {
 			for (Book book : BookDao.getBook()) {
 				if (book.getCost() <= 500) {
@@ -195,7 +195,7 @@ public class BookService {
 	public static boolean confirmOrder(String bookName) {
 		boolean isAdd = false;
 		List<Book> languageDetails = BookDao.getSearch();
-		languageDetails.removeAll(languageDetails);
+		languageDetails.clear();
 		for (Book book : BookDao.getBook()) {
 			if (book.getBookName().equalsIgnoreCase(bookName)) {
 				languageDetails.add(book);
