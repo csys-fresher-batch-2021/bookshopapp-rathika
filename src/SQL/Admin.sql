@@ -3,5 +3,5 @@ create table adminLogin(
    password varchar(30) not null
 );
 INSERT INTO adminLogin(adminName,password) VALUES 
-('Admin','admin');
+('Admin','Admin@123');
 select * from adminLogin;

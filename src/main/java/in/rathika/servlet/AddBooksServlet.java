@@ -26,17 +26,13 @@ public class AddBooksServlet extends HttpServlet {
 			throws ServletException, IOException {
 		try {
 			String bookName = request.getParameter("bookName");
-
-			String language = request.getParameter("language");
+            String language = request.getParameter("language");
 			String noOfBook = request.getParameter("noBookId");
 			int noOfBooks = Integer.parseInt(noOfBook);
-
-			String price = request.getParameter("costId");
+            String price = request.getParameter("costId");
 			double cost = Double.parseDouble(price);
 
-			boolean isAdded = false;
-
-			isAdded = BookService.addBook(bookName, language, noOfBooks, cost);
+			boolean isAdded = BookService.addBook(bookName, language, noOfBooks, cost);
 			if (isAdded) {
 				response.sendRedirect("addBookDetails.jsp");
 			} else {

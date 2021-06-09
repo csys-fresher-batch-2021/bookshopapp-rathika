@@ -47,8 +47,7 @@
 					<th scope="col">ADDRESS</th>
 					<td><%=userDetails.getAddress() %></td>
 					</tr>
-					
-				</tr>
+			</tr>
 				<%
 				break;}
 				%>
