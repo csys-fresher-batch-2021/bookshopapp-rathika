@@ -79,7 +79,6 @@ public class OrderDao {
 			pst.setString(3, order.getLanguage());
 			pst.setInt(4, order.getNoOfBooks());
 			pst.setDouble(5, order.getCost());
-			//pst.setString(5, order.getStatus());
 			int rows = pst.executeUpdate();
 			System.out.println("No of rows inserted :" + rows);
 		} catch (SQLException e) {
