@@ -22,8 +22,9 @@ public class UserDao {
 	/**
 	 * HashMap to get email and password.
 	 */
-	private static Map<String, String> loginMap = new HashMap<>();
+	private static List<User> loginMap = new ArrayList<>();
 	private static Map<String, String> adminMap = new HashMap<>();
+	private static Map<Integer, String> userMap = new HashMap<>();
 
 	/**
 	 * private constructor.
@@ -86,7 +87,7 @@ public class UserDao {
 	 * @throws Exception
 	 * @throws SQLException
 	 */
-	public static Map<String, String> checkUser(String userEmail, String userPassCode) throws Exception {
+	public static List<User> checkUser(String userEmail, String userPassCode) throws Exception {
 		Connection con = null;
 		PreparedStatement pst = null;
 		try {
@@ -97,7 +98,9 @@ public class UserDao {
 			while (rs.next()) {
 				String uemail = rs.getString("email");
 				String pass = rs.getString("password");
-				loginMap.put(uemail, pass);
+				User regObj = new User(uemail, pass);
+				loginMap.add(regObj);
+
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -107,6 +110,7 @@ public class UserDao {
 		}
 		return loginMap;
 	}
+
 
 	/**
 	 * Get user name using emailId
@@ -225,20 +229,20 @@ public class UserDao {
 		ResultSet rs = null;
 		try {
 
-			String url = "select email,mobileNumber,address from userList where username='" + userName
+			String url = "select id,email,mobileNumber,address from userList where username='" + userName
 					+ "' ORDER BY userName";
 			con = ConnectionUtil.getConnection();
 			pst = con.prepareStatement(url);
 			rs = pst.executeQuery();
 
 			while (rs.next()) {
-
+                int userId = rs.getInt("id");
 				String emailId = rs.getString("email");
 
 				long mobile = rs.getLong("mobileNumber");
 				String address = rs.getString("address");
 
-				userDetails.add(new User(emailId, mobile, address));
+				userDetails.add(new User(userId,emailId, mobile, address));
 			}
 
 		} catch (SQLException e) {
@@ -248,6 +252,41 @@ public class UserDao {
 			ConnectionUtil.close(pst, con);
 		}
 		return userDetails;
+	}
+	
+	/**
+	 * Get Id name of the user.
+	 * @return
+	 * @throws Exception
+	 */
+	public static int getId(String userName) throws Exception {
+		int id = 0;
+		Connection con = null;
+		PreparedStatement pst = null;
+		ResultSet rs = null;
+		try {
+			String url = "select id,username from userList ";
+			con = ConnectionUtil.getConnection();
+			
+            pst = con.prepareStatement(url);
+			
+            rs = pst.executeQuery();
+
+            while (rs.next()) {
+				int userId = rs.getInt("id");
+				String user = rs.getString("username");
+				if (user.equals(userName)) {
+					id = userId;
+					break;
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new RuntimeException("Invalid User");
+		} finally {
+			ConnectionUtil.close(pst, con);
+		}
+		return id;
 	}
 
 }

@@ -31,17 +31,21 @@ public class DeleteBookServlet extends HttpServlet {
 				if (isDeleted) {
 					response.sendRedirect("display.jsp");
 				} else {
-                   response.sendRedirect("addBookDetails.jsp?errorMessage=Unable to delete book Name");
+
+					String errorMessage = "Unable to delete book Name";
+					response.sendRedirect("addBookDetails.jsp?errorMessage=" + errorMessage);
 				}
 			} else {
-				isOrderDeleted = OrderService.deleteBookOrder(bookName);
+				isOrderDeleted = OrderService.deleteBook(bookName);
 				if (isOrderDeleted) {
 					response.sendRedirect("viewCart.jsp");
 
 				}
 			}
 		} catch (Exception e) {
-			response.sendRedirect("viewCart.jsp?errorMessage=Unable to delete book Name");
+
+			String errorMessage = "Unable to delete book Name";
+			response.sendRedirect("viewCart.jsp?errorMessage=" + errorMessage);
 		}
 	}
 

@@ -2,6 +2,9 @@
 	pageEncoding="ISO-8859-1"%>
 	<%@page import="java.util.List"%>
 <%@page import="java.util.Map"%>
+<%@page import="java.time.LocalDateTime"%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.util.Calendar"%>
 <%@ page import="in.rathika.model.*"%>
 <%@ page import="in.rathika.dao.UserDao"%>
 <%@ page import="in.rathika.service.UserService"%>
@@ -18,6 +21,7 @@
 	<%
 	String userName = (String) session.getAttribute("LOGGED_IN_USER");
 	Double total = (Double) session.getAttribute("TOTAL");
+	String timeStamp = new SimpleDateFormat("dd-MM-yyy  HH:mm:ss").format(Calendar.getInstance().getTime());
 	%>
 	
 	<table class="table table-bordered" border='1'>
@@ -28,13 +32,17 @@
 			<td><%=userName%></td>
 
 		</tr>
-		<%
+		           <%
 					
 					List<User> users = UserDao.getUserDetails(userName);
 					
 					for (User userDetails : users) {
 						
 					%>
+					<tr>
+					<th scope="col">User ID</th>
+					<td><%=userDetails.getId() %></td>
+					</tr>
 					<tr>
 					<th scope="col">EMAIL ID</th>
 					<td><%=userDetails.getEmail() %></td>
@@ -47,7 +55,11 @@
 					<th scope="col">ADDRESS</th>
 					<td><%=userDetails.getAddress() %></td>
 					</tr>
-			</tr>
+					<tr>
+					<th scope="col">ORDER DATE TIME</th>
+					<td><%=timeStamp %></td>
+					</tr>
+			
 				<%
 				break;}
 				%>

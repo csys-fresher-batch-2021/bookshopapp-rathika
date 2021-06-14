@@ -10,6 +10,30 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>ADD CART</title>
+<style>
+#books {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#books td, #books th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#books tr:nth-child(even){background-color: #f2f2f2;}
+
+#books tr:hover {background-color: #ddd;}
+
+#books th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #04AA6D;
+  color: white;
+}
+</style>
 </head>
 <body>
 	<jsp:include page="header.jsp"></jsp:include>
@@ -17,7 +41,7 @@
 		<form method="post">
 
 			<h3>Books</h3>
-			<table class="table table-bordered">
+			<table class="table table-bordered" id="books">
 				<caption></caption>
 				<thead>
 					<tr>
@@ -26,6 +50,7 @@
 						<th scope="col">Language</th>
 						<th scope="col">No Of Books</th>
 						<th scope="col">Cost</th>
+						<th scope="col">Cart</th>
 
 						<%
 						BookDao bookDao = new BookDao();
@@ -43,7 +68,7 @@
 						<td><%=bookDetails.getCost()%> Rs</td>
 						<td><a
 							href="OrderBookServlet?bookName=<%=bookDetails.getBookName()%>"
-							class="btn btn-success">ADD TO CART</a></td>
+							class="btn btn-primary">ADD TO CART</a></td>
 					</tr>
 					<%
 					}
@@ -52,7 +77,9 @@
 			</table>
 		</form>
 
-		<a href="displayOrder.jsp" class="btn btn-success">VIEW CART</a>
+		<a href="displayOrder.jsp" class="btn btn-info">VIEW CART</a>
+		
+		<a href="userOrder.jsp" class="btn btn-success">VIEW RESPONSE</a>
 	</main>
 </body>
 </html>

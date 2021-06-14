@@ -44,53 +44,52 @@
 			<caption></caption>
 			<thead>
 				<tr>
-					<th scope="col">S.NO</th>
+					<!-- <th scope="col">S.NO</th> -->
+					<th scope="col">ORDER ID</th>
+					<th scope="col">USER ID</th>
 					<th scope="col">BOOK NAME</th>
 					<th scope="col">LANGUAGE</th>
 					<th scope="col">TOTAL BOOKS</th>
 					<th scope="col">COST</th>
-					<th scope="col">OREDR BOOKS</th>
+					<th scope="col">STATUS</th>
+					<th scope="col">ACCEPT</th>
+					<th scope="col">REMOVE</th>
 					
 					<%
-					HttpSession sess = request.getSession();
-					session.setAttribute("JOB", "REMOVE");
+					
 					OrderDao orderDao = new OrderDao();
-					List<Order> orders = OrderDao.getOrder();
+					List<Order> orders = OrderDao.getOrderDetails();
+					
 					int i = 0;
 					for (Order orderDetails : orders) {
 						i++;
 					%>
 				
 				<tr>
-					<td><%=i%></td>
+					<%-- <td><%=i%></td> --%>
+					<td><%=orderDetails.getId() %></td>
+					<td><%=orderDetails.getUserId() %></td>
 					<td><%=orderDetails.getBookName() %></td>
 					<td><%=orderDetails.getLanguage() %></td>
 					<td><%=orderDetails.getNoOfBooks() %></td>
 					<td><%=orderDetails.getCost() %> Rs</td>
+					<td><%=orderDetails.getStatus() %></td>
+					<td><a href="AcceptOrderServlet?orderId=<%=orderDetails.getId() %>" class="btn btn-success">ACCEPT</a></td>
+					<td><a href="RejectOrderServlet?orderId=<%=orderDetails.getId()%>" class="btn btn-danger">REJECT</a></td>
+				<%-- <td><a
+							href="OrderBookServlet?bookName=<%=bookDetails.getBookName()%>"
+							class="btn btn-success">ADD TO CART</a></td> --%>
 					
-				
-					<td><form action="CofirmOrderServlet"> <input type="number" name="noBooks"
-					placeholder="Enter Number of books" id="bookId" required ></td>
-					<td><button class="btn btn-success"  type="submit">Confirm Order</button></td>
-					
-					<td><a href="DeleteBookServlet?bookName=<%=orderDetails.getBookName()%>" class="btn btn-danger">DELETE</a></td>
 				</tr>
-				<%
-				session.setAttribute("bookName",orderDetails.getBookName());
-				%>
-				</form>
+				
 		   <%
 			}
 			%>
 		</thead>
 		</table>
 	
-				 
-		
-    <a href="addCart.jsp" class="btn btn-primary">BUY MORE</a>
-    <a href="displayOrder.jsp" class="btn btn-primary">view</a>
-	
 	
 	</main>
+
 </body>
 </html>

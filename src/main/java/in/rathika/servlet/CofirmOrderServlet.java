@@ -28,13 +28,17 @@ public class CofirmOrderServlet extends HttpServlet {
 			HttpSession session = request.getSession();
 			String bookName = (String) session.getAttribute("bookName");
 			boolean valid = OrderService.validNoOfBooks(bookName, count);
+			System.out.println(valid);
 			int totalCount = OrderService.getUpdatedBooks(bookName);
 			System.out.println("Total from order list" + totalCount);
-
+            
 			boolean updated = OrderDao.updateBooks(bookName, totalCount - count);
+			System.out.println(updated);
 			if (valid && updated) {
-				boolean added = OrderService.addConfrimOrder(bookName, count);
-				
+				HttpSession sess = request.getSession();
+				String userName = (String) sess.getAttribute("LOGGED_IN_USER");
+				boolean added = OrderService.addConfrimOrder(userName,bookName, count);
+				System.out.println(added);
 				if (added) {
 					response.sendRedirect("displayOrder.jsp");
 				} else {

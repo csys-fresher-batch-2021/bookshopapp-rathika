@@ -3,6 +3,7 @@ package in.rathika.service;
 import java.util.List;
 
 import in.rathika.dao.OrderDao;
+import in.rathika.dao.UserDao;
 import in.rathika.model.Order;
 
 public class OrderService {
@@ -26,7 +27,7 @@ public class OrderService {
 		boolean isAdded = false;
 		boolean present = OrderService.isPresent(bookName);
 		List<Order> book = OrderDao.getOrder();
-		book.removeAll(book);
+		book.clear();
 		if (!present || present) {
 			isAdded = true;
 			orderDao.addCart(bookName, language, noOfBooks, cost);
@@ -109,19 +110,28 @@ public class OrderService {
 	 * @return
 	 * @throws Exception
 	 */
-	public static boolean addConfrimOrder(String bookName, int noOfBooks) throws Exception {
+	public static boolean addConfrimOrder(String userName,String bookName, int noOfBooks) throws Exception {
 		boolean isAdd = false;
 		boolean present = OrderService.isPresent(bookName);
+		System.out.println(present);
+		System.out.println(userName);
+		int user = UserDao.getId(userName);
+		System.out.println(user);
+		
 		// boolean ordered = OrderService.isPresentOrder(bookName);
 		for (Order order : OrderDao.getOrder()) {
 			if (present) {
+				
+				int id = order.getId();
 				double cost = order.getCost();
 				String language = order.getLanguage();
-				Order orderObj = new Order(bookName, language, noOfBooks, cost);
+				String status = order.getStatus();
+				Order orderObj = new Order(id,user,bookName, language, noOfBooks, cost,status);
+				
 				OrderDao.saveOrder(orderObj);
 				OrderDao.addConfrimCart(bookName, language, noOfBooks, cost);
+				 //isAdd=OrderDetailsService.addDetails(bookName, language, noOfBooks, cost);
 				isAdd = true;
-				break;
 
 			}
 
@@ -175,10 +185,12 @@ public class OrderService {
 	public static double billCalculation() throws Exception {
 		double total = 0;
 		List<Order> books = OrderDao.getConfrimOrder();
+		
 		for (Order book : books) {
-			
+		   //OrderDetailsDao.addOrderDetails(book.getBookName(),book.getLanguage(),book.getNoOfBooks(),book.getCost());
 			total = total + book.getNoOfBooks() * book.getCost();
 		}
+		//OrderDetailsService.addDetails();
         books.clear();
         
 		return total;
@@ -212,7 +224,7 @@ public class OrderService {
 	 */
 	public static List<Order> getOrderDetails() throws Exception {
 		List<Order> orders = OrderDao.getOrderDetails();
-		orders.removeAll(orders);
+		orders.clear();
 		List<Order> order = OrderDao.getOrderDetails();
 		return order;
 
@@ -260,6 +272,17 @@ public class OrderService {
 
 		}
 		return count1;
+	}
+	
+     
+     public static boolean updateRejectStatus(int orderId) throws Exception {
+		
+		return OrderDao.updateRejectStatus(orderId);
+	}
+	
+	public static boolean updateStatus(int orderId) throws Exception {
+		
+		return OrderDao.updateStatus(orderId);
 	}
 
 }

@@ -1,6 +1,7 @@
 package in.rathika.service;
 
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Map;
 
 import in.rathika.dao.UserDao;
@@ -62,14 +63,20 @@ public class UserService {
      * @throws Exception
      */
 	public static boolean isValidUser(String uemail, String userPassCode) throws Exception {
-           boolean valid = false;	
-		   Map<String,String> loginDetails = UserDao.checkUser(uemail, userPassCode);
-
-		   for (String email : loginDetails.keySet()) {
-				String password = loginDetails.get(email);
-				if(password.matches(userPassCode) && email.matches(uemail)) {
-					valid = true;
-				}
+        boolean valid = false;	
+		   List<User> loginDetails = UserDao.checkUser(uemail, userPassCode);
+           System.out.println(loginDetails);
+		   for (User user : loginDetails) {
+			   if (user.getEmail().equals(uemail)) {
+				   System.out.println("Present");
+				   if (user.getPassword().equals(userPassCode)) {
+					   valid = true;
+					   System.out.println(valid);
+					   break;
+				   }
+				   
+			   }
+			   
 				   
 
 			}
@@ -89,6 +96,7 @@ public class UserService {
 			String password1 = AdminLoginDetails.get(name1);
 			if(password1.matches(password) && name1.matches(name)) {
 				valid = true;
+				break;
 			}
 			   
 

@@ -42,6 +42,7 @@
 		</form>
 		<br /> <a href="view.jsp" class="btn btn-primary">VIEW</a> <a
 			href="display.jsp" class="btn btn-danger">DELETE</a>
+			<a href="viewOrder.jsp" class="btn btn-success">VIEW ORDER</a>
 			<script>
 			
 			function validCost() {

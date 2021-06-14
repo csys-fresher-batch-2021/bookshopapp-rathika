@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import in.rathika.service.OrderDetailsService;
 import in.rathika.service.OrderService;
 
 /**
@@ -20,11 +21,12 @@ public class BillServlet extends HttpServlet {
     @Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
-			double total = OrderService.billCalculation();
-			HttpSession session = request.getSession();
-			if(total!=0 ) {
 			
-				session.setAttribute("TOTAL", total);
+			double total = OrderService.billCalculation();
+			
+			HttpSession session = request.getSession();
+			if(total!=0) {
+			    session.setAttribute("TOTAL", total);
 				response.sendRedirect("bill.jsp");
 			}
 		}catch(Exception e) {

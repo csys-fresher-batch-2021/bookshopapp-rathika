@@ -8,6 +8,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import in.rathika.exception.CannotGetDetailsException;
 import in.rathika.exception.NotAbleToDeleteException;
 import in.rathika.model.Order;
@@ -45,8 +47,10 @@ public class OrderDao {
 	 * List to store confrim order.
 	 */
 	private static final List<Order> confrimOrders = new ArrayList<>();
+	private static final List<Order> userOrders = new ArrayList<>();
     
 	private static final List<Order> orderDetails = new ArrayList<>();
+	private static final List<Order> cartDetails = new ArrayList<>();
 	
 	public static void addConfrimCart(String bookName, String language, int noOfBooks, double cost) {
 
@@ -68,13 +72,14 @@ public class OrderDao {
 		try {
 			con = ConnectionUtil.getConnection();
 			// Step 2: Prepare data
-			String sql = "insert into orderList(bookName,language,noOfBooks,cost) values ( ?,?,?,?)";
+			String sql = "insert into orderList(userid,bookName,language,noOfBooks,cost,status) values (?,?,?,?,?,'pending')";
 			pst = con.prepareStatement(sql);
-
-			pst.setString(1, order.getBookName());
-			pst.setString(2, order.getLanguage());
-			pst.setInt(3, order.getNoOfBooks());
-			pst.setDouble(4, order.getCost());
+			pst.setInt(1, order.getUserId());
+			pst.setString(2, order.getBookName());
+			pst.setString(3, order.getLanguage());
+			pst.setInt(4, order.getNoOfBooks());
+			pst.setDouble(5, order.getCost());
+			//pst.setString(5, order.getStatus());
 			int rows = pst.executeUpdate();
 			System.out.println("No of rows inserted :" + rows);
 		} catch (SQLException e) {
@@ -109,19 +114,24 @@ public class OrderDao {
 		ResultSet rs = null;
 		try {
 
-			String url = "select * from orderList";
+			String url = "select id,userid,bookName,language,noOfBooks,cost,status from orderList ORDER BY bookName";
 			con = ConnectionUtil.getConnection();
 			
 			
 			pst = con.prepareStatement(url);
 			rs = pst.executeQuery();
+			confrimOrders.clear();
 			while (rs.next()) {
+				int id = rs.getInt("id");
+				int userId = rs.getInt("userid");
 				String bookname = rs.getString("bookName");
 				String bookLanguage = rs.getString("language");
 				int noOfBooks = rs.getInt("noOfBooks");
 				double cost = rs.getDouble("cost");
-				confrimOrders.add(new Order(bookname, bookLanguage, noOfBooks, cost));
+				String status = rs.getString("status");
+				confrimOrders.add(new Order(id,userId,bookname, bookLanguage, noOfBooks, cost,status));
 			}
+			
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -129,6 +139,7 @@ public class OrderDao {
 		} finally {
 			ConnectionUtil.close(pst, con);
 		}
+		
 		return confrimOrders;
 	}
 
@@ -178,15 +189,17 @@ public class OrderDao {
 		Connection connection = null;
 		PreparedStatement pst = null;
 
-		boolean isDeleted = false;
+		boolean isUpdated = false;
 		try {
 			connection = ConnectionUtil.getConnection();
 
-			String str = "update bookList set noOfBooks = '" + count + "' where bookName='" + bookName + "'";
+			String str = "update bookList set noOfBooks = ? where bookName=?";
 
 			pst = connection.prepareStatement(str);
+			pst.setInt(1,count);
+			pst.setString(2, bookName);
 			pst.executeUpdate();
-			isDeleted = true;
+			isUpdated = true;
 
 		} catch (SQLException e) {
 
@@ -194,7 +207,7 @@ public class OrderDao {
 		} finally {
 			ConnectionUtil.close(pst, connection);
 		}
-		return isDeleted;
+		return isUpdated;
 
 	}
 
@@ -213,9 +226,10 @@ public class OrderDao {
 		try {
 			connection = ConnectionUtil.getConnection();
 
-			String str = "select noOfBooks from orderList where bookName='" + bookName + "'";
+			String str = "select noOfBooks from orderList where bookName=?";
 
 			pst = connection.prepareStatement(str);
+			pst.setString(1, bookName);
 			ResultSet rs = pst.executeQuery();
 			while (rs.next()) {
 
@@ -282,8 +296,8 @@ public class OrderDao {
 		Connection con = null;
 		PreparedStatement pst = null;
 		try {
-			//confrimOrders.removeAll(confrimOrders);
-			String url = "select * from confrimOrderList";
+			
+			String url = "select bookName,language,noOfBooks,cost from confrimOrderList ORDER BY bookName";
 			con = ConnectionUtil.getConnection();
 			Statement st = con.createStatement();
 			ResultSet rs = st.executeQuery(url);
@@ -336,10 +350,145 @@ public class OrderDao {
 
 		return isDelete;
 	}
-
+    /**
+     * Add orderd Details.
+     * @param bookName
+     * @param language
+     * @param noOfBooks
+     * @param cost
+     */
 	public static void addOrders(String bookName, String language, int noOfBooks, double cost) {
 		orderDetails.add(new Order(bookName, language, noOfBooks, cost));
 		
 	}
+    /**
+     * Add cart details.
+     * @param bookName
+     * @param language
+     * @param noOfBooks
+     * @param cost
+     */
+	public static void addCartDetails(String bookName, String language, int noOfBooks, double cost) {
+		cartDetails.add(new Order(bookName, language, noOfBooks, cost));
+		
+	}
+	/**
+	 * Get Cart Details.
+	 * @return
+	 */
+	public static List<Order> getCartDetails() {
+		return cartDetails;
+	}
+	/**
+	 * Update Order status.
+	 * @param orderId
+	 * @return
+	 * @throws Exception
+	 */
+	public static boolean updateStatus(int orderId) throws Exception {
+		Connection connection = null;
+		PreparedStatement pst = null;
 
+		boolean isUpdated = false;
+		try {
+		
+			
+			connection = ConnectionUtil.getConnection();
+
+			
+			String str = "update orderList set status = 'accepted' where id=?";
+			pst = connection.prepareStatement(str);
+			pst.setInt(1, orderId);
+			pst.executeUpdate();
+			isUpdated = true;
+			
+
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		} finally {
+			ConnectionUtil.close(pst, connection);
+		}
+		return isUpdated;
+
+	}
+	
+	
+    /**
+     * Update order Status.
+     * @param orderId
+     * @return
+     * @throws ClassNotFoundException
+     */
+	public static boolean updateRejectStatus(int orderId) throws ClassNotFoundException {
+		Connection connection = null;
+		PreparedStatement pst = null;
+
+		boolean isUpdated = false;
+		try {
+		
+			
+			connection = ConnectionUtil.getConnection();
+
+			
+			String str = "update orderList set status ='rejected' where id=?" ;
+			pst = connection.prepareStatement(str);
+			
+			pst.setInt(1, orderId);
+			pst.executeUpdate();
+			isUpdated = true;
+
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		} finally {
+			ConnectionUtil.close(pst, connection);
+		}
+		return isUpdated;
+	}
+    /**
+     * Get User Order
+     * @param id
+     * @return
+     * @throws Exception
+     */
+	public static List<Order> getUserOrder(int id) throws Exception {
+		
+		Connection con = null;
+		PreparedStatement pst = null;
+		ResultSet rs = null;
+		try {
+            System.out.println(id);
+			String url = "select * from orderList where userid=?";
+			con = ConnectionUtil.getConnection();
+			
+			
+			pst = con.prepareStatement(url);
+			pst.setInt(1, id);
+			rs = pst.executeQuery();
+			userOrders.clear();
+			while (rs.next()) {
+				int id1 = rs.getInt("id");
+				int userId = rs.getInt("userid");
+				String bookname = rs.getString("bookName");
+				String bookLanguage = rs.getString("language");
+				int noOfBooks = rs.getInt("noOfBooks");
+				double cost = rs.getDouble("cost");
+				String status = rs.getString("status");
+				userOrders.add(new Order(id1,userId,bookname, bookLanguage, noOfBooks, cost,status));
+			}
+			
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+
+		} finally {
+			ConnectionUtil.close(pst, con);
+		}
+		
+		return userOrders;
+	}
+	public static List<Order> saveUserOrder() throws Exception {
+		return userOrders;
+	}
 }

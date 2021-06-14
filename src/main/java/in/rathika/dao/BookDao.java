@@ -122,8 +122,8 @@ public class BookDao {
 		PreparedStatement pst = null;
 		ResultSet rs = null;
 		try {
-            books.removeAll(books);
-			String url = "select * from bookList where noOfBooks>0 ORDER BY bookName";
+            books.clear();
+			String url = "select bookName,language,noOfBooks,cost from bookList where noOfBooks>0 ORDER BY bookName";
 			con = ConnectionUtil.getConnection();
 			
 			pst = con.prepareStatement(url);

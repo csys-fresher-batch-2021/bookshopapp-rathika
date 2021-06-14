@@ -29,8 +29,9 @@ public class UserLoginServlet extends HttpServlet {
 			String userPassCode = request.getParameter("passCode");
 
 			boolean isValidUser = UserService.isValidUser(uemail, userPassCode);
-
+            System.out.println(isValidUser);
 			String uname = UserDao.getValidUser(uemail);
+			System.out.println(uname);
 
 			if (isValidUser) {
 				HttpSession session = request.getSession();

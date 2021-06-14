@@ -5,6 +5,7 @@ public class User {
 	/**
 	 * Declaring required variables.
 	 */
+	private int id;
 	private String name;
 
 	private String email;
@@ -41,6 +42,9 @@ public class User {
 	public String getConfrimPassword() {
 		return confrimPassword;
 	}
+	public int getId() {
+		return id;
+	}
 
 	public String toString() {
 		return "User [name=" + name + ", email=" + email + ", mobile=" + mobile + ", address=" + address + ", age="
@@ -58,10 +62,28 @@ public class User {
 
 	}
 
-	public User(String emailId, long mobile2, String address2) {
+	public User(int id,String emailId, long mobile2, String address2) {
+		this.id = id;
 		this.email = emailId;
 		this.mobile = mobile2;
 		this.address = address2;
+	}
+
+	/*
+	 * public User(String adminname, String pass) { this.name = adminname;
+	 * this.password = pass; }
+	 */
+
+	public User(int userId, String name2) {
+		this.id = userId;
+		this.name = name2;
+		
+	}
+
+	public User(String email, String password) {
+	
+		this.email = email;
+		this.password = password;
 	}
    
 }
