@@ -4,6 +4,7 @@ import java.util.List;
 
 import in.rathika.dao.OrderDao;
 import in.rathika.dao.UserDao;
+import in.rathika.exception.CannotGetDetailsException;
 import in.rathika.model.Order;
 
 public class OrderService {
@@ -25,13 +26,12 @@ public class OrderService {
 	 */
 	public static boolean addOrder(String bookName, String language, int noOfBooks, double cost) {
 		boolean isAdded = false;
-		boolean present = OrderService.isPresent(bookName);
 		List<Order> book = OrderDao.getOrder();
 		book.clear();
-		if (!present || present) {
-			isAdded = true;
-			orderDao.addCart(bookName, language, noOfBooks, cost);
-		}
+		orderDao.addCart(bookName, language, noOfBooks, cost);
+		isAdded = true;
+
+		
 
 		return isAdded;
 	}
@@ -187,7 +187,6 @@ public class OrderService {
 		List<Order> books = OrderDao.getConfrimOrder();
 		
 		for (Order book : books) {
-		   //OrderDetailsDao.addOrderDetails(book.getBookName(),book.getLanguage(),book.getNoOfBooks(),book.getCost());
 			total = total + book.getNoOfBooks() * book.getCost();
 		}
 		//OrderDetailsService.addDetails();
@@ -220,9 +219,11 @@ public class OrderService {
 	 * Get order details.
 	 * 
 	 * @return
+	 * @throws CannotGetDetailsException 
+	 * @throws ClassNotFoundException 
 	 * @throws Exception
 	 */
-	public static List<Order> getOrderDetails() throws Exception {
+	public static List<Order> getOrderDetails() throws ClassNotFoundException, CannotGetDetailsException  {
 		List<Order> orders = OrderDao.getOrderDetails();
 		orders.clear();
 		List<Order> order = OrderDao.getOrderDetails();
@@ -275,12 +276,12 @@ public class OrderService {
 	}
 	
      
-     public static boolean updateRejectStatus(int orderId) throws Exception {
+     public static boolean updateRejectStatus(int orderId) throws ClassNotFoundException, CannotGetDetailsException  {
 		
 		return OrderDao.updateRejectStatus(orderId);
 	}
 	
-	public static boolean updateStatus(int orderId) throws Exception {
+	public static boolean updateStatus(int orderId) throws ClassNotFoundException, CannotGetDetailsException  {
 		
 		return OrderDao.updateStatus(orderId);
 	}

@@ -69,10 +69,7 @@ public class User {
 		this.address = address2;
 	}
 
-	/*
-	 * public User(String adminname, String pass) { this.name = adminname;
-	 * this.password = pass; }
-	 */
+	
 
 	public User(int userId, String name2) {
 		this.id = userId;

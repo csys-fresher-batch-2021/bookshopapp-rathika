@@ -24,7 +24,7 @@ public class BookService {
 	 * @return
 	 * @throws Exception 
 	 */
-	public static boolean addBook(String bookName, String language, int noOfBooks, double cost) throws Exception {
+	public static boolean addBook(String bookName, String language, int noOfBooks, double cost) throws Throwable  {
 		boolean isAdded = false;
 		boolean present = BookService.isPresent(bookName);
 		boolean isValidName = BookValidator.isBookNameValid(bookName);
@@ -46,7 +46,7 @@ public class BookService {
 	 * @return
 	 * @throws Exception 
 	 */
-	public static boolean deleteBook(String bookName) throws Exception {
+	public static boolean deleteBook(String bookName) throws Throwable {
 		
 		boolean deleted = false;
 		if(BookValidator.isBookNameValid(bookName)) {
@@ -64,7 +64,7 @@ public class BookService {
 	 * @return
 	 * @throws Exception 
 	 */
-	public static boolean isPresent(String bookName) throws Exception {
+	public static boolean isPresent(String bookName) throws Throwable {
 		boolean present = false;
 		List<Book> books = BookDao.getBookDetails();
 		for (Book bookDetails : books) {
@@ -104,7 +104,7 @@ public class BookService {
 	 * @return
 	 * @throws Exception 
 	 */
-	public static int getNoOfBooks(String bookName) throws Exception {
+	public static int getNoOfBooks(String bookName) throws Throwable {
 		int noOfBooks = 0;
 		List<Book> books = BookDao.getBookDetails();
 		for (Book bookDetails : books) {
@@ -124,7 +124,7 @@ public class BookService {
 	 * @return
 	 * @throws Exception 
 	 */
-	public static double getBookCost(String bookName) throws Exception {
+	public static double getBookCost(String bookName) throws Throwable {
 		double cost = 0;
 		List<Book> books = BookDao.getBookDetails();
 		for (Book bookDetails : books) {
@@ -210,9 +210,8 @@ public class BookService {
     /**
      * Get the book details.
      * @return
-     * @throws Exception
      */
-	public static List<Book> getBookDetails() throws Exception {
+	public static List<Book> getBookDetails()  {
 		return BookDao.getBook();
 	}
 

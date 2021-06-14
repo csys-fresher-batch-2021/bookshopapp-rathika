@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import in.rathika.exception.NotAbleToDeleteException;
 import in.rathika.service.BookService;
 import in.rathika.service.OrderService;
 
@@ -42,7 +43,7 @@ public class DeleteBookServlet extends HttpServlet {
 
 				}
 			}
-		} catch (Exception e) {
+		} catch (Throwable e) {
 
 			String errorMessage = "Unable to delete book Name";
 			response.sendRedirect("viewCart.jsp?errorMessage=" + errorMessage);
