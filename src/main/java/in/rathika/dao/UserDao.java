@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import in.rathika.exception.CannotGetDetailsException;
 import in.rathika.model.User;
 import in.rathika.util.ConnectionUtil;
 
@@ -24,7 +25,7 @@ public class UserDao {
 	 */
 	private static List<User> loginMap = new ArrayList<>();
 	private static Map<String, String> adminMap = new HashMap<>();
-	private static Map<Integer, String> userMap = new HashMap<>();
+	
 
 	/**
 	 * private constructor.
@@ -37,10 +38,11 @@ public class UserDao {
 	 * Add User Details into database.
 	 * 
 	 * @param user
+	 * @throws ClassNotFoundException 
 	 * @throws Exception
 	 * @throws SQLException
 	 */
-	public static void save(User user) throws Exception {
+	public static void save(User user) throws CannotGetDetailsException, ClassNotFoundException {
 		// Step 1: Get connection
 		Connection con = null;
 		PreparedStatement pst = null;
@@ -59,8 +61,8 @@ public class UserDao {
 		    pst.executeUpdate();
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
-			throw new RuntimeException("Unable to add user");
+			throw new CannotGetDetailsException("Unable to add user");
+			
 		} finally {
 			ConnectionUtil.close(pst, con);
 		}
@@ -84,10 +86,11 @@ public class UserDao {
 	 * @param userEmail
 	 * @param userPassCode
 	 * @return
+	 * @throws ClassNotFoundException 
 	 * @throws Exception
 	 * @throws SQLException
 	 */
-	public static List<User> checkUser(String userEmail, String userPassCode) throws Exception {
+	public static List<User> checkUser(String userEmail, String userPassCode) throws CannotGetDetailsException, ClassNotFoundException {
 		Connection con = null;
 		PreparedStatement pst = null;
 		try {
@@ -103,8 +106,8 @@ public class UserDao {
 
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
-			throw new RuntimeException("Invalid User");
+			throw new CannotGetDetailsException("Invalid User");
+		
 		} finally {
 			ConnectionUtil.close(pst, con);
 		}
@@ -117,10 +120,11 @@ public class UserDao {
 	 * 
 	 * @param emailId
 	 * @return
+	 * @throws ClassNotFoundException 
 	 * @throws Exception
 	 * @throws SQLException
 	 */
-	public static String getValidUser(String emailId) throws Exception {
+	public static String getValidUser(String emailId) throws CannotGetDetailsException, ClassNotFoundException {
 		// Step 1: Get connection
 		String name = null;
 		Connection con = null;
@@ -140,7 +144,7 @@ public class UserDao {
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new CannotGetDetailsException("Invalid User");
 
 		} finally {
 			ConnectionUtil.close(pst, con);
@@ -152,9 +156,10 @@ public class UserDao {
 	 * Get the user Details.
 	 * 
 	 * @return
+	 * @throws ClassNotFoundException 
 	 * @throws Exception
 	 */
-	public List<User> getUserDetails() throws Exception {
+	public List<User> getUserDetails() throws CannotGetDetailsException, ClassNotFoundException {
 		Connection con = null;
 		PreparedStatement pst = null;
 		ResultSet rs = null;
@@ -177,7 +182,7 @@ public class UserDao {
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new CannotGetDetailsException("Invalid User");
 
 		} finally {
 			ConnectionUtil.close(pst, con);
@@ -191,9 +196,10 @@ public class UserDao {
 	 * @param adminName
 	 * @param adminPassCode
 	 * @return
+	 * @throws ClassNotFoundException 
 	 * @throws Exception
 	 */
-	public static Map<String, String> checkAdmin(String adminName, String adminPassCode) throws Exception {
+	public static Map<String, String> checkAdmin(String adminName, String adminPassCode) throws CannotGetDetailsException, ClassNotFoundException {
 		Connection con = null;
 		PreparedStatement pst = null;
 		ResultSet rs = null;
@@ -208,8 +214,7 @@ public class UserDao {
 				adminMap.put(adminname, pass);
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
-			throw new RuntimeException("Invalid User");
+			throw new CannotGetDetailsException("Invalid User");
 		} finally {
 			ConnectionUtil.close(pst, con);
 		}
@@ -221,9 +226,10 @@ public class UserDao {
 	 * 
 	 * @param userName
 	 * @return
+	 * @throws ClassNotFoundException 
 	 * @throws Exception
 	 */
-	public static List<User> getUserDetails(String userName) throws Exception {
+	public static List<User> getUserDetails(String userName) throws CannotGetDetailsException, ClassNotFoundException {
 		Connection con = null;
 		PreparedStatement pst = null;
 		ResultSet rs = null;
@@ -246,7 +252,7 @@ public class UserDao {
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new CannotGetDetailsException("Invalid User");
 
 		} finally {
 			ConnectionUtil.close(pst, con);
@@ -257,9 +263,10 @@ public class UserDao {
 	/**
 	 * Get Id name of the user.
 	 * @return
+	 * @throws ClassNotFoundException 
 	 * @throws Exception
 	 */
-	public static int getId(String userName) throws Exception {
+	public static int getId(String userName) throws CannotGetDetailsException, ClassNotFoundException {
 		int id = 0;
 		Connection con = null;
 		PreparedStatement pst = null;
@@ -281,8 +288,7 @@ public class UserDao {
 				}
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
-			throw new RuntimeException("Invalid User");
+			throw new CannotGetDetailsException("Invalid User");
 		} finally {
 			ConnectionUtil.close(pst, con);
 		}

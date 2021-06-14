@@ -8,8 +8,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
-
 import in.rathika.exception.CannotGetDetailsException;
 import in.rathika.exception.NotAbleToDeleteException;
 import in.rathika.model.Order;
@@ -63,9 +61,10 @@ public class OrderDao {
 	 * Save ordered details into database.
 	 * 
 	 * @param order
+	 * @throws ClassNotFoundException 
 	 * @throws Exception
 	 */
-	public static void saveOrder(Order order) throws Exception {
+	public static void saveOrder(Order order) throws CannotGetDetailsException, ClassNotFoundException {
 		// Step 1: Get connection
 		Connection con = null;
 		PreparedStatement pst = null;
@@ -82,8 +81,7 @@ public class OrderDao {
 			int rows = pst.executeUpdate();
 			System.out.println("No of rows inserted :" + rows);
 		} catch (SQLException e) {
-			e.printStackTrace();
-			throw new RuntimeException("Unable to add user");
+			throw new CannotGetDetailsException("unable to get details");
 		} finally {
 			ConnectionUtil.close(pst, con);
 		}
@@ -95,7 +93,7 @@ public class OrderDao {
 	 * @param orders
 	 * @throws Exception
 	 */
-	public static void save(List<Order> orders) throws Exception {
+	public static void save(List<Order> orders) throws Throwable {
 		for (Order order : orders) {
 			saveOrder(order);
 		}
@@ -105,9 +103,10 @@ public class OrderDao {
 	 * Get ordered details.
 	 * 
 	 * @return
+	 * @throws ClassNotFoundException 
 	 * @throws Exception
 	 */
-	public static List<Order> getOrderDetails() throws Exception {
+	public static List<Order> getOrderDetails() throws CannotGetDetailsException, ClassNotFoundException {
 		Connection con = null;
 		PreparedStatement pst = null;
 		ResultSet rs = null;
@@ -133,7 +132,7 @@ public class OrderDao {
 			
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new CannotGetDetailsException("unable to get details");
 
 		} finally {
 			ConnectionUtil.close(pst, con);
@@ -147,9 +146,11 @@ public class OrderDao {
 	 * 
 	 * @param bookName
 	 * @return
+	 * @throws NotAbleToDeleteException 
+	 * @throws ClassNotFoundException 
 	 * @throws Exception
 	 */
-	public static boolean deleteOrders(String bookName) throws Exception {
+	public static boolean deleteOrders(String bookName) throws CannotGetDetailsException, NotAbleToDeleteException, ClassNotFoundException {
 		boolean isDelete = false;
 		Connection con = null;
 		PreparedStatement pst = null;
@@ -168,7 +169,7 @@ public class OrderDao {
 				throw new NotAbleToDeleteException("Cannot Delete");
 			}
 		} catch (SQLException e) {
-			throw new CannotGetDetailsException(e.getMessage());
+			throw new CannotGetDetailsException("unable to get details");
 		} finally {
 			ConnectionUtil.close(pst, con);
 		}
@@ -184,7 +185,7 @@ public class OrderDao {
 	 * @return
 	 * @throws Exception
 	 */
-	public static boolean updateBooks(String bookName, int count) throws Exception {
+	public static boolean updateBooks(String bookName, int count) throws Throwable {
 		Connection connection = null;
 		PreparedStatement pst = null;
 
@@ -202,7 +203,7 @@ public class OrderDao {
 
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			throw new CannotGetDetailsException("unable to get details");
 		} finally {
 			ConnectionUtil.close(pst, connection);
 		}
@@ -215,9 +216,10 @@ public class OrderDao {
 	 * 
 	 * @param bookName
 	 * @return
+	 * @throws ClassNotFoundException 
 	 * @throws Exception
 	 */
-	public static int getNoOfBooks(String bookName) throws Exception {
+	public static int getNoOfBooks(String bookName) throws CannotGetDetailsException, ClassNotFoundException {
 		Connection connection = null;
 		PreparedStatement pst = null;
 
@@ -238,7 +240,7 @@ public class OrderDao {
 
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			throw new CannotGetDetailsException("unable to get details");
 		} finally {
 			ConnectionUtil.close(pst, connection);
 		}
@@ -248,9 +250,10 @@ public class OrderDao {
 	/**
 	 * Get order
 	 * @param order
+	 * @throws ClassNotFoundException 
 	 * @throws Exception
 	 */
-	public static void confrimOrder(Order order) throws Exception {
+	public static void confrimOrder(Order order) throws CannotGetDetailsException, ClassNotFoundException {
 		// Step 1: Get connection
 		Connection con = null;
 		PreparedStatement pst = null;
@@ -267,8 +270,7 @@ public class OrderDao {
 			pst.executeUpdate();
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
-			throw new RuntimeException("Unable to add user");
+			throw new CannotGetDetailsException("unable to insert details");
 		} finally {
 			ConnectionUtil.close(pst, con);
 		}
@@ -280,7 +282,7 @@ public class OrderDao {
 	 * @param orders
 	 * @throws Exception
 	 */
-	public static void saveConfrimOrder(List<Order> orders) throws Exception {
+	public static void saveConfrimOrder(List<Order> orders) throws Throwable {
 		for (Order order : orders) {
 			confrimOrder(order);
 		}
@@ -289,9 +291,10 @@ public class OrderDao {
 	 * Get the book details from Data Base.
 	 * 
 	 * @return
+	 * @throws ClassNotFoundException 
 	 * @throws Exception
 	 */
-	public static List<Order> getConfrimDetails() throws Exception {
+	public static List<Order> getConfrimDetails() throws CannotGetDetailsException, ClassNotFoundException{
 		Connection con = null;
 		PreparedStatement pst = null;
 		try {
@@ -310,7 +313,7 @@ public class OrderDao {
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new CannotGetDetailsException("unable to get details");
 
 		} finally {
 			ConnectionUtil.close(pst, con);
@@ -321,9 +324,11 @@ public class OrderDao {
      * Delete Book from confrim order list.
      * @param bookName
      * @return
+     * @throws CannotGetDetailsException 
+     * @throws ClassNotFoundException 
      * @throws Exception
      */
-	public static boolean deleteConfrimOrders(String bookName) throws Exception {
+	public static boolean deleteConfrimOrders(String bookName) throws NotAbleToDeleteException, CannotGetDetailsException, ClassNotFoundException {
 		boolean isDelete = false;
 		Connection con = null;
 		PreparedStatement pst = null;
@@ -342,7 +347,7 @@ public class OrderDao {
 				throw new NotAbleToDeleteException("Cannot Delete");
 			}
 		} catch (SQLException e) {
-			throw new CannotGetDetailsException(e.getMessage());
+			throw new CannotGetDetailsException("unable to delete");
 		} finally {
 			ConnectionUtil.close(pst, con);
 		}
@@ -382,9 +387,10 @@ public class OrderDao {
 	 * Update Order status.
 	 * @param orderId
 	 * @return
+	 * @throws ClassNotFoundException 
 	 * @throws Exception
 	 */
-	public static boolean updateStatus(int orderId) throws Exception {
+	public static boolean updateStatus(int orderId) throws CannotGetDetailsException, ClassNotFoundException {
 		Connection connection = null;
 		PreparedStatement pst = null;
 
@@ -404,7 +410,8 @@ public class OrderDao {
 
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			throw new CannotGetDetailsException("Unable to update");
+
 		} finally {
 			ConnectionUtil.close(pst, connection);
 		}
@@ -418,8 +425,9 @@ public class OrderDao {
      * @param orderId
      * @return
      * @throws ClassNotFoundException
+     * @throws CannotGetDetailsException 
      */
-	public static boolean updateRejectStatus(int orderId) throws ClassNotFoundException {
+	public static boolean updateRejectStatus(int orderId) throws ClassNotFoundException, CannotGetDetailsException {
 		Connection connection = null;
 		PreparedStatement pst = null;
 
@@ -439,7 +447,8 @@ public class OrderDao {
 
 		} catch (SQLException e) {
 
-			e.printStackTrace();
+			throw new CannotGetDetailsException("Unable update");
+
 		} finally {
 			ConnectionUtil.close(pst, connection);
 		}
@@ -449,9 +458,10 @@ public class OrderDao {
      * Get User Order
      * @param id
      * @return
+     * @throws ClassNotFoundException 
      * @throws Exception
      */
-	public static List<Order> getUserOrder(int id) throws Exception {
+	public static List<Order> getUserOrder(int id) throws CannotGetDetailsException, ClassNotFoundException {
 		
 		Connection con = null;
 		PreparedStatement pst = null;
@@ -479,7 +489,7 @@ public class OrderDao {
 			
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new CannotGetDetailsException("Unable get user");
 
 		} finally {
 			ConnectionUtil.close(pst, con);
@@ -487,7 +497,7 @@ public class OrderDao {
 		
 		return userOrders;
 	}
-	public static List<Order> saveUserOrder() throws Exception {
+	public static List<Order> saveUserOrder() throws Throwable {
 		return userOrders;
 	}
 }

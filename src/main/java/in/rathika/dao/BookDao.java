@@ -73,15 +73,16 @@ public class BookDao {
 	 * Insert book details into DataBase.
 	 * 
 	 * @param book
+	 * @throws ClassNotFoundException 
 	 * @throws Exception
 	 */
-	public static void saveBook(Book book) throws Exception {
+	public static void saveBook(Book book) throws  CannotGetDetailsException, ClassNotFoundException {
 		// Step 1: Get connection
 		Connection con = null;
 		PreparedStatement pst = null;
 		try {
 			con = ConnectionUtil.getConnection();
-			// Step 2: Prepare data
+		
 			String sql = "insert into bookList(bookName,language,noOfBooks,cost) values ( ?,?,?,?)";
 			pst = con.prepareStatement(sql);
 
@@ -92,8 +93,7 @@ public class BookDao {
 			pst.executeUpdate();
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
-			throw new RuntimeException("Unable to add user");
+			throw new CannotGetDetailsException(e.getMessage());
 		} finally {
 			ConnectionUtil.close(pst, con);
 		}
@@ -105,7 +105,7 @@ public class BookDao {
 	 * @param bookss
 	 * @throws Exception
 	 */
-	public static void save(List<Book> books) throws Exception {
+	public static void save(List<Book> books) throws Throwable {
 		for (Book book : books) {
 			saveBook(book);
 		}
@@ -115,9 +115,10 @@ public class BookDao {
 	 * Get the book details from Data Base.
 	 * 
 	 * @return
+	 * @throws ClassNotFoundException 
 	 * @throws Exception
 	 */
-	public static List<Book> getBookDetails() throws Exception {
+	public static List<Book> getBookDetails() throws CannotGetDetailsException, ClassNotFoundException {
 		Connection con = null;
 		PreparedStatement pst = null;
 		ResultSet rs = null;
@@ -139,7 +140,7 @@ public class BookDao {
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new CannotGetDetailsException(e.getMessage());
 
 		} finally {
 			ConnectionUtil.close(pst, con);
@@ -152,9 +153,11 @@ public class BookDao {
 	 * 
 	 * @param bookName
 	 * @return
+	 * @throws ClassNotFoundException 
+	 * @throws NotAbleToDeleteException 
 	 * @throws Exception
 	 */
-	public static boolean deleteBooks(String bookName) throws Exception {
+	public static boolean deleteBooks(String bookName) throws CannotGetDetailsException, ClassNotFoundException, NotAbleToDeleteException {
 
 		boolean isDelete = false;
 		Connection con = null;
