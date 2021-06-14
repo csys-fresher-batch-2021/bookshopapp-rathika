@@ -64,11 +64,10 @@ public class UserService {
      */
 	public static boolean isValidUser(String uemail, String userPassCode) throws Exception {
         boolean valid = false;	
-		   List<User> loginDetails = UserDao.checkUser(uemail, userPassCode);
-           System.out.println(loginDetails);
+		   List<User> loginDetails = UserDao.checkUser();
 		   for (User user : loginDetails) {
 			   if (user.getEmail().equals(uemail)) {
-				   System.out.println("Present");
+				
 				   if (user.getPassword().equals(userPassCode)) {
 					   valid = true;
 					   System.out.println(valid);
@@ -91,7 +90,7 @@ public class UserService {
 	 */
     public static boolean isValidAdmin(String name,String password) throws Exception{
 		boolean valid = false;
-		Map<String,String> AdminLoginDetails = UserDao.checkAdmin(name, password);
+		Map<String,String> AdminLoginDetails = UserDao.checkAdmin();
 		for (String name1 : AdminLoginDetails.keySet()) {
 			String password1 = AdminLoginDetails.get(name1);
 			if(password1.matches(password) && name1.matches(name)) {

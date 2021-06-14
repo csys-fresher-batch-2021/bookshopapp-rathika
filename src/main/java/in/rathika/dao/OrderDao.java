@@ -78,8 +78,8 @@ public class OrderDao {
 			pst.setString(3, order.getLanguage());
 			pst.setInt(4, order.getNoOfBooks());
 			pst.setDouble(5, order.getCost());
-			int rows = pst.executeUpdate();
-			System.out.println("No of rows inserted :" + rows);
+			pst.executeUpdate();
+
 		} catch (SQLException e) {
 			throw new CannotGetDetailsException("unable to get details");
 		} finally {
@@ -132,7 +132,7 @@ public class OrderDao {
 			
 
 		} catch (SQLException e) {
-			throw new CannotGetDetailsException("unable to get details");
+			throw new CannotGetDetailsException("unable select details");
 
 		} finally {
 			ConnectionUtil.close(pst, con);
@@ -169,7 +169,7 @@ public class OrderDao {
 				throw new NotAbleToDeleteException("Cannot Delete");
 			}
 		} catch (SQLException e) {
-			throw new CannotGetDetailsException("unable to get details");
+			throw new CannotGetDetailsException("unable to get details to delete");
 		} finally {
 			ConnectionUtil.close(pst, con);
 		}
@@ -203,7 +203,7 @@ public class OrderDao {
 
 		} catch (SQLException e) {
 
-			throw new CannotGetDetailsException("unable to get details");
+			throw new CannotGetDetailsException("unable to get details to update books");
 		} finally {
 			ConnectionUtil.close(pst, connection);
 		}
@@ -240,7 +240,7 @@ public class OrderDao {
 
 		} catch (SQLException e) {
 
-			throw new CannotGetDetailsException("unable to get details");
+			throw new CannotGetDetailsException("unable to get noOfBooks");
 		} finally {
 			ConnectionUtil.close(pst, connection);
 		}
@@ -270,7 +270,7 @@ public class OrderDao {
 			pst.executeUpdate();
 			
 		} catch (SQLException e) {
-			throw new CannotGetDetailsException("unable to insert details");
+			throw new CannotGetDetailsException("unable to get details to insert");
 		} finally {
 			ConnectionUtil.close(pst, con);
 		}
@@ -280,9 +280,11 @@ public class OrderDao {
 	 * save the ordered details.
 	 * 
 	 * @param orders
+	 * @throws CannotGetDetailsException 
+	 * @throws ClassNotFoundException 
 	 * @throws Exception
 	 */
-	public static void saveConfrimOrder(List<Order> orders) throws Throwable {
+	public static void saveConfrimOrder(List<Order> orders) throws ClassNotFoundException, CannotGetDetailsException {
 		for (Order order : orders) {
 			confrimOrder(order);
 		}
@@ -313,7 +315,7 @@ public class OrderDao {
 			}
 
 		} catch (SQLException e) {
-			throw new CannotGetDetailsException("unable to get details");
+			throw new CannotGetDetailsException("unable to select ordered details");
 
 		} finally {
 			ConnectionUtil.close(pst, con);
@@ -347,7 +349,7 @@ public class OrderDao {
 				throw new NotAbleToDeleteException("Cannot Delete");
 			}
 		} catch (SQLException e) {
-			throw new CannotGetDetailsException("unable to delete");
+			throw new CannotGetDetailsException("unable to delete details");
 		} finally {
 			ConnectionUtil.close(pst, con);
 		}
@@ -410,7 +412,7 @@ public class OrderDao {
 
 		} catch (SQLException e) {
 
-			throw new CannotGetDetailsException("Unable to update");
+			throw new CannotGetDetailsException("Unable to update status");
 
 		} finally {
 			ConnectionUtil.close(pst, connection);
@@ -447,7 +449,7 @@ public class OrderDao {
 
 		} catch (SQLException e) {
 
-			throw new CannotGetDetailsException("Unable update");
+			throw new CannotGetDetailsException("Unable to update status details");
 
 		} finally {
 			ConnectionUtil.close(pst, connection);
@@ -467,7 +469,7 @@ public class OrderDao {
 		PreparedStatement pst = null;
 		ResultSet rs = null;
 		try {
-            System.out.println(id);
+           
 			String url = "select * from orderList where userid=?";
 			con = ConnectionUtil.getConnection();
 			
@@ -489,7 +491,7 @@ public class OrderDao {
 			
 
 		} catch (SQLException e) {
-			throw new CannotGetDetailsException("Unable get user");
+			throw new CannotGetDetailsException("Unable get user order");
 
 		} finally {
 			ConnectionUtil.close(pst, con);
@@ -497,7 +499,7 @@ public class OrderDao {
 		
 		return userOrders;
 	}
-	public static List<Order> saveUserOrder() throws Throwable {
+	public static List<Order> saveUserOrder() {
 		return userOrders;
 	}
 }

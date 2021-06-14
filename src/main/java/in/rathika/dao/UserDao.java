@@ -90,7 +90,7 @@ public class UserDao {
 	 * @throws Exception
 	 * @throws SQLException
 	 */
-	public static List<User> checkUser(String userEmail, String userPassCode) throws CannotGetDetailsException, ClassNotFoundException {
+	public static List<User> checkUser() throws CannotGetDetailsException, ClassNotFoundException {
 		Connection con = null;
 		PreparedStatement pst = null;
 		try {
@@ -199,7 +199,7 @@ public class UserDao {
 	 * @throws ClassNotFoundException 
 	 * @throws Exception
 	 */
-	public static Map<String, String> checkAdmin(String adminName, String adminPassCode) throws CannotGetDetailsException, ClassNotFoundException {
+	public static Map<String, String> checkAdmin() throws CannotGetDetailsException, ClassNotFoundException {
 		Connection con = null;
 		PreparedStatement pst = null;
 		ResultSet rs = null;
