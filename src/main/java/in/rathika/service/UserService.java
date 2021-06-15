@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import in.rathika.dao.UserDao;
+import in.rathika.exception.CannotGetDetailsException;
 import in.rathika.model.User;
 import in.rathika.validator.UserValidator;
 
@@ -36,7 +37,7 @@ public class UserService {
 	 * @throws SQLException 
 	 */
 	public boolean addDetails(String name, String email, Long mobileNum, String address, int age, String password,
-			String confrimPassword) throws Exception {
+			String confrimPassword) throws CannotGetDetailsException, ClassNotFoundException {
 		boolean registerd = false;
 		User regObj = new User(name, email, mobileNum, address, age, password);
 		boolean nameValid = validatorObj.isNameValid(name);
@@ -62,7 +63,7 @@ public class UserService {
      * @return
      * @throws Exception
      */
-	public static boolean isValidUser(String uemail, String userPassCode) throws Exception {
+	public static boolean isValidUser(String uemail, String userPassCode) throws CannotGetDetailsException, ClassNotFoundException {
         boolean valid = false;	
 		   List<User> loginDetails = UserDao.checkUser();
 		   for (User user : loginDetails) {
@@ -85,7 +86,7 @@ public class UserService {
 	 * @return
 	 * @throws Exception
 	 */
-    public static boolean isValidAdmin(String name,String password) throws Exception{
+    public static boolean isValidAdmin(String name,String password) throws CannotGetDetailsException, ClassNotFoundException{
 		boolean valid = false;
 		Map<String,String> AdminLoginDetails = UserDao.checkAdmin();
 		for (String name1 : AdminLoginDetails.keySet()) {

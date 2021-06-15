@@ -47,10 +47,7 @@ public class CofirmOrderServlet extends HttpServlet {
 			}
 		} catch (Exception e) {
 			response.sendRedirect("viewCart.jsp?errorMessage=Invalid No Of Books");
-		} catch (Throwable e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		} 
 
 	}
 

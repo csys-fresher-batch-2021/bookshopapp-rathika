@@ -3,6 +3,8 @@ package in.rathika.service;
 import java.util.List;
 
 import in.rathika.dao.BookDao;
+import in.rathika.exception.CannotGetDetailsException;
+import in.rathika.exception.NotAbleToDeleteException;
 import in.rathika.model.Book;
 import in.rathika.validator.BookValidator;
 
@@ -22,9 +24,10 @@ public class BookService {
 	 * @param noOfBooks
 	 * @param cost
 	 * @return
+	 * @throws Throwable 
 	 * @throws Exception 
 	 */
-	public static boolean addBook(String bookName, String language, int noOfBooks, double cost) throws Throwable  {
+	public static boolean addBook(String bookName, String language, int noOfBooks, double cost) throws CannotGetDetailsException, ClassNotFoundException  {
 		boolean isAdded = false;
 		boolean present = BookService.isPresent(bookName);
 		boolean isValidName = BookValidator.isBookNameValid(bookName);
@@ -44,9 +47,10 @@ public class BookService {
 	 * 
 	 * @param bookName
 	 * @return
+	 * @throws NotAbleToDeleteException 
 	 * @throws Exception 
 	 */
-	public static boolean deleteBook(String bookName) throws Throwable {
+	public static boolean deleteBook(String bookName) throws CannotGetDetailsException, ClassNotFoundException, NotAbleToDeleteException {
 		
 		boolean deleted = false;
 		if(BookValidator.isBookNameValid(bookName)) {
@@ -64,7 +68,7 @@ public class BookService {
 	 * @return
 	 * @throws Exception 
 	 */
-	public static boolean isPresent(String bookName) throws Throwable {
+	public static boolean isPresent(String bookName) throws CannotGetDetailsException, ClassNotFoundException {
 		boolean present = false;
 		List<Book> books = BookDao.getBookDetails();
 		for (Book bookDetails : books) {
@@ -104,7 +108,7 @@ public class BookService {
 	 * @return
 	 * @throws Exception 
 	 */
-	public static int getNoOfBooks(String bookName) throws Throwable {
+	public static int getNoOfBooks(String bookName) throws CannotGetDetailsException, ClassNotFoundException {
 		int noOfBooks = 0;
 		List<Book> books = BookDao.getBookDetails();
 		for (Book bookDetails : books) {
@@ -124,7 +128,7 @@ public class BookService {
 	 * @return
 	 * @throws Exception 
 	 */
-	public static double getBookCost(String bookName) throws Throwable {
+	public static double getBookCost(String bookName) throws CannotGetDetailsException, ClassNotFoundException {
 		double cost = 0;
 		List<Book> books = BookDao.getBookDetails();
 		for (Book bookDetails : books) {

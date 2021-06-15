@@ -240,32 +240,7 @@ public class OrderService {
 
 	}
 
-	/**
-	 * Delete Book from Order List.
-	 * 
-	 * @param bookName
-	 * @return
-	 */
-	public static boolean deleteBookOrder(String bookName) {
-		boolean isDeleted = false;
-		Order searchbook = null;
-		List<Order> books = OrderDao.getOrder();
-		for (Order order : books) {
-			if (order.getBookName().equalsIgnoreCase(bookName)) {
-				searchbook = order;
-				break;
-			}
-		}
-
-		if (searchbook != null) {
-			books.remove(searchbook);
-			isDeleted = true;
-
-		}
-		return isDeleted;
-	}
-
-	/**
+    /**
 	 * Get No of books for update.
 	 * 
 	 * @param bookName

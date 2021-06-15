@@ -55,7 +55,6 @@
 			%>
 			<thead>
 				<tr>
-					<!-- <th scope="col">S.NO</th> -->
 					<th scope="col">ORDER ID</th>
 					<th scope="col">USER ID</th>
 					<th scope="col">USER NAME</th>

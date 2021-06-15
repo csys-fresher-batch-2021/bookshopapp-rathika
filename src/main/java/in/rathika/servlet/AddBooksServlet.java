@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import in.rathika.exception.CannotGetDetailsException;
 import in.rathika.service.BookService;
 
 /**
@@ -43,8 +44,6 @@ public class AddBooksServlet extends HttpServlet {
 		} catch (Exception e) {
 			response.sendRedirect("addBookDetails.jsp?errorMessage=Not able to add");
 
-		} catch (Throwable e) {
-			response.sendRedirect("addBookDetails.jsp?errorMessage=Not able to add");
 		}
 
 	}

@@ -4,12 +4,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 import in.rathika.exception.CannotGetDetailsException;
+import in.rathika.exception.DBException;
 import in.rathika.exception.NotAbleToDeleteException;
 import in.rathika.model.Order;
 import in.rathika.util.ConnectionUtil;
@@ -67,7 +67,7 @@ public class OrderDao {
 	 * @throws ClassNotFoundException
 	 * @throws Exception
 	 */
-	public static void saveOrder(Order order) throws CannotGetDetailsException, ClassNotFoundException {
+	public static void saveOrder(Order order) throws CannotGetDetailsException, DBException, ClassNotFoundException {
 		// Step 1: Get connection
 		Connection con = null;
 		PreparedStatement pst = null;
@@ -85,7 +85,7 @@ public class OrderDao {
 			pst.setObject(7, order.getOrderDate());
 			pst.setObject(8, order.getDeliveryDate());
 
-			int row = pst.executeUpdate();
+			pst.executeUpdate();
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -99,9 +99,10 @@ public class OrderDao {
 	 * save the ordered details.
 	 * 
 	 * @param orders
+	 * @throws DBException 
 	 * @throws Exception
 	 */
-	public static void save(List<Order> orders) throws Throwable {
+	public static void save(List<Order> orders) throws CannotGetDetailsException, ClassNotFoundException, DBException {
 		for (Order order : orders) {
 			saveOrder(order);
 		}
@@ -162,7 +163,7 @@ public class OrderDao {
 	 * @throws Exception
 	 */
 	public static boolean deleteOrders(String bookName)
-			throws CannotGetDetailsException, NotAbleToDeleteException, ClassNotFoundException {
+			throws CannotGetDetailsException, NotAbleToDeleteException, ClassNotFoundException,DBException {
 		boolean isDelete = false;
 		Connection con = null;
 		PreparedStatement pst = null;
@@ -195,9 +196,10 @@ public class OrderDao {
 	 * @param bookName
 	 * @param count
 	 * @return
+	 * @throws ClassNotFoundException 
 	 * @throws Exception
 	 */
-	public static boolean updateBooks(String bookName, int count) throws Throwable {
+	public static boolean updateBooks(String bookName, int count) throws DBException, ClassNotFoundException {
 		Connection connection = null;
 		PreparedStatement pst = null;
 
@@ -215,7 +217,7 @@ public class OrderDao {
 
 		} catch (SQLException e) {
 
-			throw new CannotGetDetailsException("unable to get details to update books");
+			throw new DBException("unable to get details to update books");
 		} finally {
 			ConnectionUtil.close(pst, connection);
 		}

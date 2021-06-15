@@ -74,7 +74,7 @@ public class UserDao {
 	 * @param users
 	 * @throws Exception
 	 */
-	public static void save(List<User> users) throws Exception {
+	public static void save(List<User> users) throws CannotGetDetailsException, ClassNotFoundException {
 		for (User user : users) {
 			save(user);
 		}
