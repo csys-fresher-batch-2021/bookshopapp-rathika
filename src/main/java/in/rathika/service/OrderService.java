@@ -6,6 +6,7 @@ import java.util.List;
 import in.rathika.dao.OrderDao;
 import in.rathika.dao.UserDao;
 import in.rathika.exception.CannotGetDetailsException;
+import in.rathika.exception.NotAbleToDeleteException;
 import in.rathika.model.Order;
 
 public class OrderService {
@@ -118,7 +119,7 @@ public class OrderService {
 		int user = UserDao.getId(userName);
 		
 		
-		// boolean ordered = OrderService.isPresentOrder(bookName);
+		
 		for (Order order : OrderDao.getOrder()) {
 			if (present) {
 				
@@ -176,9 +177,10 @@ public class OrderService {
 	 * 
 	 * @param bookName
 	 * @return
+	 * @throws NotAbleToDeleteException 
 	 * @throws Exception
 	 */
-	public static boolean deleteCart(String bookName) throws Exception {
+	public static boolean deleteCart(String bookName) throws CannotGetDetailsException, ClassNotFoundException, NotAbleToDeleteException {
 
 		return OrderDao.deleteOrders(bookName.trim());
 	}
@@ -189,7 +191,7 @@ public class OrderService {
 	 * @return
 	 * @throws Exception
 	 */
-	public static double billCalculation() throws Exception {
+	public static double billCalculation() throws CannotGetDetailsException, ClassNotFoundException {
 		double total = 0;
 		
 		List<Order> books = OrderDao.getConfrimOrder();
@@ -197,7 +199,7 @@ public class OrderService {
 		for (Order book : books) {
 			total = total + book.getNoOfBooks() * book.getCost();
 		}
-		//OrderDetailsService.addDetails();
+	
 		
         books.clear();
         
@@ -211,7 +213,7 @@ public class OrderService {
 	 * @return
 	 * @throws Exception
 	 */
-	public static boolean isPresentOrder(String bookName) throws Exception {
+	public static boolean isPresentOrder(String bookName) throws CannotGetDetailsException, ClassNotFoundException {
 		boolean present = false;
 		List<Order> orders = OrderService.getOrderDetails();
 		for (Order orderDetails : orders) {

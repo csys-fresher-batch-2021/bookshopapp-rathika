@@ -40,7 +40,7 @@ public class OrderBookServlet extends HttpServlet {
 				}
 
 			
-		} catch (Throwable e) {
+		} catch (Exception e) {
 			response.sendRedirect("addCart.jsp?errorMessage=Unable to add");
 		}
 

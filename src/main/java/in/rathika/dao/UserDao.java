@@ -94,10 +94,10 @@ public class UserDao {
 		Connection con = null;
 		PreparedStatement pst = null;
 		try {
-			String url = "select email,password from userList";
+			String sql = "select email,password from userList";
 			con = ConnectionUtil.getConnection();
 			Statement st = con.createStatement();
-			ResultSet rs = st.executeQuery(url);
+			ResultSet rs = st.executeQuery(sql);
 			while (rs.next()) {
 				String uemail = rs.getString("email");
 				String pass = rs.getString("password");
@@ -131,9 +131,9 @@ public class UserDao {
 		PreparedStatement pst = null;
 		ResultSet rs = null;
 		try {
-			String url = "select username, email from userList";
+			String sql = "select username, email from userList";
 			con = ConnectionUtil.getConnection();
-			pst = con.prepareStatement(url);
+			pst = con.prepareStatement(sql);
 			rs = pst.executeQuery();
 			while (rs.next()) {
 				String uname = rs.getString("username");
@@ -164,10 +164,10 @@ public class UserDao {
 		PreparedStatement pst = null;
 		ResultSet rs = null;
 		try {
-			String url = "select * from userList";
+			String sql = "select * from userList";
 			con = ConnectionUtil.getConnection();
 
-			pst = con.prepareStatement(url);
+			pst = con.prepareStatement(sql);
 			rs = pst.executeQuery();
 			while (rs.next()) {
 				String uname = rs.getString("username");
@@ -204,9 +204,9 @@ public class UserDao {
 		PreparedStatement pst = null;
 		ResultSet rs = null;
 		try {
-			String url = "select * from adminLogin";
+			String sql = "select * from adminLogin";
 			con = ConnectionUtil.getConnection();
-			pst = con.prepareStatement(url);
+			pst = con.prepareStatement(sql);
 			rs = pst.executeQuery();
 			while (rs.next()) {
 				String adminname = rs.getString("adminName");
@@ -235,10 +235,10 @@ public class UserDao {
 		ResultSet rs = null;
 		try {
 
-			String url = "select id,email,mobileNumber,address from userList where username='" + userName
+			String sql = "select id,email,mobileNumber,address from userList where username='" + userName
 					+ "' ORDER BY userName";
 			con = ConnectionUtil.getConnection();
-			pst = con.prepareStatement(url);
+			pst = con.prepareStatement(sql);
 			rs = pst.executeQuery();
 
 			while (rs.next()) {
@@ -272,10 +272,10 @@ public class UserDao {
 		PreparedStatement pst = null;
 		ResultSet rs = null;
 		try {
-			String url = "select id,username from userList ";
+			String sql = "select id,username from userList ";
 			con = ConnectionUtil.getConnection();
 			
-            pst = con.prepareStatement(url);
+            pst = con.prepareStatement(sql);
 			
             rs = pst.executeQuery();
 

@@ -3,7 +3,6 @@ package in.rathika.validator;
 import java.util.List;
 
 import in.rathika.dao.BookDao;
-import in.rathika.exception.CannotGetDetailsException;
 import in.rathika.model.Book;
 
 public class BookValidator {
@@ -63,7 +62,7 @@ public class BookValidator {
 		}
 		return valid;
 	}
-	public static boolean isBookPresent(String bookName) throws CannotGetDetailsException, ClassNotFoundException {
+	public static boolean isBookPresent(String bookName)  {
 		List<Book> bookDetails = BookDao.getBook();
 		boolean exists = false;
 		

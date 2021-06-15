@@ -163,7 +163,7 @@ public class OrderDao {
 	 * @throws Exception
 	 */
 	public static boolean deleteOrders(String bookName)
-			throws CannotGetDetailsException, NotAbleToDeleteException, ClassNotFoundException,DBException {
+			throws CannotGetDetailsException, NotAbleToDeleteException, ClassNotFoundException {
 		boolean isDelete = false;
 		Connection con = null;
 		PreparedStatement pst = null;

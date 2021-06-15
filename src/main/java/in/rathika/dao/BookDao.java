@@ -105,7 +105,7 @@ public class BookDao {
 	 * @param bookss
 	 * @throws Exception
 	 */
-	public static void save(List<Book> books) throws Throwable {
+	public static void save(List<Book> books) throws CannotGetDetailsException, ClassNotFoundException {
 		for (Book book : books) {
 			saveBook(book);
 		}

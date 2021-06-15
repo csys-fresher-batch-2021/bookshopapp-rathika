@@ -67,12 +67,12 @@ public class UserService {
         boolean valid = false;	
 		   List<User> loginDetails = UserDao.checkUser();
 		   for (User user : loginDetails) {
-			   if (user.getEmail().equals(uemail)) {
+			   if (user.getEmail().equals(uemail) && user.getPassword().equals(userPassCode) ) {
 				
-				   if (user.getPassword().equals(userPassCode)) {
+				   
 					   valid = true;
 					   break;
-				   }
+				   
 				   
 			   }
 			   
