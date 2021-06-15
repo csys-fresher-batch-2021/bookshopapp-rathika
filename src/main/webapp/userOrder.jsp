@@ -2,6 +2,7 @@
 	pageEncoding="ISO-8859-1"%>
 <%@page import="java.util.List"%>
 <%@ page import="in.rathika.model.Order"%>
+    <%@page import="java.time.format.DateTimeFormatter"%>
 <%@ page import="in.rathika.dao.OrderDao"%>
 <%@ page import="in.rathika.dao.UserDao"%>
 <%@ page import="in.rathika.service.OrderService"%>
@@ -57,15 +58,22 @@
 			<h3>Books</h3>
 			<table class="table table-bordered" id="books">
 				<caption></caption>
+				<%
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/YYYY");
+		
+			%>
 				<thead>
 					<tr>
 						<th scope="col">S.NO</th>
 						<th scope="col">ORDER ID</th>
 						<th scope="col"> USER ID</th>
+						<th scope="col"> USER NAME</th>
 						<th scope="col">BOOK NAME</th>
 						<th scope="col">LANGUAGE</th>
 						<th scope="col">TOTAL BOOKS</th>
-						<th scope="col">COST</th>
+						<th scope="col">PRICE</th>
+						<th scope="col">ORDER DATE</th>
+						<th scope="col">DELIVERY DATE</th>
 						<th scope="col">STATUS</th>
 
 					</tr>
@@ -74,11 +82,8 @@
 					OrderDao orderDao = new OrderDao();
 					HttpSession sess = request.getSession();
 					String userName = (String) sess.getAttribute("LOGGED_IN_USER");
-					System.out.println(userName);
 					int id = UserDao.getId(userName);
-					System.out.println(id);
 					List<Order> orders = OrderDao.getUserOrder(id);
-					System.out.println(orders);
 					int i = 0;
 					for (Order orderDetails : orders) {
 						i++;
@@ -88,10 +93,13 @@
 						<td><%=i%></td>
 						<td><%=orderDetails.getId() %></td>
 						<td><%=orderDetails.getUserId() %></td>
+						<td><%=orderDetails.getUserName() %></td>
 						<td><%=orderDetails.getBookName()%></td>
 						<td><%=orderDetails.getLanguage()%></td>
 						<td><%=orderDetails.getNoOfBooks()%></td>
 						<td><%=orderDetails.getCost() %></td>
+						<td><%=formatter.format(orderDetails.getOrderDate()) %> </td>
+					    <td><%=formatter.format(orderDetails.getDeliveryDate()) %> </td>
 						<td><%=orderDetails.getStatus() %></td>
 						
 					</tr>

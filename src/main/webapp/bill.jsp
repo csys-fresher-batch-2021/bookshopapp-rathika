@@ -14,6 +14,14 @@
 <meta charset="ISO-8859-1">
 <title>Bill Estimation</title>
 </head>
+<style>
+#heading{
+  color:#04AA6D;
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+</style>
 <body>
 <jsp:include page="header.jsp"></jsp:include>
 	<main class="container-fluid">
@@ -23,7 +31,7 @@
 	Double total = (Double) session.getAttribute("TOTAL");
 	String timeStamp = new SimpleDateFormat("dd-MM-yyy  HH:mm:ss").format(Calendar.getInstance().getTime());
 	%>
-	
+	<h3 id="heading">BILL ESTIMATION</h3>
 	<table class="table table-bordered" border='1'>
 		<thead>
 		</thead>
@@ -33,7 +41,7 @@
 
 		</tr>
 		           <%
-					
+		           
 					List<User> users = UserDao.getUserDetails(userName);
 					
 					for (User userDetails : users) {
@@ -55,6 +63,7 @@
 					<th scope="col">ADDRESS</th>
 					<td><%=userDetails.getAddress() %></td>
 					</tr>
+					
 					<tr>
 					<th scope="col">ORDER DATE TIME</th>
 					<td><%=timeStamp %></td>
@@ -68,9 +77,8 @@
 			<td><%=total%> Rs</td>
 		</tr>
 	</table>
-
-	<a href="addCart.jsp" class="btn btn-success">HOME
-		</a>
+<a href="addCart.jsp" class="btn btn-primary">PAY</a>
+	
 		</main>
 </body>
 </html>

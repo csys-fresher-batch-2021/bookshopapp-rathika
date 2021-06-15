@@ -53,11 +53,11 @@
 				   
 					if(role =="ADMIN" || user == null) {
 					%>
-					<th scope="col">S.NO</th>
-					<th scope="col">Book Name</th>
-					<th scope="col">Language</th>
-					<th scope="col">No Of Books</th>
-					<th scope="col">Cost</th>
+				    <th scope="col">S.NO</th>
+					<th scope="col">BOOK NAME</th>
+					<th scope="col">LANGUAGE</th>
+					<th scope="col">NO OF BOOKS</th>
+					<th scope="col">PRICE</th>
 					
 					<%
 					BookDao bookDao = new BookDao();

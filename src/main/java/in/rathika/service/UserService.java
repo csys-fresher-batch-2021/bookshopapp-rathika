@@ -70,15 +70,12 @@ public class UserService {
 				
 				   if (user.getPassword().equals(userPassCode)) {
 					   valid = true;
-					   System.out.println(valid);
 					   break;
 				   }
 				   
 			   }
 			   
-				   
-
-			}
+		}
 		   return valid;
 	}
 	/**

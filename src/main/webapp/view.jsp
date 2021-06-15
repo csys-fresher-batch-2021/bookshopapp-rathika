@@ -33,21 +33,27 @@
   background-color: #04AA6D;
   color: white;
 }
+#heading{
+  color:#04AA6D;
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
 </style>
 </head>
 <body>
 <jsp:include page="header.jsp"></jsp:include>
 	<main class="container-fluid">
-      <h3>Books</h3>
+      <h3 id="heading">BOOKS</h3>
 		<table class="table table-bordered" id="books">
 			<caption></caption>
 			<thead>
 				<tr>
 					<th scope="col">S.NO</th>
-					<th scope="col">Book Name</th>
-					<th scope="col">Language</th>
-					<th scope="col">No Of Books</th>
-					<th scope="col">Cost</th>
+					<th scope="col">BOOK NAME</th>
+					<th scope="col">LANGUAGE</th>
+					<th scope="col">NO OF BOOKS</th>
+					<th scope="col">PRICE</th>
 					
 					<%
 					
@@ -70,6 +76,7 @@
 				%>
 			</thead>
 		</table>
+		
     </main>
 </body>
 </html>

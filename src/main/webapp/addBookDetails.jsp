@@ -5,11 +5,19 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>add books</title>
+<style type="text/css">
+#heading{
+  color:#04AA6D;
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+</style>
 </head>
 <body>
 	<jsp:include page="header.jsp"></jsp:include>
 	<main class="container-fluid">
-	<h1>ADD BOOKS</h1>
+	<h1 id="heading">ADD BOOKS</h1>
 		<form action="AddBooksServlet" method="post">
 			<table>
 				<caption>BOOK DETAILS</caption>

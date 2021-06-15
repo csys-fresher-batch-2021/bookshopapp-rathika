@@ -32,6 +32,12 @@
   background-color: #04AA6D;
   color: white;
 }
+#heading{
+  color:#04AA6D;
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
 </style>
 </head>
 <body>
@@ -39,16 +45,16 @@
 	<main class="container-fluid">
 
 		<form action="BillServlet" method="post">
-			<h3>Books</h3>
+			<h3 id="heading">YOUR CART</h3>
 			<table class="table table-bordered" id="books">
 				<caption></caption>
 				<thead>
 					<tr>
 						<th scope="col">S.NO</th>
-						<th scope="col">BOOK NAME</th>
-						<th scope="col">LANGUAGE</th>
-						<th scope="col">TOTAL BOOKS</th>
-						<th scope="col">COST</th>
+					<th scope="col">BOOK NAME</th>
+					<th scope="col">LANGUAGE</th>
+					<th scope="col">NO OF BOOKS</th>
+					<th scope="col">PRICE</th>
 
 					</tr>
 

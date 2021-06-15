@@ -1,21 +1,67 @@
 package in.rathika.model;
+import java.time.LocalDate;
+
 
 public class Order {
 
 	/**
 	 * Declaring Required Variables.
 	 */
-	private int userId;
 	
+    private int id;
+    public Order(int id, int userId, String userName, String bookName, String language, int noOfBooks, double cost,
+			LocalDate orderDate, LocalDate deliveryDate, String status) {
+		super();
+		this.id = id;
+		this.userId = userId;
+		this.userName = userName;
+		this.bookName = bookName;
+		this.language = language;
+		this.noOfBooks = noOfBooks;
+		this.cost = cost;
+		this.orderDate = orderDate;
+		this.deliveryDate = deliveryDate;
+		this.status = status;
+	}
 
-	private int id;
+	private int userId;
+	private String userName;
 	private String bookName;
 	private String language;
 	private int noOfBooks;
 	private double cost;
+	
+	private LocalDate orderDate;
+	private LocalDate deliveryDate;
 	private String status;
 	
 	
+
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public LocalDate getOrderDate() {
+		return orderDate;
+	}
+
+	public void setOrderDate(LocalDate orderDate) {
+		this.orderDate = orderDate;
+	}
+
+	public LocalDate getDeliveryDate() {
+		return deliveryDate;
+	}
+
+	public void setDeliveryDate(LocalDate deliveryDate) {
+		this.deliveryDate = deliveryDate;
+	}
+
 	public int getUserId() {
 		return userId;
 	}
@@ -26,6 +72,8 @@ public class Order {
 	public int getId() {
 		return id;
 	}
+
+
 
 	public String getStatus() {
 		return status;
@@ -87,9 +135,12 @@ public class Order {
 
 	@Override
 	public String toString() {
-		return "Order [bookName=" + bookName + ", language=" + language + ", noOfBooks=" + noOfBooks + ", cost=" + cost
-				+ "]";
+		return "Order [id=" + id + ", userId=" + userId + ", userName=" + userName + ", bookName=" + bookName
+				+ ", language=" + language + ", noOfBooks=" + noOfBooks + ", cost=" + cost + ", orderDate=" + orderDate
+				+ ", deliveryDate=" + deliveryDate + ", status=" + status + "]";
 	}
 
+	
+	
 
 }

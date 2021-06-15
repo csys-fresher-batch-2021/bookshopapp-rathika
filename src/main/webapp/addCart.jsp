@@ -33,6 +33,12 @@
   background-color: #04AA6D;
   color: white;
 }
+#heading{
+  color:#04AA6D;
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
 </style>
 </head>
 <body>
@@ -40,17 +46,17 @@
 	<main class="container-fluid">
 		<form method="post">
 
-			<h3>Books</h3>
+			<h3 id="heading">SHOP NOW</h3>
 			<table class="table table-bordered" id="books">
 				<caption></caption>
 				<thead>
 					<tr>
 						<th scope="col">S.NO</th>
-						<th scope="col">Book Name</th>
-						<th scope="col">Language</th>
-						<th scope="col">No Of Books</th>
-						<th scope="col">Cost</th>
-						<th scope="col">Cart</th>
+					<th scope="col">BOOK NAME</th>
+					<th scope="col">LANGUAGE</th>
+					<th scope="col">NO OF BOOKS</th>
+					<th scope="col">PRICE</th>
+						<th scope="col">CART</th>
 
 						<%
 						BookDao bookDao = new BookDao();
@@ -66,8 +72,7 @@
 						<td><%=bookDetails.getLanguage()%></td>
 						<td><%=bookDetails.getNoOfBooks()%></td>
 						<td><%=bookDetails.getCost()%> Rs</td>
-						<td><a
-							href="OrderBookServlet?bookName=<%=bookDetails.getBookName()%>"
+						<td><a href="OrderBookServlet?bookName=<%=bookDetails.getBookName()%>"
 							class="btn btn-primary">ADD TO CART</a></td>
 					</tr>
 					<%
@@ -79,7 +84,7 @@
 
 		<a href="displayOrder.jsp" class="btn btn-info">VIEW CART</a>
 		
-		<a href="userOrder.jsp" class="btn btn-success">VIEW RESPONSE</a>
+		<a href="userOrder.jsp" class="btn btn-success">VIEW STATUS</a>
 	</main>
 </body>
 </html>

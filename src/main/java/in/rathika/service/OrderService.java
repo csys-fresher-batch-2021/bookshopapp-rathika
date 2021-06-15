@@ -1,5 +1,6 @@
 package in.rathika.service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import in.rathika.dao.OrderDao;
@@ -113,24 +114,30 @@ public class OrderService {
 	public static boolean addConfrimOrder(String userName,String bookName, int noOfBooks) throws Exception {
 		boolean isAdd = false;
 		boolean present = OrderService.isPresent(bookName);
-		System.out.println(present);
-		System.out.println(userName);
+		
 		int user = UserDao.getId(userName);
-		System.out.println(user);
+		
 		
 		// boolean ordered = OrderService.isPresentOrder(bookName);
 		for (Order order : OrderDao.getOrder()) {
 			if (present) {
 				
 				int id = order.getId();
+				
 				double cost = order.getCost();
 				String language = order.getLanguage();
 				String status = order.getStatus();
-				Order orderObj = new Order(id,user,bookName, language, noOfBooks, cost,status);
+				
+				LocalDate order_date = LocalDate.now();
+				
+				LocalDate delivery_date = order_date.plusDays(6);
+				Order orderObj = new Order(id,user,userName,bookName, language, noOfBooks, cost,order_date,delivery_date,status);
 				
 				OrderDao.saveOrder(orderObj);
+				
+
 				OrderDao.addConfrimCart(bookName, language, noOfBooks, cost);
-				 //isAdd=OrderDetailsService.addDetails(bookName, language, noOfBooks, cost);
+				 
 				isAdd = true;
 
 			}
@@ -184,12 +191,14 @@ public class OrderService {
 	 */
 	public static double billCalculation() throws Exception {
 		double total = 0;
+		
 		List<Order> books = OrderDao.getConfrimOrder();
 		
 		for (Order book : books) {
 			total = total + book.getNoOfBooks() * book.getCost();
 		}
 		//OrderDetailsService.addDetails();
+		
         books.clear();
         
 		return total;

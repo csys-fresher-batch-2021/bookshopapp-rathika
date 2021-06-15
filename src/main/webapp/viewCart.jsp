@@ -48,8 +48,10 @@
 					<th scope="col">BOOK NAME</th>
 					<th scope="col">LANGUAGE</th>
 					<th scope="col">TOTAL BOOKS</th>
-					<th scope="col">COST</th>
-					<th scope="col">OREDR BOOKS</th>
+					<th scope="col">PRICE</th>
+					<th scope="col">ORDER BOOKS</th>
+					<th scope="col">CONFRIM</th>
+					<th scope="col">DELETE</th>
 					
 					<%
 					HttpSession sess = request.getSession();
@@ -71,7 +73,7 @@
 				
 					<td><form action="CofirmOrderServlet"> <input type="number" name="noBooks"
 					placeholder="Enter Number of books" id="bookId" required ></td>
-					<td><button class="btn btn-success"  type="submit">Confirm Order</button></td>
+					<td><button class="btn btn-success"  type="submit">CONFRIM ORDER</button></td>
 					
 					<td><a href="DeleteBookServlet?bookName=<%=orderDetails.getBookName()%>" class="btn btn-danger">DELETE</a></td>
 				</tr>

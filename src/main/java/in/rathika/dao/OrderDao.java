@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,22 +47,24 @@ public class OrderDao {
 	 */
 	private static final List<Order> confrimOrders = new ArrayList<>();
 	private static final List<Order> userOrders = new ArrayList<>();
-    
+
 	private static final List<Order> orderDetails = new ArrayList<>();
 	private static final List<Order> cartDetails = new ArrayList<>();
-	
+
 	public static void addConfrimCart(String bookName, String language, int noOfBooks, double cost) {
 
 		orderDetails.add(new Order(bookName, language, noOfBooks, cost));
 	}
+
 	public static List<Order> getConfrimOrder() {
 		return orderDetails;
 	}
+
 	/**
 	 * Save ordered details into database.
 	 * 
 	 * @param order
-	 * @throws ClassNotFoundException 
+	 * @throws ClassNotFoundException
 	 * @throws Exception
 	 */
 	public static void saveOrder(Order order) throws CannotGetDetailsException, ClassNotFoundException {
@@ -71,16 +74,21 @@ public class OrderDao {
 		try {
 			con = ConnectionUtil.getConnection();
 			// Step 2: Prepare data
-			String sql = "insert into orderList(userid,bookName,language,noOfBooks,cost,status) values (?,?,?,?,?,'pending')";
+			String sql = "insert into orderList(userid,username,bookname,language,noofbooks,cost,order_date,delivery_date,status) values (?,?,?,?,?,?,?,?,'PENDING')";
 			pst = con.prepareStatement(sql);
 			pst.setInt(1, order.getUserId());
-			pst.setString(2, order.getBookName());
-			pst.setString(3, order.getLanguage());
-			pst.setInt(4, order.getNoOfBooks());
-			pst.setDouble(5, order.getCost());
-			pst.executeUpdate();
+			pst.setString(2, order.getUserName());
+			pst.setString(3, order.getBookName());
+			pst.setString(4, order.getLanguage());
+			pst.setInt(5, order.getNoOfBooks());
+			pst.setDouble(6, order.getCost());
+			pst.setObject(7, order.getOrderDate());
+			pst.setObject(8, order.getDeliveryDate());
+
+			int row = pst.executeUpdate();
 
 		} catch (SQLException e) {
+			e.printStackTrace();
 			throw new CannotGetDetailsException("unable to get details");
 		} finally {
 			ConnectionUtil.close(pst, con);
@@ -103,7 +111,7 @@ public class OrderDao {
 	 * Get ordered details.
 	 * 
 	 * @return
-	 * @throws ClassNotFoundException 
+	 * @throws ClassNotFoundException
 	 * @throws Exception
 	 */
 	public static List<Order> getOrderDetails() throws CannotGetDetailsException, ClassNotFoundException {
@@ -112,24 +120,27 @@ public class OrderDao {
 		ResultSet rs = null;
 		try {
 
-			String url = "select id,userid,bookName,language,noOfBooks,cost,status from orderList ORDER BY bookName";
+			String url = "select id,userid,username,bookName,language,noOfBooks,cost,order_date,delivery_date,status from orderList ORDER BY bookName";
 			con = ConnectionUtil.getConnection();
-			
-			
+
 			pst = con.prepareStatement(url);
 			rs = pst.executeQuery();
 			confrimOrders.clear();
 			while (rs.next()) {
 				int id = rs.getInt("id");
 				int userId = rs.getInt("userid");
+				String userName = rs.getString("username");
 				String bookname = rs.getString("bookName");
 				String bookLanguage = rs.getString("language");
 				int noOfBooks = rs.getInt("noOfBooks");
 				double cost = rs.getDouble("cost");
+				LocalDate orderDate = LocalDate.parse(rs.getString("order_date"));
+				LocalDate deliveryDate = LocalDate.parse(rs.getString("delivery_date"));
 				String status = rs.getString("status");
-				confrimOrders.add(new Order(id,userId,bookname, bookLanguage, noOfBooks, cost,status));
+
+				confrimOrders.add(new Order(id, userId, userName, bookname, bookLanguage, noOfBooks, cost, orderDate,
+						deliveryDate, status));
 			}
-			
 
 		} catch (SQLException e) {
 			throw new CannotGetDetailsException("unable select details");
@@ -137,7 +148,7 @@ public class OrderDao {
 		} finally {
 			ConnectionUtil.close(pst, con);
 		}
-		
+
 		return confrimOrders;
 	}
 
@@ -146,11 +157,12 @@ public class OrderDao {
 	 * 
 	 * @param bookName
 	 * @return
-	 * @throws NotAbleToDeleteException 
-	 * @throws ClassNotFoundException 
+	 * @throws NotAbleToDeleteException
+	 * @throws ClassNotFoundException
 	 * @throws Exception
 	 */
-	public static boolean deleteOrders(String bookName) throws CannotGetDetailsException, NotAbleToDeleteException, ClassNotFoundException {
+	public static boolean deleteOrders(String bookName)
+			throws CannotGetDetailsException, NotAbleToDeleteException, ClassNotFoundException {
 		boolean isDelete = false;
 		Connection con = null;
 		PreparedStatement pst = null;
@@ -196,7 +208,7 @@ public class OrderDao {
 			String str = "update bookList set noOfBooks = ? where bookName=?";
 
 			pst = connection.prepareStatement(str);
-			pst.setInt(1,count);
+			pst.setInt(1, count);
 			pst.setString(2, bookName);
 			pst.executeUpdate();
 			isUpdated = true;
@@ -216,7 +228,7 @@ public class OrderDao {
 	 * 
 	 * @param bookName
 	 * @return
-	 * @throws ClassNotFoundException 
+	 * @throws ClassNotFoundException
 	 * @throws Exception
 	 */
 	public static int getNoOfBooks(String bookName) throws CannotGetDetailsException, ClassNotFoundException {
@@ -247,149 +259,49 @@ public class OrderDao {
 		return count;
 
 	}
-	/**
-	 * Get order
-	 * @param order
-	 * @throws ClassNotFoundException 
-	 * @throws Exception
-	 */
-	public static void confrimOrder(Order order) throws CannotGetDetailsException, ClassNotFoundException {
-		// Step 1: Get connection
-		Connection con = null;
-		PreparedStatement pst = null;
-		try {
-			con = ConnectionUtil.getConnection();
-			// Step 2: Prepare data
-			String sql = "insert into confrimOrderList(bookName,language,noOfBooks,cost) values ( ?,?,?,?)";
-			pst = con.prepareStatement(sql);
 
-			pst.setString(1, order.getBookName());
-			pst.setString(2, order.getLanguage());
-			pst.setInt(3, order.getNoOfBooks());
-			pst.setDouble(4, order.getCost());
-			pst.executeUpdate();
-			
-		} catch (SQLException e) {
-			throw new CannotGetDetailsException("unable to get details to insert");
-		} finally {
-			ConnectionUtil.close(pst, con);
-		}
-	}
 
 	/**
-	 * save the ordered details.
+	 * Add orderd Details.
 	 * 
-	 * @param orders
-	 * @throws CannotGetDetailsException 
-	 * @throws ClassNotFoundException 
-	 * @throws Exception
+	 * @param bookName
+	 * @param language
+	 * @param noOfBooks
+	 * @param cost
 	 */
-	public static void saveConfrimOrder(List<Order> orders) throws ClassNotFoundException, CannotGetDetailsException {
-		for (Order order : orders) {
-			confrimOrder(order);
-		}
-	}
-	/**
-	 * Get the book details from Data Base.
-	 * 
-	 * @return
-	 * @throws ClassNotFoundException 
-	 * @throws Exception
-	 */
-	public static List<Order> getConfrimDetails() throws CannotGetDetailsException, ClassNotFoundException{
-		Connection con = null;
-		PreparedStatement pst = null;
-		try {
-			
-			String url = "select bookName,language,noOfBooks,cost from confrimOrderList ORDER BY bookName";
-			con = ConnectionUtil.getConnection();
-			Statement st = con.createStatement();
-			ResultSet rs = st.executeQuery(url);
-			while (rs.next()) {
-				String bookname = rs.getString("bookName");
-				String bookLanguage = rs.getString("language");
-				int noOfBooks = rs.getInt("noOfBooks");
-				double cost = rs.getDouble("cost");
-				
-				confrimOrders.add(new Order(bookname, bookLanguage, noOfBooks, cost));
-			}
-
-		} catch (SQLException e) {
-			throw new CannotGetDetailsException("unable to select ordered details");
-
-		} finally {
-			ConnectionUtil.close(pst, con);
-		}
-		return confrimOrders;
-	}
-    /**
-     * Delete Book from confrim order list.
-     * @param bookName
-     * @return
-     * @throws CannotGetDetailsException 
-     * @throws ClassNotFoundException 
-     * @throws Exception
-     */
-	public static boolean deleteConfrimOrders(String bookName) throws NotAbleToDeleteException, CannotGetDetailsException, ClassNotFoundException {
-		boolean isDelete = false;
-		Connection con = null;
-		PreparedStatement pst = null;
-
-		try {
-			con = ConnectionUtil.getConnection();
-			String sql = "DELETE FROM confrimOrderList WHERE bookName=?;";
-			pst = con.prepareStatement(sql);
-			pst.setString(1, bookName);
-
-			int rs = pst.executeUpdate();
-
-			if (rs == 1) {
-				isDelete = true;
-			} else {
-				throw new NotAbleToDeleteException("Cannot Delete");
-			}
-		} catch (SQLException e) {
-			throw new CannotGetDetailsException("unable to delete details");
-		} finally {
-			ConnectionUtil.close(pst, con);
-		}
-
-		return isDelete;
-	}
-    /**
-     * Add orderd Details.
-     * @param bookName
-     * @param language
-     * @param noOfBooks
-     * @param cost
-     */
 	public static void addOrders(String bookName, String language, int noOfBooks, double cost) {
 		orderDetails.add(new Order(bookName, language, noOfBooks, cost));
-		
+
 	}
-    /**
-     * Add cart details.
-     * @param bookName
-     * @param language
-     * @param noOfBooks
-     * @param cost
-     */
+
+	/**
+	 * Add cart details.
+	 * 
+	 * @param bookName
+	 * @param language
+	 * @param noOfBooks
+	 * @param cost
+	 */
 	public static void addCartDetails(String bookName, String language, int noOfBooks, double cost) {
 		cartDetails.add(new Order(bookName, language, noOfBooks, cost));
-		
+
 	}
+
 	/**
 	 * Get Cart Details.
+	 * 
 	 * @return
 	 */
 	public static List<Order> getCartDetails() {
 		return cartDetails;
 	}
+
 	/**
 	 * Update Order status.
+	 * 
 	 * @param orderId
 	 * @return
-	 * @throws ClassNotFoundException 
+	 * @throws ClassNotFoundException
 	 * @throws Exception
 	 */
 	public static boolean updateStatus(int orderId) throws CannotGetDetailsException, ClassNotFoundException {
@@ -398,17 +310,14 @@ public class OrderDao {
 
 		boolean isUpdated = false;
 		try {
-		
-			
+
 			connection = ConnectionUtil.getConnection();
 
-			
-			String str = "update orderList set status = 'accepted' where id=?";
+			String str = "update orderList set status = 'DELIVERED' where id=?";
 			pst = connection.prepareStatement(str);
 			pst.setInt(1, orderId);
 			pst.executeUpdate();
 			isUpdated = true;
-			
 
 		} catch (SQLException e) {
 
@@ -420,29 +329,27 @@ public class OrderDao {
 		return isUpdated;
 
 	}
-	
-	
-    /**
-     * Update order Status.
-     * @param orderId
-     * @return
-     * @throws ClassNotFoundException
-     * @throws CannotGetDetailsException 
-     */
+
+	/**
+	 * Update order Status.
+	 * 
+	 * @param orderId
+	 * @return
+	 * @throws ClassNotFoundException
+	 * @throws CannotGetDetailsException
+	 */
 	public static boolean updateRejectStatus(int orderId) throws ClassNotFoundException, CannotGetDetailsException {
 		Connection connection = null;
 		PreparedStatement pst = null;
 
 		boolean isUpdated = false;
 		try {
-		
-			
+
 			connection = ConnectionUtil.getConnection();
 
-			
-			String str = "update orderList set status ='rejected' where id=?" ;
+			String str = "update orderList set status ='CANCELLED' where id=?";
 			pst = connection.prepareStatement(str);
-			
+
 			pst.setInt(1, orderId);
 			pst.executeUpdate();
 			isUpdated = true;
@@ -456,24 +363,25 @@ public class OrderDao {
 		}
 		return isUpdated;
 	}
-    /**
-     * Get User Order
-     * @param id
-     * @return
-     * @throws ClassNotFoundException 
-     * @throws Exception
-     */
+
+	/**
+	 * Get User Order
+	 * 
+	 * @param id
+	 * @return
+	 * @throws ClassNotFoundException
+	 * @throws Exception
+	 */
 	public static List<Order> getUserOrder(int id) throws CannotGetDetailsException, ClassNotFoundException {
-		
+
 		Connection con = null;
 		PreparedStatement pst = null;
 		ResultSet rs = null;
 		try {
-           
+
 			String url = "select * from orderList where userid=?";
 			con = ConnectionUtil.getConnection();
-			
-			
+
 			pst = con.prepareStatement(url);
 			pst.setInt(1, id);
 			rs = pst.executeQuery();
@@ -481,14 +389,17 @@ public class OrderDao {
 			while (rs.next()) {
 				int id1 = rs.getInt("id");
 				int userId = rs.getInt("userid");
+				String userName = rs.getString("username");
 				String bookname = rs.getString("bookName");
 				String bookLanguage = rs.getString("language");
 				int noOfBooks = rs.getInt("noOfBooks");
 				double cost = rs.getDouble("cost");
+				LocalDate orderDate = LocalDate.parse(rs.getString("order_date"));
+				LocalDate deliveryDate = LocalDate.parse(rs.getString("delivery_date"));
 				String status = rs.getString("status");
-				userOrders.add(new Order(id1,userId,bookname, bookLanguage, noOfBooks, cost,status));
+				userOrders.add(new Order(id1, userId, userName, bookname, bookLanguage, noOfBooks, cost, orderDate,
+						deliveryDate, status));
 			}
-			
 
 		} catch (SQLException e) {
 			throw new CannotGetDetailsException("Unable get user order");
@@ -496,9 +407,10 @@ public class OrderDao {
 		} finally {
 			ConnectionUtil.close(pst, con);
 		}
-		
+
 		return userOrders;
 	}
+
 	public static List<Order> saveUserOrder() {
 		return userOrders;
 	}
