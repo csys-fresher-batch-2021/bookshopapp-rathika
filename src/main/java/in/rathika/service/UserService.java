@@ -6,6 +6,7 @@ import java.util.Map;
 
 import in.rathika.dao.UserDao;
 import in.rathika.exception.CannotGetDetailsException;
+import in.rathika.exception.DBException;
 import in.rathika.model.User;
 import in.rathika.validator.UserValidator;
 
@@ -33,11 +34,12 @@ public class UserService {
 	 * @param password
 	 * @param confrimPassword
 	 * @return
+	 * @throws DBException 
 	 * @throws Exception 
 	 * @throws SQLException 
 	 */
 	public boolean addDetails(String name, String email, Long mobileNum, String address, int age, String password,
-			String confrimPassword) throws CannotGetDetailsException, ClassNotFoundException {
+			String confrimPassword) throws CannotGetDetailsException, ClassNotFoundException, DBException {
 		boolean registerd = false;
 		User regObj = new User(name, email, mobileNum, address, age, password);
 		boolean nameValid = validatorObj.isNameValid(name);
@@ -61,9 +63,10 @@ public class UserService {
      * @param uemail
      * @param userPassCode
      * @return
+     * @throws DBException 
      * @throws Exception
      */
-	public static boolean isValidUser(String uemail, String userPassCode) throws CannotGetDetailsException, ClassNotFoundException {
+	public static boolean isValidUser(String uemail, String userPassCode) throws CannotGetDetailsException, ClassNotFoundException, DBException {
         boolean valid = false;	
 		   List<User> loginDetails = UserDao.checkUser();
 		   for (User user : loginDetails) {
@@ -84,9 +87,10 @@ public class UserService {
 	 * @param name
 	 * @param password
 	 * @return
+	 * @throws DBException 
 	 * @throws Exception
 	 */
-    public static boolean isValidAdmin(String name,String password) throws CannotGetDetailsException, ClassNotFoundException{
+    public static boolean isValidAdmin(String name,String password) throws CannotGetDetailsException, ClassNotFoundException, DBException{
 		boolean valid = false;
 		Map<String,String> adminLoginDetails = UserDao.checkAdmin();
 		for (String name1 : adminLoginDetails.keySet()) {

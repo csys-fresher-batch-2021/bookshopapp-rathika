@@ -4,6 +4,7 @@ import java.util.List;
 
 import in.rathika.dao.BookDao;
 import in.rathika.exception.CannotGetDetailsException;
+import in.rathika.exception.DBException;
 import in.rathika.exception.NotAbleToDeleteException;
 import in.rathika.model.Book;
 import in.rathika.validator.BookValidator;
@@ -24,10 +25,11 @@ public class BookService {
 	 * @param noOfBooks
 	 * @param cost
 	 * @return
+	 * @throws DBException 
 	 * @throws Throwable 
 	 * @throws Exception 
 	 */
-	public static boolean addBook(String bookName, String language, int noOfBooks, double cost) throws CannotGetDetailsException, ClassNotFoundException  {
+	public static boolean addBook(String bookName, String language, int noOfBooks, double cost) throws CannotGetDetailsException, ClassNotFoundException, DBException  {
 		boolean isAdded = false;
 		boolean present = BookService.isPresent(bookName);
 		boolean isValidName = BookValidator.isBookNameValid(bookName);
@@ -48,9 +50,10 @@ public class BookService {
 	 * @param bookName
 	 * @return
 	 * @throws NotAbleToDeleteException 
+	 * @throws DBException 
 	 * @throws Exception 
 	 */
-	public static boolean deleteBook(String bookName) throws CannotGetDetailsException, ClassNotFoundException, NotAbleToDeleteException {
+	public static boolean deleteBook(String bookName) throws CannotGetDetailsException, ClassNotFoundException, NotAbleToDeleteException, DBException {
 		
 		boolean deleted = false;
 		if(BookValidator.isBookNameValid(bookName)) {
@@ -66,9 +69,10 @@ public class BookService {
 	 * 
 	 * @param bookName
 	 * @return
+	 * @throws DBException 
 	 * @throws Exception 
 	 */
-	public static boolean isPresent(String bookName) throws CannotGetDetailsException, ClassNotFoundException {
+	public static boolean isPresent(String bookName) throws CannotGetDetailsException, ClassNotFoundException, DBException {
 		boolean present = false;
 		List<Book> books = BookDao.getBookDetails();
 		for (Book bookDetails : books) {
@@ -106,9 +110,10 @@ public class BookService {
 	 * 
 	 * @param bookName
 	 * @return
+	 * @throws DBException 
 	 * @throws Exception 
 	 */
-	public static int getNoOfBooks(String bookName) throws CannotGetDetailsException, ClassNotFoundException {
+	public static int getNoOfBooks(String bookName) throws CannotGetDetailsException, ClassNotFoundException, DBException {
 		int noOfBooks = 0;
 		List<Book> books = BookDao.getBookDetails();
 		for (Book bookDetails : books) {
@@ -126,9 +131,10 @@ public class BookService {
 	 * 
 	 * @param bookName
 	 * @return
+	 * @throws DBException 
 	 * @throws Exception 
 	 */
-	public static double getBookCost(String bookName) throws CannotGetDetailsException, ClassNotFoundException {
+	public static double getBookCost(String bookName) throws CannotGetDetailsException, ClassNotFoundException, DBException {
 		double cost = 0;
 		List<Book> books = BookDao.getBookDetails();
 		for (Book bookDetails : books) {

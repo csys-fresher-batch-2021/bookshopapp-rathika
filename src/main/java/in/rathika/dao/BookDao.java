@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import in.rathika.exception.CannotGetDetailsException;
+import in.rathika.exception.DBException;
 import in.rathika.exception.NotAbleToDeleteException;
 import in.rathika.model.Book;
 import in.rathika.util.ConnectionUtil;
@@ -84,9 +85,10 @@ public class BookDao {
 	 * 
 	 * @param book
 	 * @throws ClassNotFoundException 
+	 * @throws DBException 
 	 * @throws Exception
 	 */
-	public static void saveBook(Book book) throws  CannotGetDetailsException, ClassNotFoundException {
+	public static void saveBook(Book book) throws  CannotGetDetailsException, ClassNotFoundException, DBException {
 		// Step 1: Get connection
 		Connection con = null;
 		PreparedStatement pst = null;
@@ -113,9 +115,10 @@ public class BookDao {
 	 * Add book details into
 	 * 
 	 * @param bookss
+	 * @throws DBException 
 	 * @throws Exception
 	 */
-	public static void save(List<Book> books) throws CannotGetDetailsException, ClassNotFoundException {
+	public static void save(List<Book> books) throws CannotGetDetailsException, ClassNotFoundException, DBException {
 		for (Book book : books) {
 			saveBook(book);
 		}
@@ -126,9 +129,10 @@ public class BookDao {
 	 * 
 	 * @return
 	 * @throws ClassNotFoundException 
+	 * @throws DBException 
 	 * @throws Exception
 	 */
-	public static List<Book> getBookDetails() throws CannotGetDetailsException, ClassNotFoundException {
+	public static List<Book> getBookDetails() throws CannotGetDetailsException, ClassNotFoundException, DBException {
 		Connection con = null;
 		PreparedStatement pst = null;
 		ResultSet rs = null;
@@ -165,9 +169,10 @@ public class BookDao {
 	 * @return
 	 * @throws ClassNotFoundException 
 	 * @throws NotAbleToDeleteException 
+	 * @throws DBException 
 	 * @throws Exception
 	 */
-	public static boolean deleteBooks(String bookName) throws CannotGetDetailsException, ClassNotFoundException, NotAbleToDeleteException {
+	public static boolean deleteBooks(String bookName) throws CannotGetDetailsException, ClassNotFoundException, NotAbleToDeleteException, DBException {
 
 		boolean isDelete = false;
 		Connection con = null;

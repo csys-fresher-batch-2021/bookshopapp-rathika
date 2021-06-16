@@ -5,6 +5,8 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+
+import in.rathika.exception.DBException;
 public class ConnectionUtil {
 	private ConnectionUtil() {
 		//Default constructor
@@ -28,8 +30,9 @@ public class ConnectionUtil {
 	 * This method is used to close the connection of Resultset connection and prepared statement
 	 * Method overloading
 	 * @param con
+	 * @throws DBException 
 	 */
-	public static void close( ResultSet rs, Statement statement, Connection con) {
+	public static void close( ResultSet rs, Statement statement, Connection con) throws DBException {
 		try {
 			if(rs!=null) {
 				rs.close();
@@ -41,15 +44,16 @@ public class ConnectionUtil {
 				con.close();
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new DBException("unable to connect");
 		}
 	}
 	/**
 	 * This method closes the connections for statement and connection.
 	 * @param statement
 	 * @param con
+	 * @throws DBException 
 	 */
-	public static void close(Statement statement, Connection con) {
+	public static void close(Statement statement, Connection con) throws DBException {
 		try {
 			if (statement != null) {
 				statement.close();
@@ -58,7 +62,7 @@ public class ConnectionUtil {
 				con.close();
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new DBException("unable to close connection");
 		}
 	}
 }

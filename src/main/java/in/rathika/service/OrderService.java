@@ -6,6 +6,7 @@ import java.util.List;
 import in.rathika.dao.OrderDao;
 import in.rathika.dao.UserDao;
 import in.rathika.exception.CannotGetDetailsException;
+import in.rathika.exception.DBException;
 import in.rathika.exception.NotAbleToDeleteException;
 import in.rathika.model.Order;
 
@@ -110,9 +111,10 @@ public class OrderService {
 	 * @param bookName
 	 * @param noOfBooks
 	 * @return
+	 * @throws DBException 
 	 * @throws Exception
 	 */
-	public static boolean addConfrimOrder(String userName,String bookName, int noOfBooks) throws CannotGetDetailsException, ClassNotFoundException  {
+	public static boolean addConfrimOrder(String userName,String bookName, int noOfBooks) throws CannotGetDetailsException, ClassNotFoundException, DBException  {
 		boolean isAdd = false;
 		boolean present = OrderService.isPresent(bookName);
 		
@@ -178,9 +180,10 @@ public class OrderService {
 	 * @param bookName
 	 * @return
 	 * @throws NotAbleToDeleteException 
+	 * @throws DBException 
 	 * @throws Exception
 	 */
-	public static boolean deleteCart(String bookName) throws CannotGetDetailsException, ClassNotFoundException, NotAbleToDeleteException {
+	public static boolean deleteCart(String bookName) throws CannotGetDetailsException, ClassNotFoundException, NotAbleToDeleteException, DBException {
 
 		return OrderDao.deleteOrders(bookName.trim());
 	}
@@ -211,9 +214,10 @@ public class OrderService {
 	 * 
 	 * @param bookName
 	 * @return
+	 * @throws DBException 
 	 * @throws Exception
 	 */
-	public static boolean isPresentOrder(String bookName) throws CannotGetDetailsException, ClassNotFoundException {
+	public static boolean isPresentOrder(String bookName) throws CannotGetDetailsException, ClassNotFoundException, DBException {
 		boolean present = false;
 		List<Order> orders = OrderService.getOrderDetails();
 		for (Order orderDetails : orders) {
@@ -232,9 +236,10 @@ public class OrderService {
 	 * @return
 	 * @throws CannotGetDetailsException 
 	 * @throws ClassNotFoundException 
+	 * @throws DBException 
 	 * @throws Exception
 	 */
-	public static List<Order> getOrderDetails() throws ClassNotFoundException, CannotGetDetailsException  {
+	public static List<Order> getOrderDetails() throws ClassNotFoundException, CannotGetDetailsException, DBException  {
 		List<Order> orders = OrderDao.getOrderDetails();
 		orders.clear();
 		List<Order> order = OrderDao.getOrderDetails();
@@ -262,12 +267,12 @@ public class OrderService {
 	}
 	
      
-     public static boolean updateRejectStatus(int orderId) throws ClassNotFoundException, CannotGetDetailsException  {
+     public static boolean updateRejectStatus(int orderId) throws ClassNotFoundException, CannotGetDetailsException, DBException  {
 		
 		return OrderDao.updateRejectStatus(orderId);
 	}
 	
-	public static boolean updateStatus(int orderId) throws ClassNotFoundException, CannotGetDetailsException  {
+	public static boolean updateStatus(int orderId) throws ClassNotFoundException, CannotGetDetailsException, DBException  {
 		
 		return OrderDao.updateStatus(orderId);
 	}

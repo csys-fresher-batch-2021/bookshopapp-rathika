@@ -32,8 +32,8 @@ public class OrderDao {
 	private static final String DELETE_ORDER_QUERY = "DELETE FROM orderList WHERE bookName=?";
 	private static final String UPDATE_BOOKS_OUERY = "update bookList set noOfBooks = ? where bookName=?";
 	private static final String GET_TOTAL_BOOKS_QUERY = "select noOfBooks from orderList where bookName=?";
-	private static final String UPDATE_ORDER_STATUS_QUERY = "update orderList set status = 'DELIVERED' where id=?";
-	private static final String UPDATE_REJECT_STATUS_QUERY =  "update orderList set status ='CANCELLED' where id=?";
+	private static final String UPDATE_ORDER_STATUS_QUERY = "update orderList set status = 'DELIVERED' where id=? ORDER BY bookName";
+	private static final String UPDATE_REJECT_STATUS_QUERY =  "update orderList set status ='CANCELLED' where id=? ORDER BY bookName";
 	private static final String GET_ORDER_QUERY =  "select * from orderList where userid=?";
 	
 	/**
@@ -86,9 +86,10 @@ public class OrderDao {
 	 * 
 	 * @param order
 	 * @throws ClassNotFoundException
+	 * @throws DBException 
 	 * @throws Exception
 	 */
-	public static void saveOrder(Order order) throws CannotGetDetailsException,ClassNotFoundException {
+	public static void saveOrder(Order order) throws CannotGetDetailsException,ClassNotFoundException, DBException {
 		// Step 1: Get connection
 		Connection con = null;
 		PreparedStatement pst = null;
@@ -109,7 +110,6 @@ public class OrderDao {
 			pst.executeUpdate();
 
 		} catch (SQLException e) {
-			e.printStackTrace();
 			throw new CannotGetDetailsException("unable to get details");
 		} finally {
 			ConnectionUtil.close(pst, con);
@@ -123,7 +123,7 @@ public class OrderDao {
 	 * @throws DBException 
 	 * @throws Exception
 	 */
-	public static void save(List<Order> orders) throws CannotGetDetailsException, ClassNotFoundException {
+	public static void save(List<Order> orders) throws CannotGetDetailsException, ClassNotFoundException, DBException {
 		for (Order order : orders) {
 			saveOrder(order);
 		}
@@ -134,9 +134,10 @@ public class OrderDao {
 	 * 
 	 * @return
 	 * @throws ClassNotFoundException
+	 * @throws DBException 
 	 * @throws Exception
 	 */
-	public static List<Order> getOrderDetails() throws CannotGetDetailsException, ClassNotFoundException {
+	public static List<Order> getOrderDetails() throws CannotGetDetailsException, ClassNotFoundException, DBException {
 		Connection con = null;
 		PreparedStatement pst = null;
 		ResultSet rs = null;
@@ -180,10 +181,11 @@ public class OrderDao {
 	 * @return
 	 * @throws NotAbleToDeleteException
 	 * @throws ClassNotFoundException
+	 * @throws DBException 
 	 * @throws Exception
 	 */
 	public static boolean deleteOrders(String bookName)
-			throws CannotGetDetailsException, NotAbleToDeleteException, ClassNotFoundException {
+			throws CannotGetDetailsException, NotAbleToDeleteException, ClassNotFoundException, DBException {
 		boolean isDelete = false;
 		Connection con = null;
 		PreparedStatement pst = null;
@@ -251,9 +253,10 @@ public class OrderDao {
 	 * @param bookName
 	 * @return
 	 * @throws ClassNotFoundException
+	 * @throws DBException 
 	 * @throws Exception
 	 */
-	public static int getNoOfBooks(String bookName) throws CannotGetDetailsException, ClassNotFoundException {
+	public static int getNoOfBooks(String bookName) throws CannotGetDetailsException, ClassNotFoundException, DBException {
 		Connection connection = null;
 		PreparedStatement pst = null;
 
@@ -324,9 +327,10 @@ public class OrderDao {
 	 * @param orderId
 	 * @return
 	 * @throws ClassNotFoundException
+	 * @throws DBException 
 	 * @throws Exception
 	 */
-	public static boolean updateStatus(int orderId) throws CannotGetDetailsException, ClassNotFoundException {
+	public static boolean updateStatus(int orderId) throws CannotGetDetailsException, ClassNotFoundException, DBException {
 		Connection connection = null;
 		PreparedStatement pst = null;
 
@@ -359,8 +363,9 @@ public class OrderDao {
 	 * @return
 	 * @throws ClassNotFoundException
 	 * @throws CannotGetDetailsException
+	 * @throws DBException 
 	 */
-	public static boolean updateRejectStatus(int orderId) throws ClassNotFoundException, CannotGetDetailsException {
+	public static boolean updateRejectStatus(int orderId) throws ClassNotFoundException, CannotGetDetailsException, DBException {
 		Connection connection = null;
 		PreparedStatement pst = null;
 
@@ -392,9 +397,10 @@ public class OrderDao {
 	 * @param id
 	 * @return
 	 * @throws ClassNotFoundException
+	 * @throws DBException 
 	 * @throws Exception
 	 */
-	public static List<Order> getUserOrder(int id) throws CannotGetDetailsException, ClassNotFoundException {
+	public static List<Order> getUserOrder(int id) throws CannotGetDetailsException, ClassNotFoundException, DBException {
 
 		Connection con = null;
 		PreparedStatement pst = null;

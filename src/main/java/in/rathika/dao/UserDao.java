@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 import in.rathika.exception.CannotGetDetailsException;
+import in.rathika.exception.DBException;
 import in.rathika.model.User;
 import in.rathika.util.ConnectionUtil;
 
@@ -57,10 +58,11 @@ public class UserDao {
 	 * 
 	 * @param user
 	 * @throws ClassNotFoundException 
+	 * @throws DBException 
 	 * @throws Exception
 	 * @throws SQLException
 	 */
-	public static void save(User user) throws CannotGetDetailsException, ClassNotFoundException {
+	public static void save(User user) throws CannotGetDetailsException, ClassNotFoundException, DBException {
 		// Step 1: Get connection
 		Connection con = null;
 		PreparedStatement pst = null;
@@ -90,9 +92,10 @@ public class UserDao {
 	 * Add user details.
 	 * 
 	 * @param users
+	 * @throws DBException 
 	 * @throws Exception
 	 */
-	public static void save(List<User> users) throws CannotGetDetailsException, ClassNotFoundException {
+	public static void save(List<User> users) throws CannotGetDetailsException, ClassNotFoundException, DBException {
 		for (User user : users) {
 			save(user);
 		}
@@ -105,10 +108,11 @@ public class UserDao {
 	 * @param userPassCode
 	 * @return
 	 * @throws ClassNotFoundException 
+	 * @throws DBException 
 	 * @throws Exception
 	 * @throws SQLException
 	 */
-	public static List<User> checkUser() throws CannotGetDetailsException, ClassNotFoundException {
+	public static List<User> checkUser() throws CannotGetDetailsException, ClassNotFoundException, DBException {
 		Connection con = null;
 		PreparedStatement pst = null;
 		try {
@@ -139,10 +143,11 @@ public class UserDao {
 	 * @param emailId
 	 * @return
 	 * @throws ClassNotFoundException 
+	 * @throws DBException 
 	 * @throws Exception
 	 * @throws SQLException
 	 */
-	public static String getValidUser(String emailId) throws CannotGetDetailsException, ClassNotFoundException {
+	public static String getValidUser(String emailId) throws CannotGetDetailsException, ClassNotFoundException, DBException {
 		// Step 1: Get connection
 		String name = null;
 		Connection con = null;
@@ -175,9 +180,10 @@ public class UserDao {
 	 * 
 	 * @return
 	 * @throws ClassNotFoundException 
+	 * @throws DBException 
 	 * @throws Exception
 	 */
-	public List<User> getUserDetails() throws CannotGetDetailsException, ClassNotFoundException {
+	public List<User> getUserDetails() throws CannotGetDetailsException, ClassNotFoundException, DBException {
 		Connection con = null;
 		PreparedStatement pst = null;
 		ResultSet rs = null;
@@ -215,9 +221,10 @@ public class UserDao {
 	 * @param adminPassCode
 	 * @return
 	 * @throws ClassNotFoundException 
+	 * @throws DBException 
 	 * @throws Exception
 	 */
-	public static Map<String, String> checkAdmin() throws CannotGetDetailsException, ClassNotFoundException {
+	public static Map<String, String> checkAdmin() throws CannotGetDetailsException, ClassNotFoundException, DBException {
 		Connection con = null;
 		PreparedStatement pst = null;
 		ResultSet rs = null;
@@ -246,9 +253,10 @@ public class UserDao {
 	 * @param userName
 	 * @return
 	 * @throws ClassNotFoundException 
+	 * @throws DBException 
 	 * @throws Exception
 	 */
-	public static List<User> getUserDetails(String userName) throws CannotGetDetailsException, ClassNotFoundException {
+	public static List<User> getUserDetails(String userName) throws CannotGetDetailsException, ClassNotFoundException, DBException {
 		Connection con = null;
 		PreparedStatement pst = null;
 		ResultSet rs = null;
@@ -283,9 +291,10 @@ public class UserDao {
 	 * Get Id name of the user.
 	 * @return
 	 * @throws ClassNotFoundException 
+	 * @throws DBException 
 	 * @throws Exception
 	 */
-	public static int getId(String userName) throws CannotGetDetailsException, ClassNotFoundException {
+	public static int getId(String userName) throws CannotGetDetailsException, ClassNotFoundException, DBException {
 		int id = 0;
 		Connection con = null;
 		PreparedStatement pst = null;
