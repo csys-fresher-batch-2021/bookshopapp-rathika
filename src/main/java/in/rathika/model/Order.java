@@ -9,20 +9,7 @@ public class Order {
 	 */
 	
     private int id;
-    public Order(int id, int userId, String userName, String bookName, String language, int noOfBooks, double cost,
-			LocalDate orderDate, LocalDate deliveryDate, String status) {
-		super();
-		this.id = id;
-		this.userId = userId;
-		this.userName = userName;
-		this.bookName = bookName;
-		this.language = language;
-		this.noOfBooks = noOfBooks;
-		this.cost = cost;
-		this.orderDate = orderDate;
-		this.deliveryDate = deliveryDate;
-		this.status = status;
-	}
+   
 
 	private int userId;
 	private String userName;
@@ -132,6 +119,21 @@ public class Order {
 		this.cost = cost2;
 		this.status = status2;
 	}
+	
+	 public Order(int id, int userId, String userName, String bookName, String language, int noOfBooks, double cost,
+				LocalDate orderDate, LocalDate deliveryDate, String status) {
+			super();
+			this.id = id;
+			this.userId = userId;
+			this.userName = userName;
+			this.bookName = bookName;
+			this.language = language;
+			this.noOfBooks = noOfBooks;
+			this.cost = cost;
+			this.orderDate = orderDate;
+			this.deliveryDate = deliveryDate;
+			this.status = status;
+		}
 
 	@Override
 	public String toString() {

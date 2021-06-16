@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -118,8 +118,8 @@ public class UserDao {
 		try {
 			String sql = CHECK_USER_QUERY;
 			con = ConnectionUtil.getConnection();
-			Statement st = con.createStatement();
-			ResultSet rs = st.executeQuery(sql);
+			pst = con.prepareStatement(sql);
+			ResultSet rs = pst.executeQuery();
 			while (rs.next()) {
 				String uemail = rs.getString(USER_EMAIL);
 				String pass = rs.getString(USER_PASSWORD);
