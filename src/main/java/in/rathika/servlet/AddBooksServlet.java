@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import in.rathika.exception.CannotGetDetailsException;
+
 import in.rathika.service.BookService;
 
 /**

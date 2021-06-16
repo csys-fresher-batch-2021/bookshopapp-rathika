@@ -37,9 +37,7 @@ public class DeleteCartServlet extends HttpServlet {
 			
 		}catch(Exception e) {
 			response.sendRedirect("viewCart.jsp?errorMessage=Unable to delete book Name");
-		} catch (Throwable e) {
-			e.printStackTrace();
-		}
+		} 
 	}
 
 }

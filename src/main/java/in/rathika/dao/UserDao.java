@@ -32,6 +32,7 @@ public class UserDao {
 	private static final String GET_ADMIN_QUERY =   "select * from adminLogin";
 	private static final String GET_PARTICULAR_USER_QUERY =  "select id,email,mobileNumber,address from userList where username=? ORDER BY userName";
 	private static final String GET_USERID_QUERY =  "select id,username from userList ";
+	private static final String MESSAGE =  "Invalid User";
 	
 	/**
 	 * List to store User details.
@@ -123,7 +124,7 @@ public class UserDao {
 
 			}
 		} catch (SQLException e) {
-			throw new CannotGetDetailsException("Invalid User");
+			throw new CannotGetDetailsException(MESSAGE);
 		
 		} finally {
 			ConnectionUtil.close(pst, con);
@@ -161,7 +162,7 @@ public class UserDao {
 			}
 
 		} catch (SQLException e) {
-			throw new CannotGetDetailsException("Invalid User");
+			throw new CannotGetDetailsException(MESSAGE);
 
 		} finally {
 			ConnectionUtil.close(pst, con);
@@ -199,7 +200,7 @@ public class UserDao {
 			}
 
 		} catch (SQLException e) {
-			throw new CannotGetDetailsException("Invalid User");
+			throw new CannotGetDetailsException(MESSAGE);
 
 		} finally {
 			ConnectionUtil.close(pst, con);
@@ -232,7 +233,7 @@ public class UserDao {
 				adminMap.put(adminname, pass);
 			}
 		} catch (SQLException e) {
-			throw new CannotGetDetailsException("Invalid User");
+			throw new CannotGetDetailsException(MESSAGE);
 		} finally {
 			ConnectionUtil.close(pst, con);
 		}
@@ -270,7 +271,7 @@ public class UserDao {
 			}
 
 		} catch (SQLException e) {
-			throw new CannotGetDetailsException("Invalid User");
+			throw new CannotGetDetailsException(MESSAGE);
 
 		} finally {
 			ConnectionUtil.close(pst, con);
@@ -306,7 +307,7 @@ public class UserDao {
 				}
 			}
 		} catch (SQLException e) {
-			throw new CannotGetDetailsException("Invalid User");
+			throw new CannotGetDetailsException(MESSAGE);
 		} finally {
 			ConnectionUtil.close(pst, con);
 		}

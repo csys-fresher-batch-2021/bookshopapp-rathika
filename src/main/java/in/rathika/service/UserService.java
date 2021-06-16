@@ -88,9 +88,9 @@ public class UserService {
 	 */
     public static boolean isValidAdmin(String name,String password) throws CannotGetDetailsException, ClassNotFoundException{
 		boolean valid = false;
-		Map<String,String> AdminLoginDetails = UserDao.checkAdmin();
-		for (String name1 : AdminLoginDetails.keySet()) {
-			String password1 = AdminLoginDetails.get(name1);
+		Map<String,String> adminLoginDetails = UserDao.checkAdmin();
+		for (String name1 : adminLoginDetails.keySet()) {
+			String password1 = adminLoginDetails.get(name1);
 			if(password1.equals(password) && name1.equals(name)) {
 				valid = true;
 				break;

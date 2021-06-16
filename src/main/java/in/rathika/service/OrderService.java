@@ -112,7 +112,7 @@ public class OrderService {
 	 * @return
 	 * @throws Exception
 	 */
-	public static boolean addConfrimOrder(String userName,String bookName, int noOfBooks) throws Exception {
+	public static boolean addConfrimOrder(String userName,String bookName, int noOfBooks) throws CannotGetDetailsException, ClassNotFoundException  {
 		boolean isAdd = false;
 		boolean present = OrderService.isPresent(bookName);
 		
@@ -129,10 +129,10 @@ public class OrderService {
 				String language = order.getLanguage();
 				String status = order.getStatus();
 				
-				LocalDate order_date = LocalDate.now();
+				LocalDate orderDate = LocalDate.now();
 				
-				LocalDate delivery_date = order_date.plusDays(6);
-				Order orderObj = new Order(id,user,userName,bookName, language, noOfBooks, cost,order_date,delivery_date,status);
+				LocalDate deliveryDate = orderDate.plusDays(6);
+				Order orderObj = new Order(id,user,userName,bookName, language, noOfBooks, cost,orderDate,deliveryDate,status);
 				
 				OrderDao.saveOrder(orderObj);
 				
@@ -191,7 +191,7 @@ public class OrderService {
 	 * @return
 	 * @throws Exception
 	 */
-	public static double billCalculation() throws CannotGetDetailsException, ClassNotFoundException {
+	public static double billCalculation()  {
 		double total = 0;
 		
 		List<Order> books = OrderDao.getConfrimOrder();
