@@ -4,17 +4,37 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import in.rathika.exception.CannotGetDetailsException;
+import in.rathika.exception.DBException;
 import in.rathika.model.User;
 import in.rathika.util.ConnectionUtil;
 
 public class UserDao {
 
+	private static final String USER_ID = "id";
+	private static final String USER_NAME = "username";
+	private static final String USER_EMAIL = "email";
+	private static final String USER_MOBILE_NUMBER = "mobileNumber";
+	private static final String USER_ADDRESS = "address";
+	private static final String USER_AGE = "age";
+	private static final String USER_PASSWORD = "password";
+	private static final String ADMIN_NAME= "adminName";
+	private static final String ADMIN_PASSWORD= "password";
+	private static final String INSERT_USER_QUERY = "insert into userList(username,email,mobileNumber,address,age,password) values ( ?,?,?,?,?,? )";
+	private static final String CHECK_USER_QUERY = "select email,password from userList";
+	private static final String GET_USER_QUERY = "select username, email from userList";
+	private static final String GET_USER_DETAILS_QUERY =  "select * from userList";
+	private static final String GET_ADMIN_QUERY =   "select * from adminLogin";
+	private static final String GET_PARTICULAR_USER_QUERY =  "select id,email,mobileNumber,address from userList where username=? ORDER BY userName";
+	private static final String GET_USERID_QUERY =  "select id,username from userList ";
+	private static final String MESSAGE =  "Invalid User";
+	
 	/**
 	 * List to store User details.
 	 */
@@ -22,8 +42,9 @@ public class UserDao {
 	/**
 	 * HashMap to get email and password.
 	 */
-	private static Map<String, String> loginMap = new HashMap<>();
+	private static List<User> loginMap = new ArrayList<>();
 	private static Map<String, String> adminMap = new HashMap<>();
+	
 
 	/**
 	 * private constructor.
@@ -36,17 +57,19 @@ public class UserDao {
 	 * Add User Details into database.
 	 * 
 	 * @param user
+	 * @throws ClassNotFoundException 
+	 * @throws DBException 
 	 * @throws Exception
 	 * @throws SQLException
 	 */
-	public static void save(User user) throws Exception {
+	public static void save(User user) throws CannotGetDetailsException, ClassNotFoundException, DBException {
 		// Step 1: Get connection
 		Connection con = null;
 		PreparedStatement pst = null;
 		try {
 			con = ConnectionUtil.getConnection();
 			// Step 2: Prepare data
-			String sql = "insert into userList(username,email,mobileNumber,address,age,password) values ( ?,?,?,?,?,? )";
+			String sql = INSERT_USER_QUERY;
 			pst = con.prepareStatement(sql);
 
 			pst.setString(1, user.getName());
@@ -55,11 +78,11 @@ public class UserDao {
 			pst.setString(4, user.getAddress());
 			pst.setInt(5, user.getAge());
 			pst.setString(6, user.getPassword());
-			int rows = pst.executeUpdate();
-			System.out.println("No of rows inserted :" + rows);
+		    pst.executeUpdate();
+			
 		} catch (SQLException e) {
-			e.printStackTrace();
-			throw new RuntimeException("Unable to add user");
+			throw new CannotGetDetailsException("Unable to add user");
+			
 		} finally {
 			ConnectionUtil.close(pst, con);
 		}
@@ -69,9 +92,10 @@ public class UserDao {
 	 * Add user details.
 	 * 
 	 * @param users
+	 * @throws DBException 
 	 * @throws Exception
 	 */
-	public static void save(List<User> users) throws Exception {
+	public static void save(List<User> users) throws CannotGetDetailsException, ClassNotFoundException, DBException {
 		for (User user : users) {
 			save(user);
 		}
@@ -83,59 +107,67 @@ public class UserDao {
 	 * @param userEmail
 	 * @param userPassCode
 	 * @return
+	 * @throws ClassNotFoundException 
+	 * @throws DBException 
 	 * @throws Exception
 	 * @throws SQLException
 	 */
-	public static Map<String, String> checkUser(String userEmail, String userPassCode) throws Exception {
+	public static List<User> checkUser() throws CannotGetDetailsException, ClassNotFoundException, DBException {
 		Connection con = null;
 		PreparedStatement pst = null;
 		try {
-			String url = "select email,password from userList";
+			String sql = CHECK_USER_QUERY;
 			con = ConnectionUtil.getConnection();
-			Statement st = con.createStatement();
-			ResultSet rs = st.executeQuery(url);
+			pst = con.prepareStatement(sql);
+			ResultSet rs = pst.executeQuery();
 			while (rs.next()) {
-				String uemail = rs.getString("email");
-				String pass = rs.getString("password");
-				loginMap.put(uemail, pass);
+				String uemail = rs.getString(USER_EMAIL);
+				String pass = rs.getString(USER_PASSWORD);
+				User regObj = new User(uemail, pass);
+				loginMap.add(regObj);
+
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
-			throw new RuntimeException("Invalid User");
+			throw new CannotGetDetailsException(MESSAGE);
+		
 		} finally {
 			ConnectionUtil.close(pst, con);
 		}
 		return loginMap;
 	}
 
+
 	/**
 	 * Get user name using emailId
 	 * 
 	 * @param emailId
 	 * @return
+	 * @throws ClassNotFoundException 
+	 * @throws DBException 
 	 * @throws Exception
 	 * @throws SQLException
 	 */
-	public static String getValidUser(String emailId) throws Exception {
+	public static String getValidUser(String emailId) throws CannotGetDetailsException, ClassNotFoundException, DBException {
 		// Step 1: Get connection
 		String name = null;
 		Connection con = null;
 		PreparedStatement pst = null;
+		ResultSet rs = null;
 		try {
-			String url = "select username, email from userList";
+			String sql = GET_USER_QUERY;
 			con = ConnectionUtil.getConnection();
-			Statement st = con.createStatement();
-			ResultSet rs = st.executeQuery(url);
+			pst = con.prepareStatement(sql);
+			rs = pst.executeQuery();
 			while (rs.next()) {
-				String uname = rs.getString("username");
-				String email = rs.getString("email");
+				String uname = rs.getString(USER_NAME);
+				String email = rs.getString(USER_EMAIL);
 				if (email.equals(emailId)) {
 					name = uname;
 				}
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new CannotGetDetailsException(MESSAGE);
 
 		} finally {
 			ConnectionUtil.close(pst, con);
@@ -147,56 +179,148 @@ public class UserDao {
 	 * Get the user Details.
 	 * 
 	 * @return
+	 * @throws ClassNotFoundException 
+	 * @throws DBException 
 	 * @throws Exception
 	 */
-	public List<User> getUserDetails() throws Exception {
+	public List<User> getUserDetails() throws CannotGetDetailsException, ClassNotFoundException, DBException {
 		Connection con = null;
 		PreparedStatement pst = null;
+		ResultSet rs = null;
 		try {
-			String url = "select * from userList";
+			String sql = GET_USER_DETAILS_QUERY;
 			con = ConnectionUtil.getConnection();
-			Statement st = con.createStatement();
-			ResultSet rs = st.executeQuery(url);
+
+			pst = con.prepareStatement(sql);
+			rs = pst.executeQuery();
 			while (rs.next()) {
-				String uname = rs.getString("username");
-				String email = rs.getString("email");
-				long mobile = rs.getLong("mobileNumber");
-				String userAddress = rs.getString("address ");
-				int userAge = rs.getInt("age");
-				String userPass = rs.getString("password");
+				String uname = rs.getString(USER_NAME);
+				String email = rs.getString(USER_EMAIL);
+				long mobile = rs.getLong(USER_MOBILE_NUMBER);
+				String userAddress = rs.getString(USER_ADDRESS);
+				int userAge = rs.getInt(USER_AGE);
+				String userPass = rs.getString(USER_PASSWORD);
 				User regObj = new User(uname, email, mobile, userAddress, userAge, userPass);
 				userDetails.add(regObj);
 
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new CannotGetDetailsException(MESSAGE);
 
 		} finally {
 			ConnectionUtil.close(pst, con);
 		}
 		return userDetails;
 	}
-	public static Map<String, String> checkAdmin(String adminName, String adminPassCode) throws Exception {
+
+	/**
+	 * Check Whether the admin is valid.
+	 * 
+	 * @param adminName
+	 * @param adminPassCode
+	 * @return
+	 * @throws ClassNotFoundException 
+	 * @throws DBException 
+	 * @throws Exception
+	 */
+	public static Map<String, String> checkAdmin() throws CannotGetDetailsException, ClassNotFoundException, DBException {
 		Connection con = null;
 		PreparedStatement pst = null;
+		ResultSet rs = null;
 		try {
-			String url = "select * from adminLogin";
+			String sql = GET_ADMIN_QUERY;
 			con = ConnectionUtil.getConnection();
-			Statement st = con.createStatement();
-			ResultSet rs = st.executeQuery(url);
+			pst = con.prepareStatement(sql);
+			
+			rs = pst.executeQuery();
 			while (rs.next()) {
-				String adminname = rs.getString("adminName");
-				String pass = rs.getString("password");
+				String adminname = rs.getString(ADMIN_NAME);
+				String pass = rs.getString(ADMIN_PASSWORD);
 				adminMap.put(adminname, pass);
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
-			throw new RuntimeException("Invalid User");
+			throw new CannotGetDetailsException(MESSAGE);
 		} finally {
 			ConnectionUtil.close(pst, con);
 		}
 		return adminMap;
+	}
+
+	/**
+	 * Get user details from userList.
+	 * 
+	 * @param userName
+	 * @return
+	 * @throws ClassNotFoundException 
+	 * @throws DBException 
+	 * @throws Exception
+	 */
+	public static List<User> getUserDetails(String userName) throws CannotGetDetailsException, ClassNotFoundException, DBException {
+		Connection con = null;
+		PreparedStatement pst = null;
+		ResultSet rs = null;
+		try {
+
+			String sql = GET_PARTICULAR_USER_QUERY;
+			con = ConnectionUtil.getConnection();
+			pst = con.prepareStatement(sql);
+			pst.setString(1, userName);
+			rs = pst.executeQuery();
+
+			while (rs.next()) {
+                int userId = rs.getInt(USER_ID);
+				String emailId = rs.getString(USER_EMAIL);
+
+				long mobile = rs.getLong(USER_MOBILE_NUMBER);
+				String address = rs.getString(USER_ADDRESS);
+
+				userDetails.add(new User(userId,emailId, mobile, address));
+			}
+
+		} catch (SQLException e) {
+			throw new CannotGetDetailsException(MESSAGE);
+
+		} finally {
+			ConnectionUtil.close(pst, con);
+		}
+		return userDetails;
+	}
+	
+	/**
+	 * Get Id name of the user.
+	 * @return
+	 * @throws ClassNotFoundException 
+	 * @throws DBException 
+	 * @throws Exception
+	 */
+	public static int getId(String userName) throws CannotGetDetailsException, ClassNotFoundException, DBException {
+		int id = 0;
+		Connection con = null;
+		PreparedStatement pst = null;
+		ResultSet rs = null;
+		try {
+			String sql = GET_USERID_QUERY;
+			con = ConnectionUtil.getConnection();
+			
+            pst = con.prepareStatement(sql);
+			
+            rs = pst.executeQuery();
+
+            while (rs.next()) {
+				int userId = rs.getInt(USER_ID);
+				String user = rs.getString(USER_NAME);
+				if (user.equals(userName)) {
+					id = userId;
+					break;
+				}
+			}
+		} catch (SQLException e) {
+			throw new CannotGetDetailsException(MESSAGE);
+		} finally {
+			ConnectionUtil.close(pst, con);
+		}
+		return id;
 	}
 
 }

@@ -15,6 +15,9 @@
 		<sonar.projectKey>csys-fresher-batch-2021_bookshopapp-rathika</sonar.projectKey>
 		<sonar.organization>csys-fresher-batch-2021</sonar.organization>
 		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
+	
+    <maven.test.skip>true</maven.test.skip>
+
 	</properties>
 	<dependencies>
 		<dependency>
@@ -42,7 +45,7 @@
 		</dependency>
 	</dependencies>
 	<build>
-		<finalName>app</finalName>
+		<finalName>bookshopapp-rathika</finalName>
 		<pluginManagement>
 			<plugins>
 				<plugin>
@@ -50,7 +53,9 @@
 					<artifactId>sonar-maven-plugin</artifactId>
 					<version>3.8.0.2131</version>
 				</plugin>
+				
 			</plugins>
+	
 		</pluginManagement>
 	</build>
 </project>

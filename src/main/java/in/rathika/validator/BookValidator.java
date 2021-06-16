@@ -1,5 +1,10 @@
 package in.rathika.validator;
 
+import java.util.List;
+
+import in.rathika.dao.BookDao;
+import in.rathika.model.Book;
+
 public class BookValidator {
 
 	private BookValidator() {
@@ -56,5 +61,17 @@ public class BookValidator {
 			valid = false;
 		}
 		return valid;
+	}
+	public static boolean isBookPresent(String bookName)  {
+		List<Book> bookDetails = BookDao.getBook();
+		boolean exists = false;
+		
+		for (Book books : bookDetails) {
+			if(books.getBookName().equalsIgnoreCase(bookName)) {
+				exists = true;
+				break;
+			}
+		}
+		return exists;
 	}
 }

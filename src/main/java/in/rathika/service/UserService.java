@@ -1,9 +1,12 @@
 package in.rathika.service;
 
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Map;
 
 import in.rathika.dao.UserDao;
+import in.rathika.exception.CannotGetDetailsException;
+import in.rathika.exception.DBException;
 import in.rathika.model.User;
 import in.rathika.validator.UserValidator;
 
@@ -31,11 +34,12 @@ public class UserService {
 	 * @param password
 	 * @param confrimPassword
 	 * @return
+	 * @throws DBException 
 	 * @throws Exception 
 	 * @throws SQLException 
 	 */
 	public boolean addDetails(String name, String email, Long mobileNum, String address, int age, String password,
-			String confrimPassword) throws Exception {
+			String confrimPassword) throws CannotGetDetailsException, ClassNotFoundException, DBException {
 		boolean registerd = false;
 		User regObj = new User(name, email, mobileNum, address, age, password);
 		boolean nameValid = validatorObj.isNameValid(name);
@@ -59,20 +63,23 @@ public class UserService {
      * @param uemail
      * @param userPassCode
      * @return
+     * @throws DBException 
      * @throws Exception
      */
-	public static boolean isValidUser(String uemail, String userPassCode) throws Exception {
-           boolean valid = false;	
-		   Map<String,String> loginDetails = UserDao.checkUser(uemail, userPassCode);
-
-		   for (String email : loginDetails.keySet()) {
-				String password = loginDetails.get(email);
-				if(password.matches(userPassCode) && email.matches(uemail)) {
-					valid = true;
-				}
+	public static boolean isValidUser(String uemail, String userPassCode) throws CannotGetDetailsException, ClassNotFoundException, DBException {
+        boolean valid = false;	
+		   List<User> loginDetails = UserDao.checkUser();
+		   for (User user : loginDetails) {
+			   if (user.getEmail().equals(uemail) && user.getPassword().equals(userPassCode) ) {
+				
 				   
-
-			}
+					   valid = true;
+					   break;
+				   
+				   
+			   }
+			   
+		}
 		   return valid;
 	}
 	/**
@@ -80,15 +87,17 @@ public class UserService {
 	 * @param name
 	 * @param password
 	 * @return
+	 * @throws DBException 
 	 * @throws Exception
 	 */
-    public static boolean isValidAdmin(String name,String password) throws Exception{
+    public static boolean isValidAdmin(String name,String password) throws CannotGetDetailsException, ClassNotFoundException, DBException{
 		boolean valid = false;
-		Map<String,String> AdminLoginDetails = UserDao.checkAdmin(name, password);
-		for (String name1 : AdminLoginDetails.keySet()) {
-			String password1 = AdminLoginDetails.get(name1);
-			if(password1.matches(password) && name1.matches(name)) {
+		Map<String,String> adminLoginDetails = UserDao.checkAdmin();
+		for (String name1 : adminLoginDetails.keySet()) {
+			String password1 = adminLoginDetails.get(name1);
+			if(password1.equals(password) && name1.equals(name)) {
 				valid = true;
+				break;
 			}
 			   
 
@@ -96,5 +105,7 @@ public class UserService {
     	return valid;
     	
     }
+    
+    
 	
 }

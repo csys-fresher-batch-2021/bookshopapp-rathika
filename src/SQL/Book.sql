@@ -1,10 +1,10 @@
-CREATE TABLE bookList (
-
-	bookName varchar (30) UNIQUE NOT NULL,
-	language varchar (30) NOT NULL,
-	noOfBooks int NOT NULL,
-	cost bigint NOT NULL
-
+create table bookList(
+	id serial primary key,
+	bookName varchar(20) not null,
+	language  varchar(20) not null,
+	noOfBooks int not null,
+	cost int not null,
+	unique(bookName)
 );
 
 INSERT INTO bookList(bookName,language,noOfBooks,cost) VALUES 

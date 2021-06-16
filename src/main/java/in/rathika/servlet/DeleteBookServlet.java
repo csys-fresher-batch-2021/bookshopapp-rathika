@@ -1,6 +1,7 @@
 package in.rathika.servlet;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -17,8 +18,7 @@ import in.rathika.service.OrderService;
 @WebServlet("/DeleteBookServlet")
 public class DeleteBookServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
-	@Override
+    @Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		try {
@@ -32,7 +32,9 @@ public class DeleteBookServlet extends HttpServlet {
 				if (isDeleted) {
 					response.sendRedirect("display.jsp");
 				} else {
-					response.sendRedirect("addBookDetails.jsp?errorMessage=Unable to delete book Name");
+
+					String errorMessage = "Unable to delete book Name";
+					response.sendRedirect("addBookDetails.jsp?errorMessage=" + errorMessage);
 				}
 			} else {
 				isOrderDeleted = OrderService.deleteBook(bookName);
@@ -42,7 +44,9 @@ public class DeleteBookServlet extends HttpServlet {
 				}
 			}
 		} catch (Exception e) {
-			response.sendRedirect("viewCart.jsp?errorMessage=Unable to delete book Name");
+
+			String errorMessage = "Unable to delete book Name";
+			response.sendRedirect("viewCart.jsp?errorMessage=" + errorMessage);
 		}
 	}
 

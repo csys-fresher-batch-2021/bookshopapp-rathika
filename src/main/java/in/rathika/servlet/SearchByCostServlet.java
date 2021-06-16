@@ -26,10 +26,14 @@ public class SearchByCostServlet extends HttpServlet {
 			if (added) {
 				response.sendRedirect("userSearchDisplay.jsp");
 			}
+			else {
+				response.sendRedirect("userSearchDisplay.jsp?errorMessages=No Books under the cost ");
+
+			}
 
 		} catch (Exception e) {
 
-			response.sendRedirect("userSearchDisplay.jsp?errorMessage=Unable to add Books ");
+			response.sendRedirect("userSearchDisplay.jsp?errorMessage=No books available");
 		}
 
 	}

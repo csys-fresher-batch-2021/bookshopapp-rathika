@@ -31,6 +31,9 @@ public class SearchLanguageServlet extends HttpServlet {
 
 				response.sendRedirect("userSearchDisplay.jsp");
 			}
+			else {
+				response.sendRedirect("userSearchDisplay.jsp?errorMessage=No Books in "+language);
+			}
 
 		} catch (Exception e) {
 

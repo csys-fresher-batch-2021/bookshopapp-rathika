@@ -28,12 +28,17 @@ public class CofirmOrderServlet extends HttpServlet {
 			HttpSession session = request.getSession();
 			String bookName = (String) session.getAttribute("bookName");
 			boolean valid = OrderService.validNoOfBooks(bookName, count);
+			
 			int totalCount = OrderService.getUpdatedBooks(bookName);
-			System.out.println("Total from order list" + totalCount);
-
+			
+            
 			boolean updated = OrderDao.updateBooks(bookName, totalCount - count);
+			
 			if (valid && updated) {
-				boolean added = OrderService.addConfrimOrder(bookName, count);
+				HttpSession sess = request.getSession();
+				String userName = (String) sess.getAttribute("LOGGED_IN_USER");
+				boolean added = OrderService.addConfrimOrder(userName,bookName, count);
+				
 				if (added) {
 					response.sendRedirect("displayOrder.jsp");
 				} else {
@@ -42,7 +47,7 @@ public class CofirmOrderServlet extends HttpServlet {
 			}
 		} catch (Exception e) {
 			response.sendRedirect("viewCart.jsp?errorMessage=Invalid No Of Books");
-		}
+		} 
 
 	}
 

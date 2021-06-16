@@ -1,8 +1,13 @@
 package in.rathika.service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import in.rathika.dao.OrderDao;
+import in.rathika.dao.UserDao;
+import in.rathika.exception.CannotGetDetailsException;
+import in.rathika.exception.DBException;
+import in.rathika.exception.NotAbleToDeleteException;
 import in.rathika.model.Order;
 
 public class OrderService {
@@ -24,13 +29,12 @@ public class OrderService {
 	 */
 	public static boolean addOrder(String bookName, String language, int noOfBooks, double cost) {
 		boolean isAdded = false;
-		boolean present = OrderService.isPresent(bookName);
 		List<Order> book = OrderDao.getOrder();
-		book.removeAll(book);
-		if (!present || present) {
-			isAdded = true;
-			orderDao.addCart(bookName, language, noOfBooks, cost);
-		}
+		book.clear();
+		orderDao.addCart(bookName, language, noOfBooks, cost);
+		isAdded = true;
+
+		
 
 		return isAdded;
 	}
@@ -107,21 +111,37 @@ public class OrderService {
 	 * @param bookName
 	 * @param noOfBooks
 	 * @return
+	 * @throws DBException 
 	 * @throws Exception
 	 */
-	public static boolean addConfrimOrder(String bookName, int noOfBooks) throws Exception {
+	public static boolean addConfrimOrder(String userName,String bookName, int noOfBooks) throws CannotGetDetailsException, ClassNotFoundException, DBException  {
 		boolean isAdd = false;
 		boolean present = OrderService.isPresent(bookName);
-		// boolean ordered = OrderService.isPresentOrder(bookName);
+		
+		int user = UserDao.getId(userName);
+		
+		
+		
 		for (Order order : OrderDao.getOrder()) {
 			if (present) {
+				
+				int id = order.getId();
+				
 				double cost = order.getCost();
 				String language = order.getLanguage();
-				Order orderObj = new Order(bookName, language, noOfBooks, cost);
-				// OrderDao.addOrders(bookName,language,noOfBooks,cost);
+				String status = order.getStatus();
+				
+				LocalDate orderDate = LocalDate.now();
+				
+				LocalDate deliveryDate = orderDate.plusDays(6);
+				Order orderObj = new Order(id,user,userName,bookName, language, noOfBooks, cost,orderDate,deliveryDate,status);
+				
 				OrderDao.saveOrder(orderObj);
+				
+
+				OrderDao.addConfrimCart(bookName, language, noOfBooks, cost);
+				 
 				isAdd = true;
-				break;
 
 			}
 
@@ -159,9 +179,11 @@ public class OrderService {
 	 * 
 	 * @param bookName
 	 * @return
+	 * @throws NotAbleToDeleteException 
+	 * @throws DBException 
 	 * @throws Exception
 	 */
-	public static boolean deleteCart(String bookName) throws Exception {
+	public static boolean deleteCart(String bookName) throws CannotGetDetailsException, ClassNotFoundException, NotAbleToDeleteException, DBException {
 
 		return OrderDao.deleteOrders(bookName.trim());
 	}
@@ -172,16 +194,18 @@ public class OrderService {
 	 * @return
 	 * @throws Exception
 	 */
-	public static double billCalculation() throws Exception {
+	public static double billCalculation()  {
 		double total = 0;
-		List<Order> books = OrderService.getOrderDetails();
+		
+		List<Order> books = OrderDao.getConfrimOrder();
+		
 		for (Order book : books) {
-			// OrderDao.saveConfrimOrder(books);
 			total = total + book.getNoOfBooks() * book.getCost();
-			// OrderDao.deleteOrders(book.getBookName());
-
 		}
-
+	
+		
+        books.clear();
+        
 		return total;
 	}
 
@@ -190,9 +214,10 @@ public class OrderService {
 	 * 
 	 * @param bookName
 	 * @return
+	 * @throws DBException 
 	 * @throws Exception
 	 */
-	public static boolean isPresentOrder(String bookName) throws Exception {
+	public static boolean isPresentOrder(String bookName) throws CannotGetDetailsException, ClassNotFoundException, DBException {
 		boolean present = false;
 		List<Order> orders = OrderService.getOrderDetails();
 		for (Order orderDetails : orders) {
@@ -209,42 +234,20 @@ public class OrderService {
 	 * Get order details.
 	 * 
 	 * @return
+	 * @throws CannotGetDetailsException 
+	 * @throws ClassNotFoundException 
+	 * @throws DBException 
 	 * @throws Exception
 	 */
-	public static List<Order> getOrderDetails() throws Exception {
+	public static List<Order> getOrderDetails() throws ClassNotFoundException, CannotGetDetailsException, DBException  {
 		List<Order> orders = OrderDao.getOrderDetails();
-		orders.removeAll(orders);
+		orders.clear();
 		List<Order> order = OrderDao.getOrderDetails();
 		return order;
 
 	}
 
-	/**
-	 * Delete Book from Order List.
-	 * 
-	 * @param bookName
-	 * @return
-	 */
-	public static boolean deleteBookOrder(String bookName) {
-		boolean isDeleted = false;
-		Order searchbook = null;
-		List<Order> books = OrderDao.getOrder();
-		for (Order order : books) {
-			if (order.getBookName().equalsIgnoreCase(bookName)) {
-				searchbook = order;
-				break;
-			}
-		}
-
-		if (searchbook != null) {
-			books.remove(searchbook);
-			isDeleted = true;
-
-		}
-		return isDeleted;
-	}
-
-	/**
+    /**
 	 * Get No of books for update.
 	 * 
 	 * @param bookName
@@ -262,4 +265,16 @@ public class OrderService {
 		}
 		return count1;
 	}
+	
+     
+     public static boolean updateRejectStatus(int orderId) throws ClassNotFoundException, CannotGetDetailsException, DBException  {
+		
+		return OrderDao.updateRejectStatus(orderId);
+	}
+	
+	public static boolean updateStatus(int orderId) throws ClassNotFoundException, CannotGetDetailsException, DBException  {
+		
+		return OrderDao.updateStatus(orderId);
+	}
+
 }

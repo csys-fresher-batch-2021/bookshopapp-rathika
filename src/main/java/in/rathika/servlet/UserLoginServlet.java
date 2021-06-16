@@ -29,14 +29,18 @@ public class UserLoginServlet extends HttpServlet {
 			String userPassCode = request.getParameter("passCode");
 
 			boolean isValidUser = UserService.isValidUser(uemail, userPassCode);
-
+          
 			String uname = UserDao.getValidUser(uemail);
+			
 
 			if (isValidUser) {
 				HttpSession session = request.getSession();
 				session.setAttribute("LOGGED_IN_USER", uname);
 				session.setAttribute("ROLE", "USER");
 				response.sendRedirect("addCart.jsp");
+			}
+			else {
+				response.sendRedirect("userLogin.jsp?errorMessage=Invalid Login Credentials");
 			}
 		} catch (Exception e) {
 			response.sendRedirect("userLogin.jsp?errorMessage=Invalid Login Credentials");

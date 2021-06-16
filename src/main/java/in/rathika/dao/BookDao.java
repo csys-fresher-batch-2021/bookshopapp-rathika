@@ -4,16 +4,26 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
 import in.rathika.exception.CannotGetDetailsException;
+import in.rathika.exception.DBException;
 import in.rathika.exception.NotAbleToDeleteException;
 import in.rathika.model.Book;
 import in.rathika.util.ConnectionUtil;
 
 public class BookDao {
+	
+	
+	
+	private static final String BOOK_NAME = "bookName";
+	private static final String BOOK_LANGUAGE = "language";
+	private static final String NO_OF_BOOKS = "noOfBooks";
+	private static final String COST = "cost";
+	private static final String INSERT_BOOKS_QUERY = "insert into bookList(bookName,language,noOfBooks,cost) values ( ?,?,?,?)";
+	private static final String GET_BOOKS_QUERY = "select bookName,language,noOfBooks,cost from bookList where noOfBooks>0 ORDER BY bookName";
+	private static final String DELETE_BOOKS_QUERY = "DELETE FROM bookList WHERE bookName=?";
 	/**
 	 * ArrayList to store Book Details.
 	 */
@@ -74,27 +84,28 @@ public class BookDao {
 	 * Insert book details into DataBase.
 	 * 
 	 * @param book
+	 * @throws ClassNotFoundException 
+	 * @throws DBException 
 	 * @throws Exception
 	 */
-	public static void saveBook(Book book) throws Exception {
+	public static void saveBook(Book book) throws  CannotGetDetailsException, ClassNotFoundException, DBException {
 		// Step 1: Get connection
 		Connection con = null;
 		PreparedStatement pst = null;
 		try {
 			con = ConnectionUtil.getConnection();
-			// Step 2: Prepare data
-			String sql = "insert into bookList(bookName,language,noOfBooks,cost) values ( ?,?,?,?)";
+		
+			String sql = INSERT_BOOKS_QUERY;
 			pst = con.prepareStatement(sql);
 
 			pst.setString(1, book.getBookName());
 			pst.setString(2, book.getLanguage());
 			pst.setInt(3, book.getNoOfBooks());
 			pst.setDouble(4, book.getCost());
-			int rows = pst.executeUpdate();
-			System.out.println("No of rows inserted :" + rows);
+			pst.executeUpdate();
+			
 		} catch (SQLException e) {
-			e.printStackTrace();
-			throw new RuntimeException("Unable to add user");
+			throw new CannotGetDetailsException(e.getMessage());
 		} finally {
 			ConnectionUtil.close(pst, con);
 		}
@@ -104,9 +115,10 @@ public class BookDao {
 	 * Add book details into
 	 * 
 	 * @param bookss
+	 * @throws DBException 
 	 * @throws Exception
 	 */
-	public static void save(List<Book> books) throws Exception {
+	public static void save(List<Book> books) throws CannotGetDetailsException, ClassNotFoundException, DBException {
 		for (Book book : books) {
 			saveBook(book);
 		}
@@ -116,28 +128,33 @@ public class BookDao {
 	 * Get the book details from Data Base.
 	 * 
 	 * @return
+	 * @throws ClassNotFoundException 
+	 * @throws DBException 
 	 * @throws Exception
 	 */
-	public static List<Book> getBookDetails() throws Exception {
+	public static List<Book> getBookDetails() throws CannotGetDetailsException, ClassNotFoundException, DBException {
 		Connection con = null;
 		PreparedStatement pst = null;
+		ResultSet rs = null;
 		try {
-            books.removeAll(books);
-			String url = "select * from bookList where noOfBooks>0";
+            books.clear();
+			String url = GET_BOOKS_QUERY;
 			con = ConnectionUtil.getConnection();
-			Statement st = con.createStatement();
-			ResultSet rs = st.executeQuery(url);
+			
+			pst = con.prepareStatement(url);
+			rs = pst.executeQuery();
+			
 			while (rs.next()) {
-				String bookname = rs.getString("bookName");
-				String bookLanguage = rs.getString("language");
-				int noOfBooks = rs.getInt("noOfBooks");
-				double cost = rs.getDouble("cost");
+				String bookname = rs.getString(BOOK_NAME);
+				String bookLanguage = rs.getString(BOOK_LANGUAGE);
+				int noOfBooks = rs.getInt(NO_OF_BOOKS);
+				double cost = rs.getDouble(COST);
 				
 				books.add(new Book(bookname, bookLanguage, noOfBooks, cost));
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new CannotGetDetailsException(e.getMessage());
 
 		} finally {
 			ConnectionUtil.close(pst, con);
@@ -150,9 +167,12 @@ public class BookDao {
 	 * 
 	 * @param bookName
 	 * @return
+	 * @throws ClassNotFoundException 
+	 * @throws NotAbleToDeleteException 
+	 * @throws DBException 
 	 * @throws Exception
 	 */
-	public static boolean deleteBooks(String bookName) throws Exception {
+	public static boolean deleteBooks(String bookName) throws CannotGetDetailsException, ClassNotFoundException, NotAbleToDeleteException, DBException {
 
 		boolean isDelete = false;
 		Connection con = null;
@@ -160,7 +180,7 @@ public class BookDao {
 
 		try {
 			con = ConnectionUtil.getConnection();
-			String sql = "DELETE FROM bookList WHERE bookName=?;";
+			String sql = DELETE_BOOKS_QUERY;
 			pst = con.prepareStatement(sql);
 			pst.setString(1, bookName);
 

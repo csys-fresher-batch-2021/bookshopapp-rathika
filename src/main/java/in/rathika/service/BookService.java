@@ -3,7 +3,11 @@ package in.rathika.service;
 import java.util.List;
 
 import in.rathika.dao.BookDao;
+import in.rathika.exception.CannotGetDetailsException;
+import in.rathika.exception.DBException;
+import in.rathika.exception.NotAbleToDeleteException;
 import in.rathika.model.Book;
+import in.rathika.validator.BookValidator;
 
 public class BookService {
 
@@ -21,13 +25,18 @@ public class BookService {
 	 * @param noOfBooks
 	 * @param cost
 	 * @return
+	 * @throws DBException 
+	 * @throws Throwable 
 	 * @throws Exception 
 	 */
-	public static boolean addBook(String bookName, String language, int noOfBooks, double cost) throws Exception {
+	public static boolean addBook(String bookName, String language, int noOfBooks, double cost) throws CannotGetDetailsException, ClassNotFoundException, DBException  {
 		boolean isAdded = false;
 		boolean present = BookService.isPresent(bookName);
+		boolean isValidName = BookValidator.isBookNameValid(bookName);
+		boolean validNoOfBooks = BookValidator.isValidNumber(noOfBooks);
+		boolean validCost = BookValidator.isCostValid(cost);
         Book bookObj = new Book(bookName, language, noOfBooks, cost);
-		if (!present) {
+		if (isValidName && validNoOfBooks && validCost && !present) {
 			isAdded = true;
 			BookDao.saveBook(bookObj);
 		}
@@ -40,11 +49,18 @@ public class BookService {
 	 * 
 	 * @param bookName
 	 * @return
+	 * @throws NotAbleToDeleteException 
+	 * @throws DBException 
 	 * @throws Exception 
 	 */
-	public static boolean deleteBook(String bookName) throws Exception {
+	public static boolean deleteBook(String bookName) throws CannotGetDetailsException, ClassNotFoundException, NotAbleToDeleteException, DBException {
 		
-		return BookDao.deleteBooks(bookName.trim());
+		boolean deleted = false;
+		if(BookValidator.isBookNameValid(bookName)) {
+			deleted =  BookDao.deleteBooks(bookName.trim());
+		}
+		return deleted;
+		
 	}
 
 	
@@ -53,9 +69,10 @@ public class BookService {
 	 * 
 	 * @param bookName
 	 * @return
+	 * @throws DBException 
 	 * @throws Exception 
 	 */
-	public static boolean isPresent(String bookName) throws Exception {
+	public static boolean isPresent(String bookName) throws CannotGetDetailsException, ClassNotFoundException, DBException {
 		boolean present = false;
 		List<Book> books = BookDao.getBookDetails();
 		for (Book bookDetails : books) {
@@ -93,9 +110,10 @@ public class BookService {
 	 * 
 	 * @param bookName
 	 * @return
+	 * @throws DBException 
 	 * @throws Exception 
 	 */
-	public static int getNoOfBooks(String bookName) throws Exception {
+	public static int getNoOfBooks(String bookName) throws CannotGetDetailsException, ClassNotFoundException, DBException {
 		int noOfBooks = 0;
 		List<Book> books = BookDao.getBookDetails();
 		for (Book bookDetails : books) {
@@ -113,9 +131,10 @@ public class BookService {
 	 * 
 	 * @param bookName
 	 * @return
+	 * @throws DBException 
 	 * @throws Exception 
 	 */
-	public static double getBookCost(String bookName) throws Exception {
+	public static double getBookCost(String bookName) throws CannotGetDetailsException, ClassNotFoundException, DBException {
 		double cost = 0;
 		List<Book> books = BookDao.getBookDetails();
 		for (Book bookDetails : books) {
@@ -138,7 +157,7 @@ public class BookService {
 	public static boolean searchBookByLanguage(String language) {
 		boolean isAdd = false;
 		List<Book> languageDetails = BookDao.getSearch();
-		languageDetails.removeAll(languageDetails);
+		languageDetails.clear();
 		for (Book book : BookDao.getBook()) {
 			if (book.getLanguage().equalsIgnoreCase(language)) {
 				languageDetails.add(book);
@@ -157,7 +176,7 @@ public class BookService {
 	public static boolean searchBookByCost(int type) {
 		boolean isAdd = false;
 		List<Book> languageDetails = BookDao.getSearch();
-		languageDetails.removeAll(languageDetails);
+		languageDetails.clear();
 		if (type == 1) {
 			for (Book book : BookDao.getBook()) {
 				if (book.getCost() <= 500) {
@@ -186,7 +205,7 @@ public class BookService {
 	public static boolean confirmOrder(String bookName) {
 		boolean isAdd = false;
 		List<Book> languageDetails = BookDao.getSearch();
-		languageDetails.removeAll(languageDetails);
+		languageDetails.clear();
 		for (Book book : BookDao.getBook()) {
 			if (book.getBookName().equalsIgnoreCase(bookName)) {
 				languageDetails.add(book);
@@ -197,19 +216,13 @@ public class BookService {
 	}
    
 	
-	/**
-	 * Get book details from database.
-	 * @return
-	 * @throws Exception
-	 */
-	public static List<Book> getBookDetails() throws Exception{
-		List<Book> books = BookDao.getBookDetails();
-		books.removeAll(books);
-		List<Book> book = BookDao.getBookDetails();
-		return book;
-		
-	}
 
-	
+    /**
+     * Get the book details.
+     * @return
+     */
+	public static List<Book> getBookDetails()  {
+		return BookDao.getBook();
+	}
 
 }

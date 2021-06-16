@@ -1,14 +1,15 @@
 package in.rathika.servlet;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+
 import in.rathika.service.BookService;
-import in.rathika.validator.BookValidator;
 
 /**
  * Servlet implementation class AddBooksServlet
@@ -26,26 +27,18 @@ public class AddBooksServlet extends HttpServlet {
 			throws ServletException, IOException {
 		try {
 			String bookName = request.getParameter("bookName");
-			boolean isValidName = BookValidator.isBookNameValid(bookName);
-			String language = request.getParameter("language");
+            String language = request.getParameter("language");
 			String noOfBook = request.getParameter("noBookId");
 			int noOfBooks = Integer.parseInt(noOfBook);
-			boolean validNoOfBooks = BookValidator.isValidNumber(noOfBooks);
-			String price = request.getParameter("costId");
+            String price = request.getParameter("costId");
 			double cost = Double.parseDouble(price);
 
-			boolean validCost = BookValidator.isCostValid(cost);
+			boolean isAdded = BookService.addBook(bookName, language, noOfBooks, cost);
+			if (isAdded) {
+				response.sendRedirect("addBookDetails.jsp");
+			} else {
 
-			boolean isAdded = false;
-			if (isValidName && validNoOfBooks && validCost) {
-
-				isAdded = BookService.addBook(bookName, language, noOfBooks, cost);
-				if (isAdded) {
-					response.sendRedirect("addBookDetails.jsp");
-				} else {
-				
-                   response.sendRedirect("addBookDetails.jsp?errorMessage=Unable to add Books");
-				}
+				response.sendRedirect("addBookDetails.jsp?errorMessage=Unable to add Books");
 			}
 
 		} catch (Exception e) {

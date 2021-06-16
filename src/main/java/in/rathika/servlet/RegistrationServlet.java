@@ -37,12 +37,15 @@ public class RegistrationServlet extends HttpServlet {
 			String confrimPassCode = request.getParameter("reenterPass");
 
 			UserService service = new UserService();
-
+            
 			boolean isAdded = service.addDetails(username, email, userMobileNum, address, validAge, password,
 					confrimPassCode);
 			if (isAdded) {
 				response.sendRedirect("userLogin.jsp");
 
+			}
+			else {
+				response.sendRedirect("userRegistration.jsp?errorMessage=Invalid user details");
 			}
 		} catch (Exception e) {
 			response.sendRedirect("userRegistration.jsp?errorMessage=Invalid user details");

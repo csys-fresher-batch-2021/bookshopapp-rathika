@@ -23,12 +23,12 @@ public class DeleteCartServlet extends HttpServlet {
 			boolean delete = false;
 			
 			String name = request.getParameter("bookName");
-		    delete = OrderService.deleteCart(name);
+			delete = OrderService.deleteCart(name);
 			int totalCount = OrderService.getUpdatedBooks(name);
-			System.out.println("Total count"+totalCount);
-			System.out.println("Total from order list"+totalCount);
+			
 			int count = OrderDao.getNoOfBooks(name);
-			System.out.println("order count"+count);
+			
+		
 		    boolean updated =  OrderDao.updateBooks(name, totalCount+count);
 		    if(delete && updated) {
 		    	response.sendRedirect("displayOrder.jsp");
@@ -37,7 +37,7 @@ public class DeleteCartServlet extends HttpServlet {
 			
 		}catch(Exception e) {
 			response.sendRedirect("viewCart.jsp?errorMessage=Unable to delete book Name");
-		}
+		} 
 	}
 
 }

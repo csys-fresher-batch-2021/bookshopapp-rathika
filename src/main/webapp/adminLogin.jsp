@@ -14,13 +14,13 @@
 				<caption>ADMIN LOGIN</caption>
 				<tr>
 					<th scope="col">USER NAME</th>
-					<td><input type="text" name="userName"
+					<td><input type="text" name="userName" pattern="[A-Za-z\s]{3,}" title="Name must have 3 Character"
 						placeholder="Enter user name" id="userId" required autofocus></td>
 				</tr>
 				<tr>
 					<th scope="col">PASSWORD</th>
-					<td><input type="password" name="password"
-						placeholder="Enter password" id="passId" required></td>
+					<td><input type="password" name="password" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,12}$"
+						title="Must match your password" placeholder="Enter password" id="passId" required></td>
 				</tr>
 			</table>
 
