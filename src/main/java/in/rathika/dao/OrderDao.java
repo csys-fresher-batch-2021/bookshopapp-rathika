@@ -32,8 +32,8 @@ public class OrderDao {
 	private static final String DELETE_ORDER_QUERY = "DELETE FROM orderList WHERE bookName=?";
 	private static final String UPDATE_BOOKS_OUERY = "update bookList set noOfBooks = ? where bookName=?";
 	private static final String GET_TOTAL_BOOKS_QUERY = "select noOfBooks from orderList where bookName=?";
-	private static final String UPDATE_ORDER_STATUS_QUERY = "update orderList set status = 'DELIVERED' where id=? ORDER BY bookName";
-	private static final String UPDATE_REJECT_STATUS_QUERY =  "update orderList set status ='CANCELLED' where id=? ORDER BY bookName";
+	private static final String UPDATE_ORDER_STATUS_QUERY = "update orderList set status = 'DELIVERED' where id=?";
+	private static final String UPDATE_REJECT_STATUS_QUERY =  "update orderList set status ='CANCELLED' where id=?";
 	private static final String GET_ORDER_QUERY =  "select * from orderList where userid=?";
 	
 	/**
