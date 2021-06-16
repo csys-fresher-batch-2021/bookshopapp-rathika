@@ -16,6 +16,23 @@ import in.rathika.util.ConnectionUtil;
 
 public class UserDao {
 
+	private static final String USER_ID = "id";
+	private static final String USER_NAME = "username";
+	private static final String USER_EMAIL = "email";
+	private static final String USER_MOBILE_NUMBER = "mobileNumber";
+	private static final String USER_ADDRESS = "address";
+	private static final String USER_AGE = "age";
+	private static final String USER_PASSWORD = "password";
+	private static final String ADMIN_NAME= "adminName";
+	private static final String ADMIN_PASSWORD= "password";
+	private static final String INSERT_USER_QUERY = "insert into userList(username,email,mobileNumber,address,age,password) values ( ?,?,?,?,?,? )";
+	private static final String CHECK_USER_QUERY = "select email,password from userList";
+	private static final String GET_USER_QUERY = "select username, email from userList";
+	private static final String GET_USER_DETAILS_QUERY =  "select * from userList";
+	private static final String GET_ADMIN_QUERY =   "select * from adminLogin";
+	private static final String GET_PARTICULAR_USER_QUERY =  "select id,email,mobileNumber,address from userList where username=? ORDER BY userName";
+	private static final String GET_USERID_QUERY =  "select id,username from userList ";
+	
 	/**
 	 * List to store User details.
 	 */
@@ -49,7 +66,7 @@ public class UserDao {
 		try {
 			con = ConnectionUtil.getConnection();
 			// Step 2: Prepare data
-			String sql = "insert into userList(username,email,mobileNumber,address,age,password) values ( ?,?,?,?,?,? )";
+			String sql = INSERT_USER_QUERY;
 			pst = con.prepareStatement(sql);
 
 			pst.setString(1, user.getName());
@@ -94,13 +111,13 @@ public class UserDao {
 		Connection con = null;
 		PreparedStatement pst = null;
 		try {
-			String sql = "select email,password from userList";
+			String sql = CHECK_USER_QUERY;
 			con = ConnectionUtil.getConnection();
 			Statement st = con.createStatement();
 			ResultSet rs = st.executeQuery(sql);
 			while (rs.next()) {
-				String uemail = rs.getString("email");
-				String pass = rs.getString("password");
+				String uemail = rs.getString(USER_EMAIL);
+				String pass = rs.getString(USER_PASSWORD);
 				User regObj = new User(uemail, pass);
 				loginMap.add(regObj);
 
@@ -131,13 +148,13 @@ public class UserDao {
 		PreparedStatement pst = null;
 		ResultSet rs = null;
 		try {
-			String sql = "select username, email from userList";
+			String sql = GET_USER_QUERY;
 			con = ConnectionUtil.getConnection();
 			pst = con.prepareStatement(sql);
 			rs = pst.executeQuery();
 			while (rs.next()) {
-				String uname = rs.getString("username");
-				String email = rs.getString("email");
+				String uname = rs.getString(USER_NAME);
+				String email = rs.getString(USER_EMAIL);
 				if (email.equals(emailId)) {
 					name = uname;
 				}
@@ -164,18 +181,18 @@ public class UserDao {
 		PreparedStatement pst = null;
 		ResultSet rs = null;
 		try {
-			String sql = "select * from userList";
+			String sql = GET_USER_DETAILS_QUERY;
 			con = ConnectionUtil.getConnection();
 
 			pst = con.prepareStatement(sql);
 			rs = pst.executeQuery();
 			while (rs.next()) {
-				String uname = rs.getString("username");
-				String email = rs.getString("email");
-				long mobile = rs.getLong("mobileNumber");
-				String userAddress = rs.getString("address ");
-				int userAge = rs.getInt("age");
-				String userPass = rs.getString("password");
+				String uname = rs.getString(USER_NAME);
+				String email = rs.getString(USER_EMAIL);
+				long mobile = rs.getLong(USER_MOBILE_NUMBER);
+				String userAddress = rs.getString(USER_ADDRESS);
+				int userAge = rs.getInt(USER_AGE);
+				String userPass = rs.getString(USER_PASSWORD);
 				User regObj = new User(uname, email, mobile, userAddress, userAge, userPass);
 				userDetails.add(regObj);
 
@@ -204,13 +221,14 @@ public class UserDao {
 		PreparedStatement pst = null;
 		ResultSet rs = null;
 		try {
-			String sql = "select * from adminLogin";
+			String sql = GET_ADMIN_QUERY;
 			con = ConnectionUtil.getConnection();
 			pst = con.prepareStatement(sql);
+			
 			rs = pst.executeQuery();
 			while (rs.next()) {
-				String adminname = rs.getString("adminName");
-				String pass = rs.getString("password");
+				String adminname = rs.getString(ADMIN_NAME);
+				String pass = rs.getString(ADMIN_PASSWORD);
 				adminMap.put(adminname, pass);
 			}
 		} catch (SQLException e) {
@@ -235,18 +253,18 @@ public class UserDao {
 		ResultSet rs = null;
 		try {
 
-			String sql = "select id,email,mobileNumber,address from userList where username='" + userName
-					+ "' ORDER BY userName";
+			String sql = GET_PARTICULAR_USER_QUERY;
 			con = ConnectionUtil.getConnection();
 			pst = con.prepareStatement(sql);
+			pst.setString(1, userName);
 			rs = pst.executeQuery();
 
 			while (rs.next()) {
-                int userId = rs.getInt("id");
-				String emailId = rs.getString("email");
+                int userId = rs.getInt(USER_ID);
+				String emailId = rs.getString(USER_EMAIL);
 
-				long mobile = rs.getLong("mobileNumber");
-				String address = rs.getString("address");
+				long mobile = rs.getLong(USER_MOBILE_NUMBER);
+				String address = rs.getString(USER_ADDRESS);
 
 				userDetails.add(new User(userId,emailId, mobile, address));
 			}
@@ -272,7 +290,7 @@ public class UserDao {
 		PreparedStatement pst = null;
 		ResultSet rs = null;
 		try {
-			String sql = "select id,username from userList ";
+			String sql = GET_USERID_QUERY;
 			con = ConnectionUtil.getConnection();
 			
             pst = con.prepareStatement(sql);
@@ -280,8 +298,8 @@ public class UserDao {
             rs = pst.executeQuery();
 
             while (rs.next()) {
-				int userId = rs.getInt("id");
-				String user = rs.getString("username");
+				int userId = rs.getInt(USER_ID);
+				String user = rs.getString(USER_NAME);
 				if (user.equals(userName)) {
 					id = userId;
 					break;

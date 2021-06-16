@@ -15,6 +15,27 @@ import in.rathika.model.Order;
 import in.rathika.util.ConnectionUtil;
 
 public class OrderDao {
+	
+	
+	private static final String ORDER_ID = "id";
+	private static final String USER_ID = "userid";
+	private static final String USER_NAME = "username";
+	private static final String BOOK_NAME = "bookname";
+	private static final String BOOK_LANGUAGE = "language";
+	private static final String NO_OF_BOOKS = "noofbooks";
+	private static final String COST = "cost";
+	private static final String ORDER_DATE = "order_date";
+	private static final String DELIVERY_DATE = "delivery_date";
+	private static final String ORDER_STATUS = "status";
+	private static final String INSERT_ORDER_DATA_QUERY = "insert into orderList(userid,username,bookname,language,noofbooks,cost,order_date,delivery_date,status) values (?,?,?,?,?,?,?,?,'PENDING')";
+	private static final String GET_ORDER_DETAILS_QUERY = "select id,userid,username,bookName,language,noOfBooks,cost,order_date,delivery_date,status from orderList ORDER BY bookName";
+	private static final String DELETE_ORDER_QUERY = "DELETE FROM orderList WHERE bookName=?";
+	private static final String UPDATE_BOOKS_OUERY = "update bookList set noOfBooks = ? where bookName=?";
+	private static final String GET_TOTAL_BOOKS_QUERY = "select noOfBooks from orderList where bookName=?";
+	private static final String UPDATE_ORDER_STATUS_QUERY = "update orderList set status = 'DELIVERED' where id=?";
+	private static final String UPDATE_REJECT_STATUS_QUERY =  "update orderList set status ='CANCELLED' where id=?";
+	private static final String GET_ORDER_QUERY =  "select * from orderList where userid=?";
+	
 	/**
 	 * Store Ordered Book Details
 	 */
@@ -67,14 +88,14 @@ public class OrderDao {
 	 * @throws ClassNotFoundException
 	 * @throws Exception
 	 */
-	public static void saveOrder(Order order) throws CannotGetDetailsException, DBException, ClassNotFoundException {
+	public static void saveOrder(Order order) throws CannotGetDetailsException,ClassNotFoundException {
 		// Step 1: Get connection
 		Connection con = null;
 		PreparedStatement pst = null;
 		try {
 			con = ConnectionUtil.getConnection();
 			// Step 2: Prepare data
-			String sql = "insert into orderList(userid,username,bookname,language,noofbooks,cost,order_date,delivery_date,status) values (?,?,?,?,?,?,?,?,'PENDING')";
+			String sql = INSERT_ORDER_DATA_QUERY;
 			pst = con.prepareStatement(sql);
 			pst.setInt(1, order.getUserId());
 			pst.setString(2, order.getUserName());
@@ -102,7 +123,7 @@ public class OrderDao {
 	 * @throws DBException 
 	 * @throws Exception
 	 */
-	public static void save(List<Order> orders) throws CannotGetDetailsException, ClassNotFoundException, DBException {
+	public static void save(List<Order> orders) throws CannotGetDetailsException, ClassNotFoundException {
 		for (Order order : orders) {
 			saveOrder(order);
 		}
@@ -121,25 +142,24 @@ public class OrderDao {
 		ResultSet rs = null;
 		try {
 
-			String url = "select id,userid,username,bookName,language,noOfBooks,cost,order_date,delivery_date,status from orderList ORDER BY bookName";
+			String sql = GET_ORDER_DETAILS_QUERY;
 			con = ConnectionUtil.getConnection();
 
-			pst = con.prepareStatement(url);
+			pst = con.prepareStatement(sql);
 			rs = pst.executeQuery();
 			confrimOrders.clear();
 			while (rs.next()) {
-				int id = rs.getInt("id");
-				int userId = rs.getInt("userid");
-				String userName = rs.getString("username");
-				String bookname = rs.getString("bookName");
-				String bookLanguage = rs.getString("language");
-				int noOfBooks = rs.getInt("noOfBooks");
-				double cost = rs.getDouble("cost");
-				LocalDate orderDate = LocalDate.parse(rs.getString("order_date"));
-				LocalDate deliveryDate = LocalDate.parse(rs.getString("delivery_date"));
-				String status = rs.getString("status");
-
-				confrimOrders.add(new Order(id, userId, userName, bookname, bookLanguage, noOfBooks, cost, orderDate,
+				int id1 = rs.getInt(ORDER_ID);
+				int userId = rs.getInt(USER_ID);
+				String userName = rs.getString(USER_NAME);
+				String bookname = rs.getString(BOOK_NAME);
+				String bookLanguage = rs.getString(BOOK_LANGUAGE);
+				int noOfBooks = rs.getInt(NO_OF_BOOKS);
+				double cost = rs.getDouble(COST);
+				LocalDate orderDate = LocalDate.parse(rs.getString(ORDER_DATE));
+				LocalDate deliveryDate = LocalDate.parse(rs.getString(DELIVERY_DATE));
+				String status = rs.getString(ORDER_STATUS);
+				confrimOrders.add(new Order(id1, userId, userName, bookname, bookLanguage, noOfBooks, cost, orderDate,
 						deliveryDate, status));
 			}
 
@@ -170,7 +190,7 @@ public class OrderDao {
 
 		try {
 			con = ConnectionUtil.getConnection();
-			String sql = "DELETE FROM orderList WHERE bookName=?;";
+			String sql = DELETE_ORDER_QUERY;
 			pst = con.prepareStatement(sql);
 			pst.setString(1, bookName);
 
@@ -207,7 +227,7 @@ public class OrderDao {
 		try {
 			connection = ConnectionUtil.getConnection();
 
-			String str = "update bookList set noOfBooks = ? where bookName=?";
+			String str = UPDATE_BOOKS_OUERY;
 
 			pst = connection.prepareStatement(str);
 			pst.setInt(1, count);
@@ -241,14 +261,14 @@ public class OrderDao {
 		try {
 			connection = ConnectionUtil.getConnection();
 
-			String str = "select noOfBooks from orderList where bookName=?";
+			String str = GET_TOTAL_BOOKS_QUERY;
 
 			pst = connection.prepareStatement(str);
 			pst.setString(1, bookName);
 			ResultSet rs = pst.executeQuery();
 			while (rs.next()) {
 
-				count = rs.getInt("noOfBooks");
+				count = rs.getInt(NO_OF_BOOKS);
 
 			}
 
@@ -315,7 +335,7 @@ public class OrderDao {
 
 			connection = ConnectionUtil.getConnection();
 
-			String str = "update orderList set status = 'DELIVERED' where id=?";
+			String str = UPDATE_ORDER_STATUS_QUERY;
 			pst = connection.prepareStatement(str);
 			pst.setInt(1, orderId);
 			pst.executeUpdate();
@@ -349,7 +369,7 @@ public class OrderDao {
 
 			connection = ConnectionUtil.getConnection();
 
-			String str = "update orderList set status ='CANCELLED' where id=?";
+			String str = UPDATE_REJECT_STATUS_QUERY;
 			pst = connection.prepareStatement(str);
 
 			pst.setInt(1, orderId);
@@ -381,7 +401,7 @@ public class OrderDao {
 		ResultSet rs = null;
 		try {
 
-			String url = "select * from orderList where userid=?";
+			String url = GET_ORDER_QUERY;
 			con = ConnectionUtil.getConnection();
 
 			pst = con.prepareStatement(url);
@@ -389,16 +409,16 @@ public class OrderDao {
 			rs = pst.executeQuery();
 			userOrders.clear();
 			while (rs.next()) {
-				int id1 = rs.getInt("id");
-				int userId = rs.getInt("userid");
-				String userName = rs.getString("username");
-				String bookname = rs.getString("bookName");
-				String bookLanguage = rs.getString("language");
-				int noOfBooks = rs.getInt("noOfBooks");
-				double cost = rs.getDouble("cost");
-				LocalDate orderDate = LocalDate.parse(rs.getString("order_date"));
-				LocalDate deliveryDate = LocalDate.parse(rs.getString("delivery_date"));
-				String status = rs.getString("status");
+				int id1 = rs.getInt(ORDER_ID);
+				int userId = rs.getInt(USER_ID);
+				String userName = rs.getString(USER_NAME);
+				String bookname = rs.getString(BOOK_NAME);
+				String bookLanguage = rs.getString(BOOK_LANGUAGE);
+				int noOfBooks = rs.getInt(NO_OF_BOOKS);
+				double cost = rs.getDouble(COST);
+				LocalDate orderDate = LocalDate.parse(rs.getString(ORDER_DATE));
+				LocalDate deliveryDate = LocalDate.parse(rs.getString(DELIVERY_DATE));
+				String status = rs.getString(ORDER_STATUS);
 				userOrders.add(new Order(id1, userId, userName, bookname, bookLanguage, noOfBooks, cost, orderDate,
 						deliveryDate, status));
 			}

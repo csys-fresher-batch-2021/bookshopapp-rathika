@@ -33,6 +33,7 @@
 	%>
 	<h3 id="heading">BILL ESTIMATION</h3>
 	<table class="table table-bordered" border='1'>
+	<caption></caption>
 		<thead>
 		</thead>
 		<tr>

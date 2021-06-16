@@ -91,7 +91,7 @@ public class UserService {
 		Map<String,String> AdminLoginDetails = UserDao.checkAdmin();
 		for (String name1 : AdminLoginDetails.keySet()) {
 			String password1 = AdminLoginDetails.get(name1);
-			if(password1.matches(password) && name1.matches(name)) {
+			if(password1.equals(password) && name1.equals(name)) {
 				valid = true;
 				break;
 			}

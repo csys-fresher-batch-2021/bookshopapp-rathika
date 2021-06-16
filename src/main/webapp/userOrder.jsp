@@ -109,7 +109,7 @@
 
 				</thead>
 			</table>
-			<button class="btn" type="submit"><i class="fa fa-home"></i> Home</button>
+			<button class="btn" type="submit"><em class="fa fa-home"></em> Home</button>
 		</form>
 	</main>
 </body>

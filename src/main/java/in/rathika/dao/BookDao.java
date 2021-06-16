@@ -13,6 +13,16 @@ import in.rathika.model.Book;
 import in.rathika.util.ConnectionUtil;
 
 public class BookDao {
+	
+	
+	
+	private static final String BOOK_NAME = "bookName";
+	private static final String BOOK_LANGUAGE = "language";
+	private static final String NO_OF_BOOKS = "noOfBooks";
+	private static final String COST = "cost";
+	private static final String INSERT_BOOKS_QUERY = "insert into bookList(bookName,language,noOfBooks,cost) values ( ?,?,?,?)";
+	private static final String GET_BOOKS_QUERY = "select bookName,language,noOfBooks,cost from bookList where noOfBooks>0 ORDER BY bookName";
+	private static final String DELETE_BOOKS_QUERY = "DELETE FROM bookList WHERE bookName=?";
 	/**
 	 * ArrayList to store Book Details.
 	 */
@@ -83,7 +93,7 @@ public class BookDao {
 		try {
 			con = ConnectionUtil.getConnection();
 		
-			String sql = "insert into bookList(bookName,language,noOfBooks,cost) values ( ?,?,?,?)";
+			String sql = INSERT_BOOKS_QUERY;
 			pst = con.prepareStatement(sql);
 
 			pst.setString(1, book.getBookName());
@@ -124,17 +134,17 @@ public class BookDao {
 		ResultSet rs = null;
 		try {
             books.clear();
-			String url = "select bookName,language,noOfBooks,cost from bookList where noOfBooks>0 ORDER BY bookName";
+			String url = GET_BOOKS_QUERY;
 			con = ConnectionUtil.getConnection();
 			
 			pst = con.prepareStatement(url);
 			rs = pst.executeQuery();
 			
 			while (rs.next()) {
-				String bookname = rs.getString("bookName");
-				String bookLanguage = rs.getString("language");
-				int noOfBooks = rs.getInt("noOfBooks");
-				double cost = rs.getDouble("cost");
+				String bookname = rs.getString(BOOK_NAME);
+				String bookLanguage = rs.getString(BOOK_LANGUAGE);
+				int noOfBooks = rs.getInt(NO_OF_BOOKS);
+				double cost = rs.getDouble(COST);
 				
 				books.add(new Book(bookname, bookLanguage, noOfBooks, cost));
 			}
@@ -165,7 +175,7 @@ public class BookDao {
 
 		try {
 			con = ConnectionUtil.getConnection();
-			String sql = "DELETE FROM bookList WHERE bookName=?;";
+			String sql = DELETE_BOOKS_QUERY;
 			pst = con.prepareStatement(sql);
 			pst.setString(1, bookName);
 
