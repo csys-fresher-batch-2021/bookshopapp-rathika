@@ -48,6 +48,12 @@
   background-color: #04AA6D;
   color: white;
 }
+#heading{
+  color:#04AA6D;
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
 </style>
 </head>
 <body>
@@ -55,7 +61,7 @@
 	<main class="container-fluid">
 
 		<form action="addCart.jsp">
-			<h3>Books</h3>
+			<h3 id="heading">YOUR ORDERS</h3>
 			<table class="table table-bordered" id="books">
 				<caption></caption>
 				<%

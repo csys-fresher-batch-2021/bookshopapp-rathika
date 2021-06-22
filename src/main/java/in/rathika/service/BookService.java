@@ -225,4 +225,22 @@ public class BookService {
 		return BookDao.getBook();
 	}
 
+    /**Search book by name.
+     * 
+     * @param name
+     * @return
+     */
+	public static boolean searchBookByName(String name) {
+	    boolean added = false;
+	    List<Book> languageDetails = BookDao.getSearch();
+		languageDetails.clear();
+		for (Book book : BookDao.getBook()) {
+			if (book.getBookName().equalsIgnoreCase(name) || book.getBookName().contains(name.toLowerCase()) || book.getBookName().contains(name.toUpperCase())) {
+				languageDetails.add(book);
+				added = true;
+			}
+		}
+		return added;
+	}
+
 }

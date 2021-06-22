@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-
 import in.rathika.exception.CannotGetDetailsException;
 import in.rathika.exception.DBException;
 import in.rathika.exception.NotAbleToDeleteException;
@@ -28,12 +27,12 @@ public class OrderDao {
 	private static final String DELIVERY_DATE = "delivery_date";
 	private static final String ORDER_STATUS = "status";
 	private static final String INSERT_ORDER_DATA_QUERY = "insert into orderList(userid,username,bookname,language,noofbooks,cost,order_date,delivery_date,status) values (?,?,?,?,?,?,?,?,'PENDING')";
-	private static final String GET_ORDER_DETAILS_QUERY = "select id,userid,username,bookName,language,noOfBooks,cost,order_date,delivery_date,status from orderList ORDER BY bookName";
+	private static final String GET_ORDER_DETAILS_QUERY = "select id,userid,username,bookName,language,noOfBooks,cost,order_date,delivery_date,status from orderList ORDER BY id";
 	private static final String DELETE_ORDER_QUERY = "DELETE FROM orderList WHERE bookName=?";
 	private static final String UPDATE_BOOKS_OUERY = "update bookList set noOfBooks = ? where bookName=?";
 	private static final String GET_TOTAL_BOOKS_QUERY = "select noOfBooks from orderList where bookName=?";
-	private static final String UPDATE_ORDER_STATUS_QUERY = "update orderList set status = 'DELIVERED' where id=?";
-	private static final String UPDATE_REJECT_STATUS_QUERY =  "update orderList set status ='CANCELLED' where id=?";
+	private static final String UPDATE_ORDER_STATUS_QUERY = "update orderList set status = 'DELIVERED'  where id=?  ";
+	private static final String UPDATE_REJECT_STATUS_QUERY =  "update orderList set status ='CANCELLED' where id=? ";
 	private static final String GET_ORDER_QUERY =  "select * from orderList where userid=?";
 	
 	/**
@@ -90,7 +89,6 @@ public class OrderDao {
 	 * @throws Exception
 	 */
 	public static void saveOrder(Order order) throws CannotGetDetailsException,ClassNotFoundException, DBException {
-		// Step 1: Get connection
 		Connection con = null;
 		PreparedStatement pst = null;
 		try {
@@ -438,7 +436,7 @@ public class OrderDao {
 
 		return userOrders;
 	}
-
+    
 	public static List<Order> saveUserOrder() {
 		return userOrders;
 	}

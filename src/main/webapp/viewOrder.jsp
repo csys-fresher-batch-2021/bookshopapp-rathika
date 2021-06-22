@@ -40,6 +40,7 @@
   border-collapse: collapse;
   width: 100%;
 }
+
 </style>
 </head>
 <body>

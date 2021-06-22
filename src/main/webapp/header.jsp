@@ -2,6 +2,7 @@
 <link rel="stylesheet" href="assets/css/fontawesome.min.css">
 <link rel="stylesheet" href="assets/css/style.css">
 <link rel="stylesheet" href=" bootstrap.js">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
@@ -15,6 +16,23 @@ String role = (String) session.getAttribute("ROLE");
 <%
 String loggedInUsername = (String) session.getAttribute("LOGGED_IN_USER");
 %>
+<style>
+.topnav .search-container button {
+  float: right;
+  padding: 6px 10px;
+  margin-top: 8px;
+  margin-right: 16px;
+  background: #ddd;
+  font-size: 17px;
+  border: none;
+  cursor: pointer;
+}
+
+.topnav .search-container button:hover {
+  background: #ccc;
+}
+
+</style>
 <header>
 	<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
 		<a class="navbar-brand" href="#">BOOK SHOP APP</a>
@@ -31,8 +49,7 @@ String loggedInUsername = (String) session.getAttribute("LOGGED_IN_USER");
 				<li class="nav-item">
 					<%
 					if (loggedInAdminname != "Admin") {
-					%> <a class="nav-link"
-					href="view.jsp">BOOKS</a> <%
+					%> <a class="nav-link" href="view.jsp">BOOKS</a> <%
  } else {
  %> <a class="nav-link" href="addCart.jsp">BOOKS</a> <%
  }
@@ -43,7 +60,8 @@ String loggedInUsername = (String) session.getAttribute("LOGGED_IN_USER");
 				%>
 				<li class="nav-item dropdown"><a
 					class="nav-link dropdown-toggle" href="#" id="dropdownId"
-					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">SEARCH</a>
+					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">FILTER
+						BY LANGUAGE</a>
 					<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 						<a class="dropdown-item"
 							href="SearchLanguageServlet?language=tamil">TAMIL</a> <a
@@ -54,13 +72,24 @@ String loggedInUsername = (String) session.getAttribute("LOGGED_IN_USER");
 				<li class="nav-item dropdown">
 					<div class="dropdown">
 						<a class="nav-link dropdown-toggle" href="#" id="dropdownId"
-							data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">COST</a>
+							data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">FILTER
+							BY COST</a>
 						<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 							<a class="dropdown-item" href="SearchByCostServlet?cost=1">Below
 								500</a> <a class="dropdown-item" href="SearchByCostServlet?cost=2">above
 								1000</a>
 						</div>
 					</div>
+				</li>
+				<li class="nav-item search-container ">
+				<div class="search-container">
+					<form action="SearchServlet">
+						<input type="text" placeholder="Search.." name="search">
+						<button type="submit">
+							<i class="fa fa-search"></i>
+						</button>
+			 		</form>
+				</div>
 				</li>
 				<%
 				}

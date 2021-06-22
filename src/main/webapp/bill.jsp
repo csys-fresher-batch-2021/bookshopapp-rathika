@@ -64,7 +64,6 @@
 					<th scope="col">ADDRESS</th>
 					<td><%=userDetails.getAddress() %></td>
 					</tr>
-					
 					<tr>
 					<th scope="col">ORDER DATE TIME</th>
 					<td><%=timeStamp %></td>
@@ -78,7 +77,8 @@
 			<td><%=total%> Rs</td>
 		</tr>
 	</table>
-<a href="addCart.jsp" class="btn btn-primary">PAY</a>
+	
+   <a href="addCart.jsp" class="btn btn-primary">PAY</a>
 	
 		</main>
 </body>
