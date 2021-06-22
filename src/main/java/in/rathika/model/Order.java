@@ -9,15 +9,12 @@ public class Order {
 	 */
 	
     private int id;
-   
-
-	private int userId;
+    private int userId;
 	private String userName;
 	private String bookName;
 	private String language;
 	private int noOfBooks;
 	private double cost;
-	
 	private LocalDate orderDate;
 	private LocalDate deliveryDate;
 	private String status;

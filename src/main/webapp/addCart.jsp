@@ -84,7 +84,7 @@
 
 		<a href="displayOrder.jsp" class="btn btn-info">VIEW CART</a>
 		
-		<a href="userOrder.jsp" class="btn btn-success">VIEW STATUS</a>
+		<a href="userOrder.jsp" class="btn btn-success">VIEW ORDER HISTORY</a>
 	</main>
 </body>
 </html>
